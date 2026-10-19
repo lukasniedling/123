@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<!--
+  quadrate.html - directory of all 146 Quadrate as a table.                            [V1]
+
+  Interim version V1: HTML and CSS only. The table replaces the profile ("Steckbrief") of the
+  final version: per Quadrat the number of places per category and a short text with its source.
+  - Every row has an id (id="q-G1"). A link to quadrate.html#q-G1 from the map jumps to that
+    row (anchor on another page, lecture 3 slide 2); css/verzeichnis.css highlights it with :target.
+  - The link "Karte" in each row goes back to index.html#G1 and highlights the Quadrat on the map.
+  - The jump list and the 146 rows between the "generated" comments are written by the build tool
+    tools/export_v1.py from the data of the final version (js/data/quadrate.js and js/data/orte.js,
+    not part of this folder). Do not edit them by hand: run the tool again instead.
+  Place data (c) OpenStreetMap contributors, ODbL 1.0, as of 28.09.2026.
+  Page-specific styles: css/verzeichnis.css.
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Verzeichnis der Quadrate – Quadrate</title>
+  <meta name="description" content="Alle 146 Mannheimer Quadrate als Tabelle: Orte zum Essen, Trinken, für Kultur und zum Shoppen und eine kurze Beschreibung je Quadrat.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/verzeichnis.css">
+</head>
+<body>
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="site-logo" href="index.html"><img src="img/logo.svg" alt="Quadrate – zur Karte" width="200" height="33"></a>
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <ul>
+          <li><a href="index.html">Karte</a></li>
+          <li><a class="current" href="quadrate.html" aria-current="page">Quadrate</a></li>
+          <li><a href="vorschlagen.html">Ort vorschlagen</a></li>
+          <li><a href="ueber-uns.html">Über uns</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhalt" class="container">
+    <div class="page-intro">
+      <h1>Verzeichnis der Quadrate</h1>
+      <p class="lead">Alle 146 Quadrate mit der Zahl ihrer Orte und einer kurzen Beschreibung.</p>
+    </div>
+
+    <div class="prose">
+      <p>So findest du dich zurecht: Die Kurpfalzstraße teilt die Innenstadt in zwei Hälften. <strong>Links</strong> davon liegen, beginnend am Schloss, die Reihen A bis K, <strong>rechts</strong> davon die Reihen L bis U. Die Nummer wird größer, je weiter ein Quadrat von der Kurpfalzstraße entfernt ist.</p>
+      <p>Gezählt sind Orte mit Namen aus OpenStreetMap. <em>Essen:</em> Restaurants, Imbisse und Eisdielen. <em>Trinken:</em> Cafés, Kneipen, Bars und Clubs. <em>Kultur:</em> zum Beispiel Museen, Theater, Kinos, Galerien und Kirchen. <em>Shoppen:</em> Geschäfte, aber keine Dienstleister wie Friseure.</p>
+    </div>
+
+    <!-- Jump list: links to anchors on this page (lecture 2 slide 6). -->
+    <nav class="jump-list" aria-label="Zu einer Reihe springen">
+      <h2>Zu einer Reihe springen</h2>
+      <ul>
+        <!-- BEGIN generated: jump list -->
+          <li><a class="block-code" href="#q-A1">A</a></li>
+          <li><a class="block-code" href="#q-B1">B</a></li>
+          <li><a class="block-code" href="#q-C1">C</a></li>
+          <li><a class="block-code" href="#q-D1">D</a></li>
+          <li><a class="block-code" href="#q-E1">E</a></li>
+          <li><a class="block-code" href="#q-F1">F</a></li>
+          <li><a class="block-code" href="#q-G1">G</a></li>
+          <li><a class="block-code" href="#q-H1">H</a></li>
+          <li><a class="block-code" href="#q-I1">I</a></li>
+          <li><a class="block-code" href="#q-K1">K</a></li>
+          <li><a class="block-code" href="#q-L1">L</a></li>
+          <li><a class="block-code" href="#q-M1">M</a></li>
+          <li><a class="block-code" href="#q-N1">N</a></li>
+          <li><a class="block-code" href="#q-O1">O</a></li>
+          <li><a class="block-code" href="#q-P1">P</a></li>
+          <li><a class="block-code" href="#q-Q1">Q</a></li>
+          <li><a class="block-code" href="#q-R1">R</a></li>
+          <li><a class="block-code" href="#q-S1">S</a></li>
+          <li><a class="block-code" href="#q-T1">T</a></li>
+          <li><a class="block-code" href="#q-U1">U</a></li>
+        <!-- END generated: jump list -->
+      </ul>
+    </nav>
+
+    <p class="small">Orte: Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL 1.0, Stand 28.09.2026.</p>
+
+    <!-- The table sits in a box that scrolls sideways on phones (overflow-x: auto). -->
+    <div class="table-wrap">
+      <table class="directory">
+        <caption>Alle 146 Quadrate mit der Zahl der Orte je Kategorie</caption>
+        <thead>
+          <tr>
+            <th scope="col">Quadrat</th>
+            <th scope="col">Art und Lage</th>
+            <th scope="col" class="num essen">Essen</th>
+            <th scope="col" class="num trinken">Trinken</th>
+            <th scope="col" class="num kultur">Kultur</th>
+            <th scope="col" class="num shoppen">Shoppen</th>
+            <th scope="col" class="num">Gesamt</th>
+            <th scope="col">Kurzinfo</th>
+            <th scope="col">Karte</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- BEGIN generated: table rows -->
+          <tr id="q-A1">
+            <th scope="row"><span class="block-code">A1</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe A</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">Den bebauten Teil von A1 nimmt das Landgericht Mannheim ein, ein Bau von Helmut Striffler. Seine Obergeschosse sind mit rostbraunem Cortenstahl verkleidet – damals das erste Mal in Deutschland, dass ein Architekt Roststahl für eine Fassade einsetzte. Früher stand hier das Palais von BASF-Gründer Friedrich Engelhorn.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#A1">Karte</a></td>
+          </tr>
+          <tr id="q-A2">
+            <th scope="row"><span class="block-code">A2</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe A</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">Gegenüber dem Schloss steht in A2, 1 das Palais Bretzenheim, eines der wichtigsten historischen Adelshäuser Mannheims, erbaut 1782 bis 1788 nach Plänen von Peter Anton von Verschaffelt für Karl August von Bretzenheim, den Sohn von Kurfürst Carl Theodor und der Tänzerin Josepha Seyffert. Schon ab 1771 hatte Carl Theodor hier ältere Häuser für Josepha Seyffert und ihre Kinder umbauen lassen; Mozart gab den Kindern 1777/78 Klavierunterricht.<br><span class="small">Quelle: Wikipedia: Quadratestadt; Wikipedia: Palais Bretzenheim; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#A2">Karte</a></td>
+          </tr>
+          <tr id="q-A3">
+            <th scope="row"><span class="block-code">A3</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe A</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num">1</td>
+            <td class="num">2</td>
+            <td class="num total">4</td>
+            <td class="info">In A3 steht die Universitätsbibliothek Mannheim, 1986 bis 1988 von Gottfried Böhm und Jürgen Minkus mit Lesesaal und Hörsaal gebaut. Auffällig sind die in Beton gegossenen Baumskulpturen, die als Stützen dienen; vor der Jesuitenkirche liegt der kleine Asamplatz.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#A3">Karte</a></td>
+          </tr>
+          <tr id="q-A4">
+            <th scope="row"><span class="block-code">A4</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe A</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num total">1</td>
+            <td class="info">In A4 steht die Jesuitenkirche (1738 bis 1760), die oft als bedeutendste Barockkirche Südwestdeutschlands bezeichnet wird; ihre Kuppel ist rund 75 m hoch. Daneben stehen die Sternwarte von 1772 bis 1774, die genau nach den Himmelsrichtungen ausgerichtet ist und deshalb schräg zur Kirche steht, und das Ursulinen-Gymnasium.<br><span class="small">Quelle: Wikipedia: Quadratestadt; Wikipedia: Jesuitenkirche (Mannheim); Wikipedia: Mannheimer Sternwarte; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#A4">Karte</a></td>
+          </tr>
+          <tr id="q-A5">
+            <th scope="row"><span class="block-code">A5</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe A</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">A5 ist das jüngste Quadrat: Es wurde erst um 1960 vom Schlossgarten abgetrennt, als die Auffahrt zur Konrad-Adenauer-Brücke neu gebaut wurde. Hier stehen Bibliotheks- und Seminargebäude der Universität und seit 2006 das Mannheimer Zentrum für Europäische Sozialforschung; dazu entsteht das IT-Gebäude UNIT, das 2027 fertig werden soll.<br><span class="small">Quelle: Wikipedia: Quadratestadt; Universität Mannheim, 24.04.2026; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#A5">Karte</a></td>
+          </tr>
+          <tr id="q-B1">
+            <th scope="row"><span class="block-code">B1</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe B</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num total">2</td>
+            <td class="info">In B1 wohnte der Revolutionär Friedrich Hecker, Symbolfigur des Volksaufstands von 1848; sein Haus wurde im Zweiten Weltkrieg zerstört. Heute hat hier unter anderem die Handwerkskammer Mannheim Rhein-Neckar-Odenwald ihren Sitz.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#B1">Karte</a></td>
+          </tr>
+          <tr id="q-B2">
+            <th scope="row"><span class="block-code">B2</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe B</span></td>
+            <td class="num">1</td>
+            <td class="num">2</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num total">4</td>
+            <td class="info">In B2 wohnte 1763 der siebenjährige Wolfgang Amadeus Mozart, als er vor dem Kurfürsten in Schwetzingen spielte. In B2, 12 steht eines der wenigen erhaltenen Mannheimer Barockhäuser; heute gibt es im Block unter anderem die Cafés Sleepy Bird und Café Fräulein Schiller.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#B2">Karte</a></td>
+          </tr>
+          <tr id="q-B3">
+            <th scope="row"><span class="block-code">B3</span></th>
+            <td class="place">Park: Schillerplatz<br><span class="small">links der Kurpfalzstraße, Reihe B</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">Der Schillerplatz ist eine grüne Anlage mit großen Bäumen, einem Spielplatz und dem Schiller-Denkmal von 1862. Hier stand bis zu seiner Zerstörung 1943 das alte Nationaltheater, in dem 1782 Schillers Räuber uraufgeführt wurden; ein Mahnmal erinnert an die Arbeit der Trümmerfrauen.<br><span class="small">Quelle: Wikipedia: Quadratestadt; MARCHIVUM: Schillerplatz; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#B3">Karte</a></td>
+          </tr>
+          <tr id="q-B4">
+            <th scope="row"><span class="block-code">B4</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe B</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">Im Eckhaus B4, 1 wohnte 1810 der Komponist Carl Maria von Weber; heute steht dort eine moderne Wohnanlage. In B4, 9 und 10 stehen frühere Tresor- und Bürogebäude der Rheinischen Kreditbank von 1905, der Anbau ist heute ein Depot der Reiss-Engelhorn-Museen.<br><span class="small">Quelle: Wikipedia: Quadratestadt (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#B4">Karte</a></td>
+          </tr>
+          <tr id="q-B5">
+            <th scope="row"><span class="block-code">B5</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe B</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num">3</td>
+            <td class="num total">4</td>
+            <td class="info">In B5, 7 liegt das Museum Schillerhaus der Reiss-Engelhorn-Museen, das von Schillers Mannheimer Jahren 1783 bis 1785 erzählt. Seine letzte Mannheimer Wohnung hatte Schiller im heute nicht mehr erhaltenen Haus B5, 8.<br><span class="small">Quelle: Wikipedia: Quadratestadt; Wikipedia: Reiss-Engelhorn-Museen; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#B5">Karte</a></td>
+          </tr>
+          <tr id="q-B6">
+            <th scope="row"><span class="block-code">B6</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe B</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num total">1</td>
+            <td class="info">B6 ist ein großer Block der Universität Mannheim mit mehreren Lehr- und Forschungsgebäuden, darunter das denkmalgeschützte Rhenania-Haus aus dem 19. Jahrhundert. Außerdem sitzt hier GESIS, das Leibniz-Institut für Sozialwissenschaften.<br><span class="small">Quelle: Wikipedia: Quadratestadt; Wikipedia: Universität Mannheim; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#B6">Karte</a></td>
+          </tr>
+          <tr id="q-B7">
+            <th scope="row"><span class="block-code">B7</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe B</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">B7 liegt am Parkring am Rand der Innenstadt. Im Quadrat befindet sich ein Studentenwohnheim mit rund 100 Wohnplätzen.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#B7">Karte</a></td>
+          </tr>
+          <tr id="q-C1">
+            <th scope="row"><span class="block-code">C1</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe C</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">4</td>
+            <td class="num total">4</td>
+            <td class="info">C1 liegt an der Kurpfalzstraße (Breite Straße). In C1, 2 wohnte von 1795 bis 1829 die Gräfin von Ottweiler, die wegen ihrer vielen Katzen Katzengräfin genannt wurde; heute gibt es hier Geschäfte und das Parkhaus C1.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#C1">Karte</a></td>
+          </tr>
+          <tr id="q-C2">
+            <th scope="row"><span class="block-code">C2</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe C</span></td>
+            <td class="num">2</td>
+            <td class="num">2</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num total">5</td>
+            <td class="info">C2 ist ein Wohn- und Geschäftsblock in der Westlichen Oberstadt. Hier gibt es unter anderem die ALPHA Buchhandlung, ein Café der Bäckerei Grimminger, Imbisse und das Parkhaus Kaufhof C2.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#C2">Karte</a></td>
+          </tr>
+          <tr id="q-C3">
+            <th scope="row"><span class="block-code">C3</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe C</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num">2</td>
+            <td class="num total">3</td>
+            <td class="info">C3 ist ein Wohn- und Geschäftsblock in der Westlichen Oberstadt. Wie von vielen Gasthäusern der Gegend wird auch vom Weinhaus Hunzinger in C3, 20 erzählt, dass Friedrich Schiller dort eingekehrt sein soll.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#C3">Karte</a></td>
+          </tr>
+          <tr id="q-C4">
+            <th scope="row"><span class="block-code">C4</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe C</span></td>
+            <td class="num">1</td>
+            <td class="num">1</td>
+            <td class="num">3</td>
+            <td class="num num--zero">0</td>
+            <td class="num total">5</td>
+            <td class="info">In C4 liegen mehrere Häuser der Reiss-Engelhorn-Museen: das Museum Bassermannhaus für Musik und Kunst (C4, 8) mit ZEPHYR – Raum für Fotografie und das 2023 eröffnete Peter &amp; Traudl Engelhornhaus (C4, 12). In C4, 9b steht das Palais Cunzmann, das nach seiner früheren Gaststätte nahe dem alten Nationaltheater Zwischenakt genannt wird.<br><span class="small">Quelle: Wikipedia: Reiss-Engelhorn-Museen; Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#C4">Karte</a></td>
+          </tr>
+          <tr id="q-C5">
+            <th scope="row"><span class="block-code">C5</span></th>
+            <td class="place">Teils Freifläche: Toulonplatz<br><span class="small">links der Kurpfalzstraße, Reihe C</span></td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num total">2</td>
+            <td class="info">Das Zeughaus wurde 1777 bis 1779 nach Plänen von Peter Anton von Verschaffelt für das kurpfälzische Heer gebaut und ist heute das Museum Zeughaus der Reiss-Engelhorn-Museen. Auf dem Toulonplatz davor, benannt nach der Partnerstadt Toulon, ist der Grundriss der früheren Garnisonskirche im Pflaster markiert; hinter dem Zeughaus liegt ein Garten.<br><span class="small">Quelle: Wikipedia: Zeughaus (Mannheim); Wikipedia: Quadratestadt; Wikipedia: Garnisonskirche (Mannheim); OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#C5">Karte</a></td>
+          </tr>
+          <tr id="q-C6">
+            <th scope="row"><span class="block-code">C6</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe C</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">In C6 steht die Friedrich-List-Schule, eine kaufmännische Schule, die 1907 zum 300. Stadtjubiläum eingeweiht wurde. Ein Relief an der Fassade zeigt den Stadtgründer Kurfürst Friedrich zu Pferd; der turmartige Eckbau steht an den Zeughausplanken.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#C6">Karte</a></td>
+          </tr>
+          <tr id="q-C7">
+            <th scope="row"><span class="block-code">C7</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe C</span></td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num total">2</td>
+            <td class="info">Im Haus C7, dem ehemaligen Wöchnerinnenasyl Luisenheim, wurde Alfred Delp geboren, der im Januar 1945 zum Tode verurteilt wurde. Eine Gedenktafel erinnert seit 2003 an ihn; in dem großen Block liegt heute unter anderem das Käthe-Luther-Heim.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#C7">Karte</a></td>
+          </tr>
+          <tr id="q-C8">
+            <th scope="row"><span class="block-code">C8</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe C</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">C8 liegt am Luisenring und ist – abgesehen von den L-Quadraten – das einzige Quadrat mit einer Nummer höher als 7. Hier sitzt unter anderem eine Dienststelle des Wasserstraßen- und Schifffahrtsamts Oberrhein, bis 2019 Wasser- und Schifffahrtsamt Mannheim.<br><span class="small">Quelle: Wikipedia: Quadratestadt; Wikipedia: Wasserstraßen- und Schifffahrtsamt Oberrhein; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#C8">Karte</a></td>
+          </tr>
+          <tr id="q-D1">
+            <th scope="row"><span class="block-code">D1</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe D</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num total">2</td>
+            <td class="info">Mit D1 beginnen die D-Quadrate an der Ecke von Kurpfalzstraße und Planken gegenüber dem Paradeplatz. Hier sitzt die Sparkasse Rhein Neckar Nord, daneben steht das Modehaus C&amp;A; früher stand hier der Pfälzer Hof, in dem Mozart mit seiner Mutter wohnte.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#D1">Karte</a></td>
+          </tr>
+          <tr id="q-D2">
+            <th scope="row"><span class="block-code">D2</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe D</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num">2</td>
+            <td class="num total">3</td>
+            <td class="info">In D2 lag die Schwan&#x27;sche Buchhandlung, die 1782 die Erstausgabe von Schillers Räubern druckte. Heute ist D2 ein Wohn- und Geschäftsblock an den Planken mit kleinen Läden und einer Bar.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#D2">Karte</a></td>
+          </tr>
+          <tr id="q-D3">
+            <th scope="row"><span class="block-code">D3</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe D</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num">2</td>
+            <td class="num num--zero">0</td>
+            <td class="num">5</td>
+            <td class="num total">7</td>
+            <td class="info">In D3 lernte Friedrich Engelhorn das Goldschmiedehandwerk. Dreißig Jahre später schloss er im Bankhaus W. H. Ladenburg &amp; Söhne in D3 den Gesellschaftsvertrag, der zur Gründung der BASF führte.<br><span class="small">Quelle: Wikipedia: Quadratestadt (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#D3">Karte</a></td>
+          </tr>
+          <tr id="q-D4">
+            <th scope="row"><span class="block-code">D4</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe D</span></td>
+            <td class="num">1</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num">2</td>
+            <td class="num total">4</td>
+            <td class="info">In D4, 9–10 befindet sich das Städtische Leihamt, gegründet 1809 und heute das einzige kommunale Leihamt in Deutschland. Außerdem gibt es hier Juweliere, das Café am Museum und das Restaurant Burrito Baby.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#D4">Karte</a></td>
+          </tr>
+          <tr id="q-D5">
+            <th scope="row"><span class="block-code">D5</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe D</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num total">1</td>
+            <td class="info">In D5 steht das Museum Weltkulturen der Reiss-Engelhorn-Museen, ein moderner Bau von 1988 gegenüber dem Zeughaus, mit Ausstellungen zu Archäologie an Rhein und Neckar und zum alten Ägypten. Vor dem Museum erinnert eine Tafel an Goethes Lob des freundlichen Mannheim, das gleich und heiter gebaut ist.<br><span class="small">Quelle: Wikipedia: Reiss-Engelhorn-Museen; Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#D5">Karte</a></td>
+          </tr>
+          <tr id="q-D6">
+            <th scope="row"><span class="block-code">D6</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe D</span></td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num">3</td>
+            <td class="num">2</td>
+            <td class="num total">6</td>
+            <td class="info">In D6, 3 spielt die Klapsmühl&#x27; am Rathaus, ein Kabarett-Theater. Außerdem sitzen hier das Curt-Engelhorn-Zentrum Archäometrie, das Funde mit naturwissenschaftlichen Methoden untersucht, und die Katholische Hochschulgemeinde; in der Gaststätte Silberner Schlüssel (D6, 11) wurde 1840 die Mannheimer Liedertafel gegründet.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#D6">Karte</a></td>
+          </tr>
+          <tr id="q-D7">
+            <th scope="row"><span class="block-code">D7</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe D</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">D7 liegt am Luisenring; hier stand von 1725 bis 1863 das Rheintor der Stadtbefestigung. Heute prägt das Elisabeth-Gymnasium den Block, gegründet 1863 und seit 1905 in einem Bau von Stadtbaumeister Richard Perrey.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#D7">Karte</a></td>
+          </tr>
+          <tr id="q-E1">
+            <th scope="row"><span class="block-code">E1</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe E</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">5</td>
+            <td class="num total">5</td>
+            <td class="info">E1 liegt an der Ecke von Planken und Kurpfalzstraße. Hier stand das jüdische Kaufhaus Wronker, später Hertie, das 1995 schloss; heute gibt es im Block Geschäfte wie H&amp;M, Deichmann, TK Maxx und Rossmann.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#E1">Karte</a></td>
+          </tr>
+          <tr id="q-E2">
+            <th scope="row"><span class="block-code">E2</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe E</span></td>
+            <td class="num">1</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num">5</td>
+            <td class="num total">7</td>
+            <td class="info">In E2, 8 stellt die Konditorei Herrdegen seit dem 19. Jahrhundert nach überliefertem Rezept den Mannemer Dreck her. Im Haus Zum goldenen Leuchter (E2, 5) gründete Tobias Löffler 1766 seine Buchhandlung.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#E2">Karte</a></td>
+          </tr>
+          <tr id="q-E3">
+            <th scope="row"><span class="block-code">E3</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe E</span></td>
+            <td class="num">3</td>
+            <td class="num">3</td>
+            <td class="num num--zero">0</td>
+            <td class="num">2</td>
+            <td class="num total">8</td>
+            <td class="info">E3 ist ein Wohn- und Geschäftsblock an den Planken. In E3, 16 steht ein denkmalgeschütztes Bankgebäude aus der Gründerzeit, und an E3, 9 ist eine alte Holztür mit der Jahreszahl 1774 erhalten; dazu gibt es Cafés wie das Café am Rathaus.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#E3">Karte</a></td>
+          </tr>
+          <tr id="q-E4">
+            <th scope="row"><span class="block-code">E4</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe E</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num">2</td>
+            <td class="num num--zero">0</td>
+            <td class="num total">3</td>
+            <td class="info">In E4, 12–16 steht die Mannheimer Börse, ein repräsentativer Großbau aus der Zeit um 1900. Im Block sind außerdem die Städtische Musikschule und das Stamitz-Orchester zu finden.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#E4">Karte</a></td>
+          </tr>
+          <tr id="q-E5">
+            <th scope="row"><span class="block-code">E5</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe E</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">Das Rathaus in E5 entstand ab 1936 auf dem Quadrat, das für den Plankendurchbruch geräumt worden war; sein Grundriss hat die Form eines H. Seit 1951 sitzen hier die städtische Hauptverwaltung und der Oberbürgermeister.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#E5">Karte</a></td>
+          </tr>
+          <tr id="q-E6">
+            <th scope="row"><span class="block-code">E6</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe E</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num total">1</td>
+            <td class="info">In E6 stehen das katholische Bürgerhospital und die Spitalkirche, die heute die polnische katholische Gemeinde nutzt. Hinter der Kirche steht der Friedensengel, eine Plastik von Gerhard Marcks, und daneben ein Mahnmal für die Sinti-Opfer.<br><span class="small">Quelle: Wikipedia: Quadratestadt; Wikipedia: Spitalkirche (Mannheim); MARCHIVUM: Der Mannheimer Friedensengel; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#E6">Karte</a></td>
+          </tr>
+          <tr id="q-E7">
+            <th scope="row"><span class="block-code">E7</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe E</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num">1</td>
+            <td class="num total">2</td>
+            <td class="info">E7 ist ein großer Block am Luisenring. Hier steht das Wohn- und Atelierhaus des Architekten Carlfried Mutschler (E7, 7), außerdem hat das Landesarbeitsgericht Baden-Württemberg hier einen Sitz.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#E7">Karte</a></td>
+          </tr>
+          <tr id="q-F1">
+            <th scope="row"><span class="block-code">F1</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe F</span></td>
+            <td class="num">3</td>
+            <td class="num">2</td>
+            <td class="num">1</td>
+            <td class="num">9</td>
+            <td class="num total">15</td>
+            <td class="info">In F1 stehen das Alte Rathaus und die Kirche St. Sebastian als barocker Doppelbau mit gemeinsamem Mittelturm – ein Beispiel der Mannheimer Symmetrie. St. Sebastian wurde ab 1706 gebaut, 1709 geweiht und ist die älteste katholische Pfarrkirche der Stadt; den Grundstein des Rathauses legte man schon 1700.<br><span class="small">Quelle: Wikipedia: Quadratestadt; Wikipedia: St. Sebastian (Mannheim); Wikipedia: Altes Rathaus (Mannheim); OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#F1">Karte</a></td>
+          </tr>
+          <tr id="q-F2">
+            <th scope="row"><span class="block-code">F2</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe F</span></td>
+            <td class="num">3</td>
+            <td class="num">5</td>
+            <td class="num num--zero">0</td>
+            <td class="num">8</td>
+            <td class="num total">16</td>
+            <td class="info">An der Ecke von F2 stand die Mannheimer Hauptsynagoge, die bei den Novemberpogromen 1938 niedergebrannt wurde; eine Gedenktafel erinnert daran. Heute gibt es hier viele Cafés, Imbisse und kleine Läden.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#F2">Karte</a></td>
+          </tr>
+          <tr id="q-F3">
+            <th scope="row"><span class="block-code">F3</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe F</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num total">1</td>
+            <td class="info">In F3 steht die Mannheimer Synagoge mit jüdischem Gemeindezentrum, eingeweiht 1987 und hufeisenförmig von einem fünfstöckigen Wohn- und Geschäftshaus umgeben. Der begrünte Platz davor heißt seit 1993 Rabbiner-Grünewald-Platz; im Haus F3, 5 wohnte 1777/78 Mozart mit seiner Mutter.<br><span class="small">Quelle: Wikipedia: Synagoge (Mannheim); Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#F3">Karte</a></td>
+          </tr>
+          <tr id="q-F4">
+            <th scope="row"><span class="block-code">F4</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe F</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num">2</td>
+            <td class="num total">3</td>
+            <td class="info">F4 ist ein Block in der Westlichen Unterstadt, den zu einem großen Teil ein Hotel einnimmt. Außerdem gibt es hier kleine Läden, darunter einen Fahrradteile-Händler und ein Atelier.<br><span class="small">Quelle: OpenStreetMap; Wikipedia: Quadratestadt (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#F4">Karte</a></td>
+          </tr>
+          <tr id="q-F5">
+            <th scope="row"><span class="block-code">F5</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe F</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">F5 wurde nach den Zerstörungen des Zweiten Weltkriegs ab 1951 von der GBG mit zwei Reihen fünf- bis sechsgeschossiger Wohnhäuser im Grünen neu bebaut. An einem Giebel ist das Wandbild New Wave der LOW BROS aus der Reihe Stadt.Wand.Kunst zu sehen.<br><span class="small">Quelle: Stadt Mannheim: Sozialer Wohnungsbau im Quadrat F 5; Stadt.Wand.Kunst; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#F5">Karte</a></td>
+          </tr>
+          <tr id="q-F6">
+            <th scope="row"><span class="block-code">F6</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe F</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">Auch F6 besteht aus zwei parallelen Wohnhauszeilen der Nachkriegszeit mit einer Wiese dazwischen, auf der eine als Naturdenkmal geschützte Platane steht. Am Giebel von F6, 8 ist das Wandbild The Modern Thinker (2014) von ASKE zu sehen.<br><span class="small">Quelle: Stadt Mannheim: Sozialer Wohnungsbau im Quadrat F 5; Wikipedia: Liste der Naturdenkmale in Mannheim; Stadt.Wand.Kunst (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#F6">Karte</a></td>
+          </tr>
+          <tr id="q-F7">
+            <th scope="row"><span class="block-code">F7</span></th>
+            <td class="place">Teils Freifläche: Grünanlage<br><span class="small">links der Kurpfalzstraße, Reihe F</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num total">1</td>
+            <td class="info">Auf F7 lag von 1661 bis 1842 der jüdische Friedhof Mannheims. Ein Teil davon ist heute eine öffentliche Grünanlage mit Spielplatz und einer Gedenkstele von 2007; im übrigen Block stehen Wohnhäuser und ein Hotel.<br><span class="small">Quelle: Stadt Mannheim: Grünanlage F7; Wikipedia: Jüdischer Friedhof (Mannheim); Stadt Mannheim: Spielplatzliste Mai 2025; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#F7">Karte</a></td>
+          </tr>
+          <tr id="q-G1">
+            <th scope="row"><span class="block-code">G1</span></th>
+            <td class="place">Platz: Marktplatz<br><span class="small">links der Kurpfalzstraße, Reihe G</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">Der Marktplatz nimmt das ganze Quadrat G1 ein und ist einer der ältesten Plätze der Stadt; an drei Wochentagen findet hier der Markt statt. In der Mitte steht der Marktplatzbrunnen, den Kurfürst Carl Theodor der Stadt 1767 schenkte.<br><span class="small">Quelle: Wikipedia: Marktplatz (Mannheim); Wikipedia: Marktplatzbrunnen (Mannheim); Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#G1">Karte</a></td>
+          </tr>
+          <tr id="q-G2">
+            <th scope="row"><span class="block-code">G2</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe G</span></td>
+            <td class="num">14</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">8</td>
+            <td class="num total">22</td>
+            <td class="info">Die Häuser von G2 zum Marktplatz hin stammen aus der Kurfürstenzeit und bilden mit dem Platz eine architektonische Einheit. 1815 stieg Goethe hier im Gasthaus Drei Könige ab; heute gibt es besonders viele türkische Restaurants und Imbisse.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#G2">Karte</a></td>
+          </tr>
+          <tr id="q-G3">
+            <th scope="row"><span class="block-code">G3</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe G</span></td>
+            <td class="num">2</td>
+            <td class="num">1</td>
+            <td class="num">1</td>
+            <td class="num">9</td>
+            <td class="num total">13</td>
+            <td class="info">G3 ist ein Wohn- und Geschäftsblock in der Westlichen Unterstadt. Hier gibt es mehrere Juweliere, Friseure und Brautmodengeschäfte sowie Cafés und Imbisse.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#G3">Karte</a></td>
+          </tr>
+          <tr id="q-G4">
+            <th scope="row"><span class="block-code">G4</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe G</span></td>
+            <td class="num">1</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num">2</td>
+            <td class="num total">4</td>
+            <td class="info">In G4 steht die ehemalige Trinitatiskirche, ein moderner Bau von Helmut Striffler, geweiht 1959, mit einem freistehenden, 55 m hohen Glockenturm. Seit 2017 ist sie als EinTanzHaus ein Ort für zeitgenössischen Tanz.<br><span class="small">Quelle: Wikipedia: Trinitatiskirche (Mannheim); Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#G4">Karte</a></td>
+          </tr>
+          <tr id="q-G5">
+            <th scope="row"><span class="block-code">G5</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe G</span></td>
+            <td class="num">5</td>
+            <td class="num">3</td>
+            <td class="num num--zero">0</td>
+            <td class="num">2</td>
+            <td class="num total">10</td>
+            <td class="info">In G5 wurden die Wohnanlagen der Gemeinnützigen Baugesellschaft als parallele Zeilen gebaut. Heute gibt es hier Restaurants mit italienischer, äthiopischer und türkischer Küche, eine Fischhandlung und Kneipen.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#G5">Karte</a></td>
+          </tr>
+          <tr id="q-G6">
+            <th scope="row"><span class="block-code">G6</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe G</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">3</td>
+            <td class="num total">3</td>
+            <td class="info">In G6 stand von 1897 bis 1935 das Apollotheater, in dem Stars wie Asta Nielsen und Richard Tauber auftraten. Von 1933 bis 1937 wurde das ganze Quadrat abgerissen und neu bebaut; an seiner westlichen Spitze liegt heute ein öffentlicher Spielplatz.<br><span class="small">Quelle: Wikipedia: Quadratestadt; Stadt Mannheim: Spielplatzliste Mai 2025; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#G6">Karte</a></td>
+          </tr>
+          <tr id="q-G7">
+            <th scope="row"><span class="block-code">G7</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe G</span></td>
+            <td class="num">4</td>
+            <td class="num">6</td>
+            <td class="num">6</td>
+            <td class="num">6</td>
+            <td class="num total">22</td>
+            <td class="info">G7 ist ein großer Block am Luisenring und das einzige Quadrat, das eine Sackgasse mit Wendeschleife fast in zwei Hälften teilt. Um 1900 saßen hier viele Tabakfirmen; heute gibt es unter anderem das TheaterhausG7, das Kino Odeon und das Queere Zentrum Mannheim.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#G7">Karte</a></td>
+          </tr>
+          <tr id="q-H1">
+            <th scope="row"><span class="block-code">H1</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe H</span></td>
+            <td class="num">6</td>
+            <td class="num">2</td>
+            <td class="num num--zero">0</td>
+            <td class="num">7</td>
+            <td class="num total">15</td>
+            <td class="info">Die Häuser von H1 zum Marktplatz stammen aus der Kurfürstenzeit und bilden mit dem Platz, dem Alten Rathaus und St. Sebastian eine architektonische Einheit. Heute gibt es hier viele Geschäfte, Cafés und Restaurants, etwa Grimminger am Markt.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#H1">Karte</a></td>
+          </tr>
+          <tr id="q-H2">
+            <th scope="row"><span class="block-code">H2</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe H</span></td>
+            <td class="num">6</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">15</td>
+            <td class="num total">21</td>
+            <td class="info">H2 ist ein Wohn- und Geschäftsblock in der Westlichen Unterstadt. Hier gibt es besonders viele Juweliere, dazu türkische und arabische Restaurants, eine Konditorei und ein Fischrestaurant.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#H2">Karte</a></td>
+          </tr>
+          <tr id="q-H3">
+            <th scope="row"><span class="block-code">H3</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe H</span></td>
+            <td class="num">2</td>
+            <td class="num">4</td>
+            <td class="num">1</td>
+            <td class="num">5</td>
+            <td class="num total">12</td>
+            <td class="info">H3 ist ein Wohn- und Geschäftsblock in der Westlichen Unterstadt. In H3, 7 befindet sich die Moschee Abdul Kadir Geylani Camii; außerdem gibt es Cafés, eine Baklava-Bäckerei und kleine Läden.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#H3">Karte</a></td>
+          </tr>
+          <tr id="q-H4">
+            <th scope="row"><span class="block-code">H4</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe H</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">Die alten Gebäude in H4 wurden in den 1970er-Jahren abgerissen. In H4, 1 hat seit 1982 das Polizeirevier Mannheim-Innenstadt seinen Sitz, im Volksmund H4-Wache genannt.<br><span class="small">Quelle: Wikipedia: Quadratestadt (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#H4">Karte</a></td>
+          </tr>
+          <tr id="q-H5">
+            <th scope="row"><span class="block-code">H5</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe H</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">4</td>
+            <td class="num total">4</td>
+            <td class="info">In H5, 9 stand bis in die 1970er-Jahre das Henkerhaus, damals das zweitälteste Baudenkmal der Innenstadt. Heute ist H5 ein kleiner Wohn- und Geschäftsblock mit einem Supermarkt und einigen Läden.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#H5">Karte</a></td>
+          </tr>
+          <tr id="q-H6">
+            <th scope="row"><span class="block-code">H6</span></th>
+            <td class="place">Platz: Swanseaplatz<br><span class="small">links der Kurpfalzstraße, Reihe H</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">Der Swanseaplatz ist nach Mannheims walisischer Partnerstadt Swansea benannt und gilt als größter Kinderspielplatz der Innenstadt. Seit Februar 2026 wird er umgebaut: Bis Sommer 2027 entstehen mehr Grün, 22 neue Bäume und ein Wasserspiel; unter dem Platz liegt eine Tiefgarage.<br><span class="small">Quelle: Wikipedia: Quadratestadt; Stadt Mannheim, Pressemitteilung 04.02.2026; Mannheimer Parkhausbetriebe; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#H6">Karte</a></td>
+          </tr>
+          <tr id="q-H7">
+            <th scope="row"><span class="block-code">H7</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe H</span></td>
+            <td class="num">1</td>
+            <td class="num">2</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num total">4</td>
+            <td class="info">H7 ist ein großer Block am Luisenring, der 1977 als Teil der Westlichen Unterstadt zum Sanierungsgebiet erklärt wurde. In H7, 1 baute der Architekt Theo Seiler ein modernes Geschäftshaus; heute gibt es hier Friseure, Cafés und eine Moschee.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#H7">Karte</a></td>
+          </tr>
+          <tr id="q-I1">
+            <th scope="row"><span class="block-code">I1</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe I</span></td>
+            <td class="num">1</td>
+            <td class="num">1</td>
+            <td class="num">2</td>
+            <td class="num">15</td>
+            <td class="num total">19</td>
+            <td class="info">I1 an der Kurpfalzstraße gehörte wie K1 zum Bereich des früheren Neckartors, des größten der drei Stadttore, das 1723 errichtet wurde. Heute reihen sich hier Juweliere und Geschäfte für Braut- und Abendmode.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#I1">Karte</a></td>
+          </tr>
+          <tr id="q-I2">
+            <th scope="row"><span class="block-code">I2</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe I</span></td>
+            <td class="num">2</td>
+            <td class="num">5</td>
+            <td class="num num--zero">0</td>
+            <td class="num">10</td>
+            <td class="num total">17</td>
+            <td class="info">I2 ist ein Wohn- und Geschäftsblock in der Westlichen Unterstadt. Wie im Nachbarblock I1 gibt es hier viele Geschäfte für Braut- und Abendmode und Juweliere, dazu Kneipen wie das Schiff und den Schinderhannes.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#I2">Karte</a></td>
+          </tr>
+          <tr id="q-I3">
+            <th scope="row"><span class="block-code">I3</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe I</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">An der Seite zu K3 hat I3 einen kleinen, von großen Bäumen beschatteten Platz, den Murnauplatz. Der Rest ist ein geschlossener Wohnblock mit Innenhof; früher schnitt die Schiefe Gasse durch I3, dadurch entstand das dreieckige Quadrat I3a.<br><span class="small">Quelle: OpenStreetMap; Polizeipräsidium Mannheim, 19.06.2026; Wikimedia Commons: Spielstraße in I 3; Wikipedia: Quadratestadt (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#I3">Karte</a></td>
+          </tr>
+          <tr id="q-I4">
+            <th scope="row"><span class="block-code">I4</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe I</span></td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num total">1</td>
+            <td class="info">In I4 und I5 befindet sich das Zentralinstitut für Seelische Gesundheit (ZI), eine psychiatrische Klinik mit Forschungsinstitut, gegründet 1975. Für den Bau wurden zwanzig Häuser abgerissen; das achtstöckige Hochhaus reicht über beide Quadrate.<br><span class="small">Quelle: Wikipedia: Quadratestadt; Wikipedia: Zentralinstitut für Seelische Gesundheit; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#I4">Karte</a></td>
+          </tr>
+          <tr id="q-I5">
+            <th scope="row"><span class="block-code">I5</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe I</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">Auch I5 gehört größtenteils zum Zentralinstitut für Seelische Gesundheit, mit dem achtstöckigen Therapiegebäude und dem Laborgebäude. In I5, 6 wurden 1970 die vermutlich letzten typischen Mannheimer Hofanlagen mit Holzgalerien abgerissen.<br><span class="small">Quelle: Wikipedia: Quadratestadt; Wikipedia: Zentralinstitut für Seelische Gesundheit; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#I5">Karte</a></td>
+          </tr>
+          <tr id="q-I6">
+            <th scope="row"><span class="block-code">I6</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe I</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num">1</td>
+            <td class="num">1</td>
+            <td class="num total">3</td>
+            <td class="info">In der Ecke zum Swanseaplatz liegt der Stadtteilgarten Filsbach, ein Gemeinschaftsgarten der Begegnungsstätte Westliche Unterstadt neben dem Café Filsbach. 1928 eröffnete in I6, 5 die Jungbusch-Garage, ein damals ungewöhnliches Parkhaus, in dem Autos mit Aufzügen in die Stockwerke gebracht wurden.<br><span class="small">Quelle: Begegnungsstätte Westliche Unterstadt e.V.; OpenStreetMap; Wikipedia: Quadratestadt (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#I6">Karte</a></td>
+          </tr>
+          <tr id="q-I7">
+            <th scope="row"><span class="block-code">I7</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe I</span></td>
+            <td class="num">1</td>
+            <td class="num">2</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num total">4</td>
+            <td class="info">I7 ist ein großer Block am Luisenring in der Westlichen Unterstadt. Hier gibt es unter anderem den Club Soho, die Bar Filmriss und das Restaurant Mie House.<br><span class="small">Quelle: OpenStreetMap; Wikipedia: Quadratestadt (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#I7">Karte</a></td>
+          </tr>
+          <tr id="q-K1">
+            <th scope="row"><span class="block-code">K1</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe K</span></td>
+            <td class="num">2</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num">8</td>
+            <td class="num total">11</td>
+            <td class="info">K1 liegt am nördlichen Eingang der Innenstadt an der Kurpfalzstraße. Hier stehen die Kurpfalzpassage, das Einkaufszentrum K1 Karree und das Kino Cinema Quadrat; nach dem Krieg spielte das Nationaltheater im früheren Kino Schauburg in K1.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#K1">Karte</a></td>
+          </tr>
+          <tr id="q-K2">
+            <th scope="row"><span class="block-code">K2</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe K</span></td>
+            <td class="num">2</td>
+            <td class="num">3</td>
+            <td class="num">1</td>
+            <td class="num">6</td>
+            <td class="num total">12</td>
+            <td class="info">In K2, 6 befand sich früher die jüdische Schule, und im Winkel einer Bastion lag einst ein katholischer Friedhof. Heute gibt es hier unter anderem das Kino Atlantis und Restaurants wie Viet Village.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#K2">Karte</a></td>
+          </tr>
+          <tr id="q-K3">
+            <th scope="row"><span class="block-code">K3</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe K</span></td>
+            <td class="num">1</td>
+            <td class="num">1</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num total">3</td>
+            <td class="info">K3 ist ein großer Block am Luisenring. Hier liegen die Klinik für abhängiges Verhalten des Zentralinstituts für Seelische Gesundheit und das Gemeindezentrum der Griechischen Gemeinde Mannheim.<br><span class="small">Quelle: OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#K3">Karte</a></td>
+          </tr>
+          <tr id="q-K4">
+            <th scope="row"><span class="block-code">K4</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe K</span></td>
+            <td class="num">1</td>
+            <td class="num">3</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num total">5</td>
+            <td class="info">Die K-Quadrate wurden erst nach dem Abriss der Festungsmauer bebaut; die ersten Häuser entstanden nach 1850 in K1 und K4. Heute gibt es in K4 das Christliche Studentenwohnheim Haus Friede, Cafés und das Restaurant Akropolis.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#K4">Karte</a></td>
+          </tr>
+          <tr id="q-K5">
+            <th scope="row"><span class="block-code">K5</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe K</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">In K5 steht die Johannes-Kepler-Schule in einem denkmalgeschützten, dreistöckigen Bau der Gründerzeit, erbaut ab 1885. Über K5 zog sich einst der Pestbuckel, ein Massengrab von 1666, auf dem Friedrich Engelhorn 1848 eine Gasfabrik baute.<br><span class="small">Quelle: Wikipedia: Quadratestadt; Stadt Mannheim: K 5-Schule; LEO-BW; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#K5">Karte</a></td>
+          </tr>
+          <tr id="q-K6">
+            <th scope="row"><span class="block-code">K6</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe K</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">K6 gehört zur Johannes-Kepler-Schule: Hier stehen ihre Sporthalle, ein Bolzplatz und viele Bäume. Die Hallenwand trägt das 28 m lange Wandbild 900 dogs by a chocolate factory von The London Police aus der Reihe Stadt.Wand.Kunst.<br><span class="small">Quelle: Stadt.Wand.Kunst; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#K6">Karte</a></td>
+          </tr>
+          <tr id="q-K7">
+            <th scope="row"><span class="block-code">K7</span></th>
+            <td class="place">Gebäude<br><span class="small">links der Kurpfalzstraße, Reihe K</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">K7 ist wie U6 eines der beiden dreieckigen Quadrate. Im 1922 bis 1926 errichteten früheren Verwaltungsgebäude der städtischen Wasser-, Gas- und Elektrizitätswerke arbeitet heute die Stadtverwaltung, unter anderem der Bürgerdienst Innenstadt/Jungbusch.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#K7">Karte</a></td>
+          </tr>
+          <tr id="q-L1">
+            <th scope="row"><span class="block-code">L1</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe L</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">L1 liegt gegenüber dem Schloss; hier stand früher die Klosterkirche der Augustinerinnen. Heute hat in L1, 2 die Industrie- und Handelskammer Rhein-Neckar ihren Sitz.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#L1">Karte</a></td>
+          </tr>
+          <tr id="q-L2">
+            <th scope="row"><span class="block-code">L2</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe L</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num total">1</td>
+            <td class="info">In L2, 2 lebte von 1821 bis 1842 Johann Baptist Lingg von Linggenfeld; heute gehört das Haus der Universität als Gästehaus. Außerdem stehen hier ein weiteres Gebäude der IHK und eine Zweigstelle von Land- und Amtsgericht.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#L2">Karte</a></td>
+          </tr>
+          <tr id="q-L3">
+            <th scope="row"><span class="block-code">L3</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe L</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num total">1</td>
+            <td class="info">In L3 stand einst das Karmeliterkloster mit seiner Kirche, eine von vier Kirchen, die dem Schloss gegenüberlagen. Heute steht an dieser Stelle das Finanzamt.<br><span class="small">Quelle: Wikipedia: Quadratestadt (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#L3">Karte</a></td>
+          </tr>
+          <tr id="q-L4">
+            <th scope="row"><span class="block-code">L4</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe L</span></td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num total">1</td>
+            <td class="info">Das Eckhaus L4, 15 ließ Heinrich Vögele als Geldanlage bauen, mit einer Zwölf-Zimmer-Wohnung pro Etage, Aufzug und Zentralheizung. Heute sitzt in L4 unter anderem das Amt Mannheim von Vermögen und Bau Baden-Württemberg.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#L4">Karte</a></td>
+          </tr>
+          <tr id="q-L5">
+            <th scope="row"><span class="block-code">L5</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe L</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">L5 ist das schmalste L-Quadrat und schließt südlich der Bismarckstraße an den Ostflügel des Schlosses an. Hier steht eine Reihe von Villen, die heute die Universität nutzt, am Ende die neugotische Villa Vögele von 1893/94.<br><span class="small">Quelle: Wikipedia: Quadratestadt; Stadt Mannheim: Villa Vögele; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#L5">Karte</a></td>
+          </tr>
+          <tr id="q-L6">
+            <th scope="row"><span class="block-code">L6</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe L</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">In L6 befindet sich das Polizeipräsidium Mannheim. Das Hauptgebäude L6, 1 wurde 1903 als Badisches Bezirksamt gebaut und dient seit 1938 der Polizei.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#L6">Karte</a></td>
+          </tr>
+          <tr id="q-L7">
+            <th scope="row"><span class="block-code">L7</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe L</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num total">1</td>
+            <td class="info">In L7, 1 sitzt das ZEW – Leibniz-Zentrum für Europäische Wirtschaftsforschung, eines der führenden Wirtschaftsforschungsinstitute Deutschlands. An der Ecke zur Bismarckstraße steht das Verfügungsgebäude der Universität; früher lag hier die prächtige Villa des Bankiers Gustav Ladenburg.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#L7">Karte</a></td>
+          </tr>
+          <tr id="q-L8">
+            <th scope="row"><span class="block-code">L8</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe L</span></td>
+            <td class="num">1</td>
+            <td class="num">3</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num total">5</td>
+            <td class="info">L8 entstand erst Ende des 19. Jahrhunderts; vorher liefen hier die Stallungen der Dragonerkaserne schräg Richtung Schloss. Eine ausgesparte Ecke bei L8, 4 und 5 erinnert noch an ihren Verlauf; heute gibt es hier Cafés und eine Außenstelle des Finanzamts.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#L8">Karte</a></td>
+          </tr>
+          <tr id="q-L9">
+            <th scope="row"><span class="block-code">L9</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe L</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num total">1</td>
+            <td class="info">L9 war Ende des 19. Jahrhunderts als Villengegend geplant und gehörte zunächst Friedrich Engelhorn. Erhalten ist die Villa des Bankiers Wilhelm Maast (L9, 4–5); in L9, 9 steht das Logenhaus, dazu kommen Gebäude der Universität.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#L9">Karte</a></td>
+          </tr>
+          <tr id="q-L10">
+            <th scope="row"><span class="block-code">L10</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe L</span></td>
+            <td class="num">2</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num">1</td>
+            <td class="num total">4</td>
+            <td class="info">L10 entstand auf den ehemaligen großherzoglichen Baumschulgärten. An der Bismarckstraße steht in L10, 1 die schlichte Villa von Felix Hecht aus dem Jahr 1892; außerdem gibt es hier ein Seniorenheim und die Freireligiöse Gemeinde.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#L10">Karte</a></td>
+          </tr>
+          <tr id="q-L11">
+            <th scope="row"><span class="block-code">L11</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe L</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num total">1</td>
+            <td class="info">L11 wurde anders als seine Nachbarn nicht für Villen, sondern in kleineren Parzellen angelegt; die Häuser L11, 7 und 8 zeigen noch, wie die Straßenzeilen früher aussahen. Hier hat unter anderem die Evangelische Stadtmission ein Haus.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#L11">Karte</a></td>
+          </tr>
+          <tr id="q-L12">
+            <th scope="row"><span class="block-code">L12</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe L</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">2</td>
+            <td class="num total">2</td>
+            <td class="info">L12 wurde erst nach 1900 angelegt. Heute ist es ein Wohn- und Geschäftsblock mit Friseur, Optiker und kleinen Läden.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#L12">Karte</a></td>
+          </tr>
+          <tr id="q-L13">
+            <th scope="row"><span class="block-code">L13</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe L</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">3</td>
+            <td class="num total">3</td>
+            <td class="info">L13 wurde nach 1900 südlich der Bismarckstraße angelegt. Hier stehen das Otto-Selz-Institut für Angewandte Psychologie der Universität und das siebenstöckige Helvetia-Haus.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#L13">Karte</a></td>
+          </tr>
+          <tr id="q-L14">
+            <th scope="row"><span class="block-code">L14</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe L</span></td>
+            <td class="num">5</td>
+            <td class="num">4</td>
+            <td class="num num--zero">0</td>
+            <td class="num">4</td>
+            <td class="num total">13</td>
+            <td class="info">L14 wurde erst nach 1900 angelegt und liegt am Kaiserring. Hier gibt es das Hotel Kurpfalzstuben und viele Restaurants und Kneipen, zum Beispiel mit indischer und italienischer Küche.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#L14">Karte</a></td>
+          </tr>
+          <tr id="q-L15">
+            <th scope="row"><span class="block-code">L15</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe L</span></td>
+            <td class="num">4</td>
+            <td class="num">2</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num total">7</td>
+            <td class="info">L15 ist das Quadrat mit der höchsten Nummer und liegt am Bahnhofsvorplatz. Es wird vom Bürogebäude L15, 1–6 überragt, in dem Einrichtungen der Universität Mannheim untergebracht sind, etwa die Universitäts-IT.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#L15">Karte</a></td>
+          </tr>
+          <tr id="q-M1">
+            <th scope="row"><span class="block-code">M1</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe M</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">2</td>
+            <td class="num total">2</td>
+            <td class="info">M1 heißt auch Kirchenquadrat, weil die meisten Gebäude der Kirche gehören; hier ist das Haus der Evangelischen Kirche in Mannheim. In M1, 8 wohnte Karl von Drais, der Erfinder des Laufrads – hier begann am 12. Juni 1817 seine Probefahrt.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#M1">Karte</a></td>
+          </tr>
+          <tr id="q-M2">
+            <th scope="row"><span class="block-code">M2</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe M</span></td>
+            <td class="num">4</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">3</td>
+            <td class="num total">7</td>
+            <td class="info">In M2, 17 war der erste Standort der Rheinischen Porzellanfabrik; dort steht das ehemalige Wohnhaus der jüdischen Inhaberfamilie Steiner. Heute gibt es hier ein Gästehaus der Universität und Restaurants wie das Safran mit persisch-afghanischer Küche.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#M2">Karte</a></td>
+          </tr>
+          <tr id="q-M3">
+            <th scope="row"><span class="block-code">M3</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe M</span></td>
+            <td class="num">2</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">2</td>
+            <td class="num total">4</td>
+            <td class="info">Das Quadrat M3 wird durch eine Querstraße in M3 und M3a geteilt. Der Teil M3 ist ein kleiner Wohn- und Geschäftsblock mit Reisebüros, einem Wollgeschäft und Imbissen.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#M3">Karte</a></td>
+          </tr>
+          <tr id="q-M3a">
+            <th scope="row"><span class="block-code">M3a</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe M</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">M3a ist der abgetrennte Teil von M3; hier sitzen die Agentur für Arbeit und das Berufsinformationszentrum. Von 1722 bis 1930/32 stand auf M3a und M4a eine Kaserne, später Dragonerkaserne genannt.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#M3a">Karte</a></td>
+          </tr>
+          <tr id="q-M4">
+            <th scope="row"><span class="block-code">M4</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe M</span></td>
+            <td class="num">2</td>
+            <td class="num">2</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num total">5</td>
+            <td class="info">Auch M4 ist durch eine Querstraße geteilt; der Teil M4a ist ein offener Parkplatz. In M4, 9 lebte bis 1839 Karl von Drais, der Erfinder des Laufrads; heute gibt es hier kleine Restaurants, ein Café und eine Bar.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#M4">Karte</a></td>
+          </tr>
+          <tr id="q-M4a">
+            <th scope="row"><span class="block-code">M4a</span></th>
+            <td class="place">Parkplatz<br><span class="small">rechts der Kurpfalzstraße, Reihe M</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">M4a ist ein offener Parkplatz der Mannheimer Parkhausbetriebe, rundum von großen alten Bäumen gesäumt. Bis 1930/32 stand hier zusammen mit M3a ein Teil der Dragonerkaserne aus der Kurfürstenzeit.<br><span class="small">Quelle: OpenStreetMap; Mannheimer Parkhausbetriebe; Grüne Gemeinderatsfraktion Mannheim, 15.03.2021; Wikipedia: Quadratestadt (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#M4a">Karte</a></td>
+          </tr>
+          <tr id="q-M5">
+            <th scope="row"><span class="block-code">M5</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe M</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num total">1</td>
+            <td class="info">In M5, 7 hat die Hauptverwaltung der Berufsgenossenschaft Handel und Warenlogistik ihren Sitz. Daneben gibt es eine Bäckerei, Kosmetikstudios und einen Schlüsseldienst.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#M5">Karte</a></td>
+          </tr>
+          <tr id="q-M6">
+            <th scope="row"><span class="block-code">M6</span></th>
+            <td class="place">Teils Freifläche: Lauersche Gärten<br><span class="small">rechts der Kurpfalzstraße, Reihe M</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">Den größten Teil von M6 nehmen die Lauerschen Gärten ein, ein Park mit altem Baumbestand, Spielplätzen und Bolzplatz. Hier steht mit einem Rest der Bastion St. Andreas der letzte oberirdische Teil der alten Stadtbefestigung; den Rest des Quadrats teilen sich das Kurpfalz-Gymnasium und eine Außenstelle der Mozartschule.<br><span class="small">Quelle: Wikipedia: Quadratestadt; Stadt Mannheim: Lauersche Gärten; Stadt Mannheim: Mozartschule; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#M6">Karte</a></td>
+          </tr>
+          <tr id="q-M7">
+            <th scope="row"><span class="block-code">M7</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe M</span></td>
+            <td class="num">3</td>
+            <td class="num">2</td>
+            <td class="num">1</td>
+            <td class="num">8</td>
+            <td class="num total">14</td>
+            <td class="info">In M7, 3–6 steht die ehemalige Landeszentralbank, 1909 bis 1911 als Reichsbankgebäude errichtet; 1948 wurde hier bei der Währungsreform das Startgeld ausgegeben. Reliefs mit Putten an der Muschelkalk-Fassade stehen für Treue, Fleiß, Wachsamkeit und Reichtum.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#M7">Karte</a></td>
+          </tr>
+          <tr id="q-N1">
+            <th scope="row"><span class="block-code">N1</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe N</span></td>
+            <td class="num">3</td>
+            <td class="num">2</td>
+            <td class="num">4</td>
+            <td class="num">5</td>
+            <td class="num total">14</td>
+            <td class="info">Das Stadthaus N1 am Paradeplatz wurde 1991 eingeweiht, an der Stelle des im Krieg zerstörten Alten Kaufhauses. Markant ist der Mittelturm mit gläsernem Aufzug zu einem Café; im Haus sind unter anderem die Stadtbibliothek und der Bürgersaal untergebracht.<br><span class="small">Quelle: Wikipedia: Stadthaus (Mannheim); Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#N1">Karte</a></td>
+          </tr>
+          <tr id="q-N2">
+            <th scope="row"><span class="block-code">N2</span></th>
+            <td class="place">Teils Freifläche: Dalbergplatz<br><span class="small">rechts der Kurpfalzstraße, Reihe N</span></td>
+            <td class="num">2</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num">2</td>
+            <td class="num total">5</td>
+            <td class="info">Auf N2 liegt der Dalbergplatz mit einem Denkmal für Wolfgang Heribert von Dalberg, den früheren Intendanten des Nationaltheaters. Daneben steht ein Parkhaus von 1967, damals eines der fortschrittlichsten: Die Autos fahren über leicht geneigte Parkdecks, die selbst als Rampen dienen.<br><span class="small">Quelle: OpenStreetMap; Wikipedia: Liste der Denkmäler in Mannheim; Wikipedia: Quadratestadt (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#N2">Karte</a></td>
+          </tr>
+          <tr id="q-N3">
+            <th scope="row"><span class="block-code">N3</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe N</span></td>
+            <td class="num">5</td>
+            <td class="num">3</td>
+            <td class="num">3</td>
+            <td class="num">6</td>
+            <td class="num total">17</td>
+            <td class="info">Im Dalberghaus in N3, 4 wohnte Wolfgang Heribert von Dalberg, der Intendant des Nationaltheaters. Heute sind hier die Musikbibliothek und die Kinder- und Jugendbibliothek der Stadtbibliothek; im Block gibt es außerdem viele Restaurants und Geschäfte.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#N3">Karte</a></td>
+          </tr>
+          <tr id="q-N4">
+            <th scope="row"><span class="block-code">N4</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe N</span></td>
+            <td class="num">4</td>
+            <td class="num">3</td>
+            <td class="num num--zero">0</td>
+            <td class="num">3</td>
+            <td class="num total">10</td>
+            <td class="info">An der Nordostecke von N4 liegt der Kapuzinerplatz, im Volksmund Gockelsmarkt genannt, mit einer Nachbildung der Statue des heiligen Johannes Nepomuk von Paul Egell. Rundherum gibt es Restaurants wie das Gasthaus Zentrale, Cafés und Geschäfte.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#N4">Karte</a></td>
+          </tr>
+          <tr id="q-N5">
+            <th scope="row"><span class="block-code">N5</span></th>
+            <td class="place">Teils Freifläche: Scipiogarten<br><span class="small">rechts der Kurpfalzstraße, Reihe N</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num">2</td>
+            <td class="num total">3</td>
+            <td class="info">Der Scipiogarten in der Mitte von N5 ist der erhaltene Garten des früheren Kapuzinerklosters aus dem 18. Jahrhundert; später gehörte er zur Villa des Kaufmanns Wilhelm Scipio. An der Kunststraße steht heute das Sporthaus engelhorn sports.<br><span class="small">Quelle: Wikipedia: Quadratestadt; Wikipedia: Kapuzinerkirche (Mannheim); OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#N5">Karte</a></td>
+          </tr>
+          <tr id="q-N6">
+            <th scope="row"><span class="block-code">N6</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe N</span></td>
+            <td class="num">3</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">6</td>
+            <td class="num total">9</td>
+            <td class="info">In N6 stehen das elfstöckige Studierendenwohnheim N6 und ein Kinderhaus. Außerdem gibt es hier ein Parkhaus sowie Restaurants und Läden, etwa die Galerie Lumas.<br><span class="small">Quelle: OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#N6">Karte</a></td>
+          </tr>
+          <tr id="q-N7">
+            <th scope="row"><span class="block-code">N7</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe N</span></td>
+            <td class="num">4</td>
+            <td class="num">3</td>
+            <td class="num">1</td>
+            <td class="num">14</td>
+            <td class="num total">22</td>
+            <td class="info">N7 ist ein langer Block am Kaiserring. Hier stehen ein großes Kino, die Staatliche Hochschule für Musik und Darstellende Kunst im ehemaligen Siemenshaus und die Staatsanwaltschaft; das 1927 bis 1930 gebaute Kaufhaus der Samt &amp; Seide AG war das erste Hochhaus Mannheims.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#N7">Karte</a></td>
+          </tr>
+          <tr id="q-O1">
+            <th scope="row"><span class="block-code">O1</span></th>
+            <td class="place">Platz: Paradeplatz<br><span class="small">rechts der Kurpfalzstraße, Reihe O</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num total">2</td>
+            <td class="info">Der Paradeplatz auf O1 ist der zentrale Platz der Innenstadt und nach den Truppenaufmärschen der Kurfürstenzeit benannt. Zehn Wege führen sternförmig zur Grupello-Pyramide, die seit 1743 hier steht; am Platz kreuzen sich fast alle Straßenbahnlinien der Stadt.<br><span class="small">Quelle: Wikipedia: Paradeplatz (Mannheim); Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#O1">Karte</a></td>
+          </tr>
+          <tr id="q-O2">
+            <th scope="row"><span class="block-code">O2</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe O</span></td>
+            <td class="num">2</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">5</td>
+            <td class="num total">7</td>
+            <td class="info">Das Gebäude in O2 wurde 1957 als Postamt eingeweiht und nimmt das ganze Quadrat ein, ausgerichtet zum Paradeplatz. Heute gibt es hier Geschäfte und Gastronomie, etwa Urban Outfitters und Hans im Glück.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#O2">Karte</a></td>
+          </tr>
+          <tr id="q-O3">
+            <th scope="row"><span class="block-code">O3</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe O</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num">11</td>
+            <td class="num total">12</td>
+            <td class="info">O3 an den Planken wird zum größten Teil vom Modehaus Peek &amp; Cloppenburg eingenommen. In O3, 10 war einst die Musikalienhandlung Heckel; Emil Heckel gründete 1871 den ersten Wagnerverein Deutschlands.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#O3">Karte</a></td>
+          </tr>
+          <tr id="q-O4">
+            <th scope="row"><span class="block-code">O4</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe O</span></td>
+            <td class="num">2</td>
+            <td class="num">2</td>
+            <td class="num num--zero">0</td>
+            <td class="num">13</td>
+            <td class="num total">17</td>
+            <td class="info">An den Planken steht in O4, 4 das Geschäftshaus Palais auf den Planken von 2015. In O4, 5 hatte das Eiscafé Fontanella seinen Sitz; Dario Fontanella gibt an, dort 1969 das Spaghettieis erfunden zu haben. Außerdem gibt es hier eine Buchhandlung, Optiker und Modegeschäfte.<br><span class="small">Quelle: Wikipedia: Quadratestadt; Wikipedia: Spaghettieis; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#O4">Karte</a></td>
+          </tr>
+          <tr id="q-O5">
+            <th scope="row"><span class="block-code">O5</span></th>
+            <td class="place">Teils Freifläche: Kapuzinerplanken<br><span class="small">rechts der Kurpfalzstraße, Reihe O</span></td>
+            <td class="num">3</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num">4</td>
+            <td class="num total">8</td>
+            <td class="info">Der südliche Teil von O5 gehört zu den Kapuzinerplanken, einem Platz mit Bäumen, auf dem das Denkmal des Blumepeter, eines Mannheimer Originals, steht und freitags ein Bio-Wochenmarkt stattfindet. An der Ecke zu den Planken steht das Modehaus engelhorn.<br><span class="small">Quelle: Wikipedia: Kapuzinerplanken; Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#O5">Karte</a></td>
+          </tr>
+          <tr id="q-O6">
+            <th scope="row"><span class="block-code">O6</span></th>
+            <td class="place">Teils Freifläche: Kapuzinerplanken<br><span class="small">rechts der Kurpfalzstraße, Reihe O</span></td>
+            <td class="num">2</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num">8</td>
+            <td class="num total">11</td>
+            <td class="info">Auch O6 reicht mit seinem südlichen Teil in die Kapuzinerplanken, einen Platz mit Bäumen für Märkte und kleine Veranstaltungen. In O6, 3 fällt die Aluminiumfassade des ehemaligen Teppichhauses Engelhardt auf, ein Beispiel der Fassadenkunst der 1960er-Jahre.<br><span class="small">Quelle: Wikipedia: Kapuzinerplanken; Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#O6">Karte</a></td>
+          </tr>
+          <tr id="q-O7">
+            <th scope="row"><span class="block-code">O7</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe O</span></td>
+            <td class="num">9</td>
+            <td class="num">6</td>
+            <td class="num num--zero">0</td>
+            <td class="num">23</td>
+            <td class="num total">38</td>
+            <td class="info">O7 ist ein langer Block am östlichen Ende der Planken, zum Wasserturm hin. Hier reihen sich Mode- und Schuhgeschäfte, Schnellrestaurants und Cafés; in O7, 18 verkauft das Nationaltheater seine Karten.<br><span class="small">Quelle: OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#O7">Karte</a></td>
+          </tr>
+          <tr id="q-P1">
+            <th scope="row"><span class="block-code">P1</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe P</span></td>
+            <td class="num">2</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">4</td>
+            <td class="num total">6</td>
+            <td class="info">An der Ecke von Planken und Kurpfalzstraße steht in P1 das Kaufhaus Galeria, das fast den ganzen Block einnimmt. Hier war früher das Kaufhaus Schmoller, gegründet von jüdischen Kaufleuten; ab 1968 hieß das Haus Kaufhof.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#P1">Karte</a></td>
+          </tr>
+          <tr id="q-P2">
+            <th scope="row"><span class="block-code">P2</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe P</span></td>
+            <td class="num">3</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num">5</td>
+            <td class="num total">9</td>
+            <td class="info">Vor P2 steht auf den Planken der Glaskubus, eine gläserne Gedenkskulptur von Jochen Kitzbihler (2003) für die jüdischen Opfer des Nationalsozialismus in Mannheim. Im Block gibt es Geschäfte wie dm und Tchibo sowie Restaurants.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#P2">Karte</a></td>
+          </tr>
+          <tr id="q-P3">
+            <th scope="row"><span class="block-code">P3</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe P</span></td>
+            <td class="num">2</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num">8</td>
+            <td class="num total">11</td>
+            <td class="info">P3 liegt an den Planken; der Bankneubau in P3, 1–2 galt nach dem Krieg als Vorbild eines modernen Geschäftshauses und ist mit Travertin verkleidet. Heute gibt es hier unter anderem eine Drogerie und Modegeschäfte.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#P3">Karte</a></td>
+          </tr>
+          <tr id="q-P4">
+            <th scope="row"><span class="block-code">P4</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe P</span></td>
+            <td class="num">3</td>
+            <td class="num">1</td>
+            <td class="num">1</td>
+            <td class="num">7</td>
+            <td class="num total">12</td>
+            <td class="info">In P4, 4–6 saß ab 1921 der Mannheimer Hauptsitz des Allgemeinen Deutschen Gewerkschaftsbundes; die Besetzung des Hauses 1933 steht für die Zerschlagung der Gewerkschaften durch die Nationalsozialisten. Heute gibt es hier das Kino Planken Lichtspiele und Restaurants wie den Alten Simpl.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#P4">Karte</a></td>
+          </tr>
+          <tr id="q-P5">
+            <th scope="row"><span class="block-code">P5</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe P</span></td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">7</td>
+            <td class="num total">8</td>
+            <td class="info">P5 und P6 ragten bis in die 1930er-Jahre in die Straße und bildeten die engen Planken. Ein vorgezogener, höherer Eckbau in P5 markiert die Stelle, an der sie endeten; heute gibt es hier Parfümerie, Mode- und Schuhgeschäfte.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#P5">Karte</a></td>
+          </tr>
+          <tr id="q-P6">
+            <th scope="row"><span class="block-code">P6</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe P</span></td>
+            <td class="num">6</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">21</td>
+            <td class="num total">27</td>
+            <td class="info">Der Plankenhof in P6 ist ein strenger kubischer Bau, der 1936 beim Plankendurchbruch entstand. Heute gibt es hier viele Geschäfte und Restaurants, darunter einen Fanshop des SV Waldhof Mannheim.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#P6">Karte</a></td>
+          </tr>
+          <tr id="q-P7">
+            <th scope="row"><span class="block-code">P7</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe P</span></td>
+            <td class="num">4</td>
+            <td class="num">4</td>
+            <td class="num">1</td>
+            <td class="num">26</td>
+            <td class="num total">35</td>
+            <td class="info">P7 ist ein langer Block zwischen Planken und Fressgasse am Friedrichsring. Durch ihn führen die ÖVA-Passage (1955 bis 1957) und die Kurfürsten-Passage; hier gibt es unter anderem eine große Buchhandlung und den Papyrusbrunnen.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#P7">Karte</a></td>
+          </tr>
+          <tr id="q-Q1">
+            <th scope="row"><span class="block-code">Q1</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe Q</span></td>
+            <td class="num">5</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">12</td>
+            <td class="num total">17</td>
+            <td class="info">Q1 ist ein Geschäftsblock an der Kurpfalzstraße (Breite Straße). Hier gibt es viele Läden, etwa Schuhgeschäfte und Handyläden, dazu Imbisse und die Eisdiele Vittoria.<br><span class="small">Quelle: OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#Q1">Karte</a></td>
+          </tr>
+          <tr id="q-Q2">
+            <th scope="row"><span class="block-code">Q2</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe Q</span></td>
+            <td class="num">8</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num">10</td>
+            <td class="num total">19</td>
+            <td class="info">Q2 ist ein Wohn- und Geschäftsblock in der Östlichen Unterstadt. Auffällig viele Restaurants bieten hier asiatische Küche, außerdem gibt es Friseure, Modegeschäfte und einen Supermarkt.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#Q2">Karte</a></td>
+          </tr>
+          <tr id="q-Q3">
+            <th scope="row"><span class="block-code">Q3</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe Q</span></td>
+            <td class="num">3</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num">7</td>
+            <td class="num total">11</td>
+            <td class="info">Q3 ist ein Wohn- und Geschäftsblock in der Östlichen Unterstadt. Hier gibt es zahlreiche Friseure und Kosmetikstudios, kleine Imbisse und das Interkulturelle Bildungszentrum ikubiz.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#Q3">Karte</a></td>
+          </tr>
+          <tr id="q-Q4">
+            <th scope="row"><span class="block-code">Q4</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe Q</span></td>
+            <td class="num">8</td>
+            <td class="num">5</td>
+            <td class="num num--zero">0</td>
+            <td class="num">8</td>
+            <td class="num total">21</td>
+            <td class="info">In Q4, 11 wurde 1776 die Brauerei Habereckl gegründet; ihr 42 m hohes Sudhaus im Hof wurde 1984 abgerissen. Heute gibt es in Q4 viele Restaurants und Bars, etwa das Südlandhaus und die Tokyo-Sushi-Bar.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#Q4">Karte</a></td>
+          </tr>
+          <tr id="q-Q5">
+            <th scope="row"><span class="block-code">Q5</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe Q</span></td>
+            <td class="num">5</td>
+            <td class="num">2</td>
+            <td class="num num--zero">0</td>
+            <td class="num">13</td>
+            <td class="num total">20</td>
+            <td class="info">Q5 ist ein Wohn- und Geschäftsblock an der Fressgasse. Hier gibt es kleine Modegeschäfte, Restaurants wie Casa Barrios und MargherEat sowie den Club Das Zimmer.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#Q5">Karte</a></td>
+          </tr>
+          <tr id="q-Q6">
+            <th scope="row"><span class="block-code">Q6</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe Q</span></td>
+            <td class="num">2</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num">20</td>
+            <td class="num total">23</td>
+            <td class="info">Wo heute das Einkaufszentrum Stadtquartier Q6 Q7 steht, lag ab 1749 das Mannheimer Zucht-, Irren- und Waisenhaus, später das Landesgefängnis. Die alte Bebauung wurde 2012/13 abgerissen, das Stadtquartier öffnete im Herbst 2016; am Münzplatz gibt es Läden und Gastronomie.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#Q6">Karte</a></td>
+          </tr>
+          <tr id="q-Q7">
+            <th scope="row"><span class="block-code">Q7</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe Q</span></td>
+            <td class="num">5</td>
+            <td class="num">3</td>
+            <td class="num num--zero">0</td>
+            <td class="num">29</td>
+            <td class="num total">37</td>
+            <td class="info">Q7 gehört größtenteils zum Einkaufszentrum Stadtquartier Q6 Q7, das im Herbst 2016 eröffnet wurde, mit Geschäften wie MediaMarkt und Primark. Früher lag in Q7, 10 das Elisabethbad, eines von sechs städtischen Volksbädern für die Arbeiterbevölkerung.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#Q7">Karte</a></td>
+          </tr>
+          <tr id="q-R1">
+            <th scope="row"><span class="block-code">R1</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe R</span></td>
+            <td class="num">2</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">11</td>
+            <td class="num total">13</td>
+            <td class="info">Im Haus R1, 1 zog 1720 Kurfürst Karl Philipp ein, als er die Residenz von Heidelberg nach Mannheim verlegte. R1 liegt gegenüber dem Marktplatz; heute gibt es hier unter anderem einen Supermarkt und das Kurfürst Wirtshaus am Markt.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#R1">Karte</a></td>
+          </tr>
+          <tr id="q-R2">
+            <th scope="row"><span class="block-code">R2</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe R</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num total">1</td>
+            <td class="info">Die Konkordienkirche in R2 (1706 bis 1717) bildet mit der Mozartschule und dem Turm dazwischen einen Doppelbau im Stil der Mannheimer Symmetrie. Ihr Turm ist mit 86,93 m der höchste Kirchturm Mannheims; die Gemeinde nennt sich seit 2009 CityKirche Konkordien.<br><span class="small">Quelle: Wikipedia: Konkordienkirche (Mannheim); Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#R2">Karte</a></td>
+          </tr>
+          <tr id="q-R3">
+            <th scope="row"><span class="block-code">R3</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe R</span></td>
+            <td class="num">4</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">2</td>
+            <td class="num total">6</td>
+            <td class="info">In R3, 13–15 war bis 2009 die Mannheimer Abendakademie, bevor sie nach U1 umzog. Heute ist R3 ein Wohn- und Geschäftsblock mit Imbissen, einer Sushi-Bar und einem Antikladen.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#R3">Karte</a></td>
+          </tr>
+          <tr id="q-R4">
+            <th scope="row"><span class="block-code">R4</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe R</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num">2</td>
+            <td class="num">1</td>
+            <td class="num">2</td>
+            <td class="num total">5</td>
+            <td class="info">R4 ist ein Wohn- und Geschäftsblock in der Östlichen Unterstadt. Hier spielt die Mannheimer Bürgerbühne, außerdem gibt es ein Café, eine Bar und kleine Läden.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#R4">Karte</a></td>
+          </tr>
+          <tr id="q-R5">
+            <th scope="row"><span class="block-code">R5</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe R</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num total">1</td>
+            <td class="info">In R5, 6–13 sitzt das Leibniz-Institut für Deutsche Sprache (IDS), das die deutsche Sprache erforscht; in seinen Neubau wurden Teile des Allgemeinen Krankenhauses einbezogen. Den übrigen Block nimmt seit 2014 ein großer Bauhaus-Baumarkt ein.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#R5">Karte</a></td>
+          </tr>
+          <tr id="q-R6">
+            <th scope="row"><span class="block-code">R6</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe R</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num">2</td>
+            <td class="num total">3</td>
+            <td class="info">Die schräge Straße bei R6 zeigt noch den Verlauf der alten Festungsmauer; bei Bauarbeiten stößt man hier auf Festungsreste. Heute gibt es hier Galerien, Einrichtungsgeschäfte und die Skulptur Quadrat-Latsche.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#R6">Karte</a></td>
+          </tr>
+          <tr id="q-R7">
+            <th scope="row"><span class="block-code">R7</span></th>
+            <td class="place">Teils Freifläche: Lameygarten<br><span class="small">rechts der Kurpfalzstraße, Reihe R</span></td>
+            <td class="num">4</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">11</td>
+            <td class="num total">15</td>
+            <td class="info">Mitten durch den langen Block R7 zieht sich der Lameygarten, eine Grünanlage mit Spielplatz und der Bronzeplastik Springendes Fohlen von Renée Sintenis (1940). Er gehörte zum Wohnhaus von August Lamey (1816–1896) in R7, 46, der von 1860 bis 1866 das badische Innenministerium leitete.<br><span class="small">Quelle: Wikipedia: Quadratestadt; Wikipedia: Renée Sintenis; MARCHIVUM: Lameygarten (abgerufen 29.09.2026); Mannheimer Nachrichten, 20.05.2020; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#R7">Karte</a></td>
+          </tr>
+          <tr id="q-S1">
+            <th scope="row"><span class="block-code">S1</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe S</span></td>
+            <td class="num">2</td>
+            <td class="num">3</td>
+            <td class="num num--zero">0</td>
+            <td class="num">13</td>
+            <td class="num total">18</td>
+            <td class="info">S1 ist ein Geschäftsblock an der Kurpfalzstraße (Breite Straße) im Norden der Innenstadt. Hier gibt es viele Modegeschäfte, Imbisse und den Plattenladen Comeback CD + Schallplatten.<br><span class="small">Quelle: OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#S1">Karte</a></td>
+          </tr>
+          <tr id="q-S2">
+            <th scope="row"><span class="block-code">S2</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe S</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num">10</td>
+            <td class="num total">11</td>
+            <td class="info">S2 ist ein Wohn- und Geschäftsblock in der Östlichen Unterstadt. Hier gibt es den Weltladen, den Comicladen Paper Street Comic Company, den Back Stage Rock Club und viele kleine Läden.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#S2">Karte</a></td>
+          </tr>
+          <tr id="q-S3">
+            <th scope="row"><span class="block-code">S3</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe S</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num">3</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num total">4</td>
+            <td class="info">In S3 lag früher das Wöchnerinnenasyl, aus dem nach dem Umzug nach Heidelberg 1805 die Frauenklinik der Universität Heidelberg hervorging. In S3, 10 hatte ab 1899 das Mannheimer Arbeitersekretariat seinen Sitz; heute gibt es hier Kneipen und Kosmetikstudios.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#S3">Karte</a></td>
+          </tr>
+          <tr id="q-S4">
+            <th scope="row"><span class="block-code">S4</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe S</span></td>
+            <td class="num">1</td>
+            <td class="num">1</td>
+            <td class="num">1</td>
+            <td class="num">1</td>
+            <td class="num total">4</td>
+            <td class="info">1914 hob die Fachzeitschrift Deutsche Bauhütte das viergeschossige Mietshaus mit Sandsteinfassade von Batz &amp; Baumüller in S4 als Beispiel guter Gestaltung hervor. Heute gibt es hier unter anderem die Stadtgalerie Mannheim und ein Restaurant.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#S4">Karte</a></td>
+          </tr>
+          <tr id="q-S5">
+            <th scope="row"><span class="block-code">S5</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe S</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">S5 besteht aus drei fünfgeschossigen Wohnhäusern, die U-förmig einen privaten grünen Innenhof umschließen. Auf der Seite zu R5 ist über fünf Etagen das Wandbild Rhythm von Stohead (2015) aus der Reihe Stadt.Wand.Kunst zu sehen.<br><span class="small">Quelle: Stadt.Wand.Kunst; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#S5">Karte</a></td>
+          </tr>
+          <tr id="q-S6">
+            <th scope="row"><span class="block-code">S6</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe S</span></td>
+            <td class="num">3</td>
+            <td class="num">1</td>
+            <td class="num">1</td>
+            <td class="num">11</td>
+            <td class="num total">16</td>
+            <td class="info">S6 ist ein großer Block am Friedrichsring. Hier gibt es zwei Supermärkte, das Improvisationstheater DRAMA light, ein Antiquariat und eine Tiefgarage.<br><span class="small">Quelle: OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#S6">Karte</a></td>
+          </tr>
+          <tr id="q-T1">
+            <th scope="row"><span class="block-code">T1</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe T</span></td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num">3</td>
+            <td class="num total">4</td>
+            <td class="info">In T1 eröffnete 1900 das Kaufhaus Kander, das erste Warenhaus Mannheims, wegen seiner Glaswände Glaspalast genannt. Schon 1859 gründete Johann Philipp Zeller hier den Mannheimer Altertumsverein; heute stehen im Block ein Hotel und ein Kaufhaus.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#T1">Karte</a></td>
+          </tr>
+          <tr id="q-T2">
+            <th scope="row"><span class="block-code">T2</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe T</span></td>
+            <td class="num">1</td>
+            <td class="num">8</td>
+            <td class="num">1</td>
+            <td class="num">3</td>
+            <td class="num total">13</td>
+            <td class="info">T2 ist ein Wohn- und Geschäftsblock in der Östlichen Unterstadt. Hier gibt es viele Cafés und Bars, darunter das Gasthaus Roter Ochsen, dazu Lebensmittelläden und das Restaurant Little India.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#T2">Karte</a></td>
+          </tr>
+          <tr id="q-T3">
+            <th scope="row"><span class="block-code">T3</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe T</span></td>
+            <td class="num">2</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num">3</td>
+            <td class="num total">6</td>
+            <td class="info">T3 ist ein Wohn- und Geschäftsblock in der Östlichen Unterstadt. Hier finden sich der Frauenbuchladen Xanthippe, zwei Pizzerien, Tattoostudios und kleine Läden.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#T3">Karte</a></td>
+          </tr>
+          <tr id="q-T4">
+            <th scope="row"><span class="block-code">T4</span></th>
+            <td class="place">Teils Freifläche: Quartiersplatz<br><span class="small">rechts der Kurpfalzstraße, Reihe T</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">Auf der Seite zu S4 liegt der neue Quartiersplatz T4/T5, der im Juni 2026 fertig wurde: mit 36 jungen Bäumen, Rasen, Bänken und einem Trinkwasserbrunnen. Sandsteinblöcke zeichnen den Verlauf der alten Stadtmauer nach; der übrige Block ist ein neuer Wohnhof mit Kita.<br><span class="small">Quelle: Stadt Mannheim, Pressemitteilung 26.06.2026; Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#T4">Karte</a></td>
+          </tr>
+          <tr id="q-T5">
+            <th scope="row"><span class="block-code">T5</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe T</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero total">0</td>
+            <td class="info">T5 entstand erst nach etwa 1865 auf dem Gelände der früheren Bastion St. Simon. Hier stand ein Teil der Sickingerschule, heute steht hier eine neue Wohnanlage.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#T5">Karte</a></td>
+          </tr>
+          <tr id="q-T6">
+            <th scope="row"><span class="block-code">T6</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe T</span></td>
+            <td class="num">1</td>
+            <td class="num">3</td>
+            <td class="num">1</td>
+            <td class="num">2</td>
+            <td class="num total">7</td>
+            <td class="info">Auf dem Grundstück T6, 11 (heute T6, 33) baute Carl Benz sein erstes Automobil; das Grundstück hatte er 1871 mit dem Mechaniker August Ritter gekauft. Heute ist T6 ein großer Block am Friedrichsring mit Wohnungen, Bars und Läden.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#T6">Karte</a></td>
+          </tr>
+          <tr id="q-U1">
+            <th scope="row"><span class="block-code">U1</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe U</span></td>
+            <td class="num">4</td>
+            <td class="num">1</td>
+            <td class="num num--zero">0</td>
+            <td class="num">8</td>
+            <td class="num total">13</td>
+            <td class="info">In U1, 16–19 sitzt seit 2009 die Mannheimer Abendakademie, die 1899 gegründete Volkshochschule der Stadt. Der Block an der Kurpfalzstraße hat außerdem Imbisse, Kioske und Läden.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#U1">Karte</a></td>
+          </tr>
+          <tr id="q-U2">
+            <th scope="row"><span class="block-code">U2</span></th>
+            <td class="place">Teils Freifläche: Herschelplatz<br><span class="small">rechts der Kurpfalzstraße, Reihe U</span></td>
+            <td class="num">2</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num">1</td>
+            <td class="num total">4</td>
+            <td class="info">In U2 liegen die Eberhard-Gothein-Schule, früher Friedrichsschule, und die Maria-Montessori-Schule. Dazwischen öffnet sich der Herschelplatz mit Platanen und einem Spielplatz, benannt nach Bernhard Herschel, dem Stifter des Herschelbads nebenan; darunter liegt eine Tiefgarage.<br><span class="small">Quelle: Wikipedia: Quadratestadt; Stadt Mannheim: Aufwertung Herschelplatz U2; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#U2">Karte</a></td>
+          </tr>
+          <tr id="q-U3">
+            <th scope="row"><span class="block-code">U3</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe U</span></td>
+            <td class="num num--zero">0</td>
+            <td class="num">3</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num total">3</td>
+            <td class="info">Das Herschelbad in U3 wurde 1920 eröffnet und gilt als eines der Hauptwerke des Jugendstils in Mannheim; gestiftet hat es der Stadtrat Bernhard Herschel. Es hat drei Schwimmhallen und eine Sauna; 1960 eröffnete in U3 außerdem der erste Baumarkt Deutschlands.<br><span class="small">Quelle: Wikipedia: Herschelbad; Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#U3">Karte</a></td>
+          </tr>
+          <tr id="q-U4">
+            <th scope="row"><span class="block-code">U4</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe U</span></td>
+            <td class="num">1</td>
+            <td class="num">2</td>
+            <td class="num num--zero">0</td>
+            <td class="num">1</td>
+            <td class="num total">4</td>
+            <td class="info">U4 ist ein großer Wohnblock am Friedrichsring. Hier gibt es unter anderem das Rockstar Cafe &amp; Bistro und das Restaurant Paprika am Ring.<br><span class="small">Quelle: OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#U4">Karte</a></td>
+          </tr>
+          <tr id="q-U5">
+            <th scope="row"><span class="block-code">U5</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe U</span></td>
+            <td class="num">4</td>
+            <td class="num">5</td>
+            <td class="num num--zero">0</td>
+            <td class="num">2</td>
+            <td class="num total">11</td>
+            <td class="info">U5 ist ein großer Wohnblock am Friedrichsring. Im Inneren liegt der Internationale Garten U5; außerdem gibt es Kneipen, einen Irish Pub und Restaurants wie Naan &amp; Curry.<br><span class="small">Quelle: OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#U5">Karte</a></td>
+          </tr>
+          <tr id="q-U6">
+            <th scope="row"><span class="block-code">U6</span></th>
+            <td class="place">Gebäude<br><span class="small">rechts der Kurpfalzstraße, Reihe U</span></td>
+            <td class="num">2</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num num--zero">0</td>
+            <td class="num total">2</td>
+            <td class="info">U6 ist wie K7 eines der beiden dreieckigen Quadrate. Hier stehen das Hotel Kleiner Rosengarten mit Restaurant und das Deutsch-Türkische Wirtschaftszentrum.<br><span class="small">Quelle: Wikipedia: Quadratestadt; OpenStreetMap (abgerufen 28.09.2026)</span></td>
+            <td><a href="index.html#U6">Karte</a></td>
+          </tr>
+          <!-- END generated: table rows -->
+        </tbody>
+      </table>
+    </div>
+
+    <p><a href="#inhalt">Nach oben</a></p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL</p>
+      <nav aria-label="Rechtliches">
+        <ul>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </nav>
+      <p>Studienprojekt · DHBW Mannheim · Webprogrammierung 2026 · Zwischenversion <span class="version-tag">V1</span></p>
+    </div>
+  </footer>
+</body>
+</html>

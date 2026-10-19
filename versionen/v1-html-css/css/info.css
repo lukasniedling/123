@@ -1,0 +1,191 @@
+@charset "utf-8";
+/*
+ * info.css - text pages: Über uns (ueber-uns.html), Impressum (impressum.html),
+ * Datenschutz (datenschutz.html).                                                      [V1]
+ * float and clear: lecture 5 slide 14. display inline-block: lecture 5 slide 17.
+ */
+
+
+/* --- Links to the sections of the page, side by side --- */
+.page-toc {
+  margin-bottom: 2rem;
+  padding: 0.75rem 1rem;
+  background-color: #f7f5f0;
+  border: 1px solid #c5c0b5;
+}
+
+.page-toc ul,
+.page-toc ol {
+  margin: 0;
+}
+
+.page-toc ul {
+  padding: 0;
+  list-style: none;
+}
+
+.page-toc ul li {
+  display: inline-block;
+  margin-right: 1.25rem;
+}
+
+/* --- Sections --- */
+.info-section {
+  margin-bottom: 3rem;
+}
+
+.info-section p,
+.info-section ol {
+  max-width: 44rem;
+}
+
+/* clear: both starts an element below a floating element (here: below the plan). */
+.clear {
+  clear: both;
+  padding-top: 1rem;
+}
+
+/* --- Idea: the plan floats right, the text flows around it on the left --- */
+.idea-map {
+  float: right;
+  width: 42%;
+  margin: 0 0 1rem 2rem;
+}
+
+.idea-map img {
+  display: block;
+  width: 100%;
+  border: 1px solid #c5c0b5;
+}
+
+/* --- Three photos side by side --- */
+.photo-row {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.photo-row li {
+  display: inline-block;
+  width: 31%;
+  margin-right: 2%;
+  vertical-align: top;
+}
+
+/* All photos get the same height: the frame is 11rem high and cuts off
+   what sticks out below (overflow: hidden, lecture 5 slide 14). */
+.photo-frame {
+  height: 11rem;
+  overflow: hidden;
+  background-color: #dcd4c3;
+}
+
+/* --- Steps --- */
+.steps li {
+  margin-bottom: 0.5rem;
+}
+
+/* --- Team: one card per person, side by side, wrapping into the next line --- */
+.team {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.team li {
+  display: inline-block;
+  width: 13.5rem;
+  padding: 1rem;
+  margin: 0 0.75rem 0.75rem 0;
+  vertical-align: top;
+}
+
+/* Initials as a block like on the map: dark roof, lighter edge below. */
+.team-initials {
+  display: inline-block;
+  width: 3rem;
+  margin-bottom: 0.5rem;
+  padding: 0.6rem 0;
+  background-color: #3a3d43;
+  color: #ffffff;
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-align: center;
+  border-bottom: 5px solid #62666e;
+}
+
+/* --- Logo --- */
+.logo-parts dt {
+  font-weight: 700;
+}
+
+.logo-parts dd {
+  max-width: 44rem;
+  margin: 0 0 0.75rem 1.5rem;
+}
+
+/* --- Tables on text pages (technology, photo credits) --- */
+.table-wrap {
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+  background-color: #f7f5f0;
+  border: 1px solid #c5c0b5;
+}
+
+.tech-table {
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.tech-table caption {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: left;
+}
+
+.tech-table th,
+.tech-table td {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid #c5c0b5;
+}
+
+.tech-table thead th {
+  background-color: #dcd4c3;
+  border-bottom: 2px solid #7d7a72;
+}
+
+/* --- Address --- */
+address {
+  margin-bottom: 1rem;
+  font-style: normal;
+}
+
+/* --- Phones --- */
+@media (max-width: 48rem) {
+  .idea-map {
+    float: none;
+    width: 100%;
+    margin: 0 0 1rem 0;
+  }
+
+  .photo-row li {
+    display: block;
+    width: 100%;
+    margin: 0 0 1.5rem 0;
+  }
+
+  /* On phones each photo is shown whole: the frame takes the height of the photo. */
+  .photo-frame {
+    height: auto;
+  }
+
+  .team li {
+    width: 100%;
+    margin-right: 0;
+  }
+}

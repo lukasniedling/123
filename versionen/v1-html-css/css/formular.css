@@ -1,0 +1,133 @@
+@charset "utf-8";
+/*
+ * formular.css - page "Ort vorschlagen" (vorschlagen.html): form and map.          [V1]
+ * Layout with float (lecture 5 slide 14): on large screens the form floats left and the
+ * map right; on phones (media query) both take the full width, one below the other.
+ */
+
+
+/* --- Two columns --- */
+.suggest-form {
+  float: left;
+  width: 56%;
+}
+
+.suggest-map {
+  float: right;
+  width: 40%;
+}
+
+/* Ends the floating: clear: both puts this empty element below both columns,
+   so the footer does not slide up next to them. */
+.suggest-end {
+  clear: both;
+}
+
+@media (max-width: 56rem) {
+  .suggest-form,
+  .suggest-map {
+    float: none;
+    width: 100%;
+  }
+
+  .suggest-map {
+    margin-top: 2rem;
+  }
+}
+
+
+/* --- Form --- */
+
+/* A fieldset groups fields that belong together; the legend is its caption. */
+fieldset {
+  margin: 0 0 1.5rem 0;
+  padding: 1rem 1.25rem 0.5rem 1.25rem;
+  border: 1px solid #c5c0b5;
+}
+
+legend {
+  padding: 0 0.5rem;
+  font-weight: 700;
+}
+
+/* Labels as blocks: each label stands on its own line above its field (lecture 5 slide 17). */
+label {
+  display: block;
+  margin-top: 0.75rem;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.group-label {
+  margin: 0.75rem 0 0.25rem 0;
+  font-weight: 600;
+}
+
+.required {
+  color: #54575e;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.hint {
+  margin: 0 0 0.375rem 0;
+  color: #54575e;
+  font-size: 0.875rem;
+}
+
+/* Text fields, the list and the text area: full width of the form column. */
+input,
+select,
+textarea {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background-color: #f7f5f0;
+  color: #2b2d31;
+  font-family: "Archivo", Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  border: 1px solid #7d7a72;
+}
+
+/* Field with the cursor in it (keyboard or mouse): white background and a dark frame. */
+input:focus,
+select:focus,
+textarea:focus {
+  background-color: #ffffff;
+  border-color: #2b2d31;
+}
+
+/* Radio buttons: small, side by side, with their label next to them. */
+.choices {
+  margin: 0 0 0.75rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.choices li {
+  display: inline-block;
+  margin-right: 1.25rem;
+}
+
+.choices input {
+  display: inline;
+  width: auto;
+  margin: 0;
+}
+
+.choices label {
+  display: inline;
+  margin: 0;
+  font-weight: 400;
+}
+
+
+/* --- Map in the iframe --- */
+iframe {
+  display: block;
+  width: 100%;
+  height: 24rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #c5c0b5;
+}

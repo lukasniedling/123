@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 42 42" width="32" height="32">
+  <!-- Quadrate favicon: the grid mark on a light plate so it stays visible on dark browser tabs. [V1] -->
+  <rect x="-5" y="-5" width="42" height="42" rx="8" fill="#e7e4dd"/>
+  <g>
+    <rect x="13.5" y="0" width="5" height="32" fill="#f2e6cc"/>
+    <rect x="0" y="13" width="32" height="5" fill="#f2e6cc"/>
+    <rect x="0" y="0" width="13.5" height="13.5" rx="1.2" fill="#62666e"/>
+    <rect x="0" y="0" width="13.5" height="10" rx="1.2" fill="#3a3d43"/>
+    <rect x="18.5" y="0" width="13.5" height="13.5" rx="1.2" fill="#62666e"/>
+    <rect x="18.5" y="0" width="13.5" height="10" rx="1.2" fill="#3a3d43"/>
+    <rect x="0" y="18.5" width="13.5" height="13.5" rx="1.2" fill="#62666e"/>
+    <rect x="0" y="18.5" width="13.5" height="10" rx="1.2" fill="#3a3d43"/>
+    <rect x="18.5" y="18.5" width="13.5" height="13.5" rx="1.2" fill="#62666e"/>
+    <rect x="18.5" y="18.5" width="13.5" height="10" rx="1.2" fill="#3a3d43"/>
+  </g>
+</svg>

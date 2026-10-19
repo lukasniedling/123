@@ -1,0 +1,226 @@
+@charset "utf-8";
+/*
+ * verzeichnis.css - styles of the directory page quadrate.html only.
+ * Version: [V1] (plain CSS). The rules for the search field and the status line
+ * are marked [V2]: those elements are only shown by js/verzeichnis.js.
+ *
+ * How it fits in: quadrate.html links css/style.css first (design system:
+ * tokens, table, block codes, form fields, sort buttons) and then this file.
+ * Only what is special about this page is here: the jump list, the search
+ * row, the source line and a few table details (fixed code column, widths).
+ *
+ * Contents
+ *  1. Intro text
+ *  2. Jump list A-K / L-U
+ *  3. Search field and status line   [V2]
+ *  4. Source line above the table
+ *  5. Table details
+ *  6. Print
+ */
+
+
+/* =========================================================================
+   1. Intro text
+   ========================================================================= */
+
+.directory-intro {
+  margin-bottom: var(--space-5);
+}
+
+
+/* =========================================================================
+   2. Jump list A-K / L-U
+   <nav class="jump-list"> with two groups (left and right of the
+   Kurpfalzstrasse); every letter is a small block like on the map.
+   ========================================================================= */
+
+.jump-list {
+  margin-bottom: var(--space-5);
+}
+
+.jump-list__title {
+  margin-bottom: var(--space-3);
+  font-size: var(--text-l);
+}
+
+/* The two groups sit side by side when there is room, else one below the other. */
+.jump-list__groups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-6);
+}
+
+.jump-list__label {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-s);
+  font-weight: 600;
+}
+
+/* "A bis K" in the muted colour after the side name. */
+.jump-list__range {
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+.jump-list__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* The letters reuse .block-code from style.css, made big enough to tap
+   (--target = 44 px). The wall edge below (box-shadow) stays. */
+.jump-list__items .block-code {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--target);
+  min-height: var(--target);
+  margin-bottom: 0.125rem;          /* room for the wall edge */
+  font-size: var(--text-m);
+}
+
+
+/* =========================================================================
+   3. Search field and status line [V2]
+   Hidden in the HTML (attribute hidden); js/verzeichnis.js shows them.
+   ========================================================================= */
+
+/* Field and status line in one row on wider screens, stacked on phones. */
+.directory-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-3) var(--space-5);
+  margin-bottom: var(--space-4);
+}
+
+.directory-tools__search {
+  flex: 1 1 18rem;
+  max-width: 28rem;
+}
+
+/* Same height as the field, so the text lines up with the field's middle. */
+.directory-tools__status {
+  flex: 1 1 14rem;
+  display: flex;
+  align-items: center;
+  min-height: var(--target);
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+}
+
+
+/* =========================================================================
+   4. Source line above the table
+   ========================================================================= */
+
+.directory-source {
+  margin-bottom: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+}
+
+
+/* =========================================================================
+   5. Table details
+   The general table look (header colour, sticky header, numbers, zero
+   values, targeted row, sort buttons) comes from style.css, section 13.
+   ========================================================================= */
+
+/* The hidden link texts (.visually-hidden, position: absolute) inside the
+   table need a positioned ancestor. Without it they are placed relative to
+   the whole page, sit far right where the table ends and make the whole page
+   scroll sideways on phones, not only the table box. */
+.table-wrap {
+  position: relative;
+}
+
+/* Every cell is centred vertically: the code blocks are a little taller than
+   a text line. The side padding is a bit tighter than the style.css default
+   (--space-4), so all nine columns fit next to each other on a laptop screen
+   (about 1200 px); on smaller screens the table box scrolls sideways. */
+.directory-table th,
+.directory-table td {
+  padding-inline: var(--space-3);
+  vertical-align: middle;
+}
+
+/* The headings of the number columns use the text font like all other
+   headings (style.css gives every .num cell the code font, which is meant for
+   the digits). The text font is also narrower, so the table fits a laptop screen. */
+.directory-table thead .num {
+  font-family: var(--font-text);
+}
+
+/* The colour swatch in the category headings is the category colour of the map. */
+.directory-table thead .swatch {
+  margin-right: 0.125rem;
+}
+
+/* The sum of the four categories is bold, so it reads as the result of the row. */
+.directory-table__total {
+  font-weight: 700;
+}
+
+/* "Lage" and "Auf der Karte" stay on one line; the column "Art / Name" may
+   wrap instead (only the few long names of open spaces need two lines). */
+.directory-table__location,
+.directory-table__map {
+  white-space: nowrap;
+}
+
+/* --- Fixed code column ---
+   When the table scrolls sideways on a phone, the first column (the Quadrat
+   code) stays at the left edge, so every row stays readable. position: sticky
+   needs a solid background, otherwise the scrolled cells would shine through. */
+.directory-table tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--color-paper);
+  /* A thin line on the right edge; a border would stay behind with border-collapse. */
+  box-shadow: inset -0.0625rem 0 0 var(--color-ring);
+}
+
+/* The header row is sticky at the top (style.css). Its cells must lie above the
+   sticky code cells when the rows scroll up under them. */
+.directory-table thead th {
+  z-index: 2;
+}
+
+/* The corner cell "Quadrat" is sticky in both directions and lies above everything. */
+.directory-table thead th:first-child {
+  left: 0;
+  z-index: 3;
+  box-shadow: inset 0 -0.125rem 0 var(--color-control-line), inset -0.0625rem 0 0 var(--color-ring);
+}
+
+/* The row hover colour of style.css is half transparent. The solid code cell
+   gets the same colour by laying it over the paper colour. */
+.directory-table tbody tr:hover > th {
+  background: linear-gradient(rgba(220, 212, 195, 0.45), rgba(220, 212, 195, 0.45)), var(--color-paper);
+}
+
+/* Row reached by an anchor (quadrate.html#q-G1): the code cell keeps the yellow
+   edge from style.css and gets the light yellow row colour plus its right line. */
+.directory-table tr:target > th:first-child {
+  background: var(--color-selected-soft);
+  box-shadow: inset 0.25rem 0 0 var(--color-selected), inset -0.0625rem 0 0 var(--color-ring);
+}
+
+
+/* =========================================================================
+   6. Print: the jump list and the search make no sense on paper.
+   ========================================================================= */
+
+@media print {
+  .jump-list,
+  .directory-tools {
+    display: none;
+  }
+}

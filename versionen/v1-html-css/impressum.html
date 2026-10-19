@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!--
+  impressum.html - legal notice (provider, contact, licences of map data, photos and fonts).   [V1]
+
+  Interim version V1: HTML and CSS only. Typical content of a website (lecture 2 slide 8):
+  the legal notice is mandatory. The texts are a sample for a student project.
+  - <address> holds the contact details; <br> breaks the lines (lecture 2 slide 6).
+  - mailto: opens the e-mail program (lecture 2 slide 6). Address and phone number are
+    fictitious placeholders chosen by the team: never write to them or call them.
+  Page-specific styles: css/info.css.
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Impressum – Quadrate</title>
+  <meta name="description" content="Impressum des Studienprojekts Quadrate an der DHBW Mannheim.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/info.css">
+</head>
+<body>
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="site-logo" href="index.html"><img src="img/logo.svg" alt="Quadrate – zur Karte" width="200" height="33"></a>
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <ul>
+          <li><a href="index.html">Karte</a></li>
+          <li><a href="quadrate.html">Quadrate</a></li>
+          <li><a href="vorschlagen.html">Ort vorschlagen</a></li>
+          <li><a href="ueber-uns.html">Über uns</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhalt" class="container">
+    <div class="page-intro">
+      <h1>Impressum</h1>
+      <p class="lead">Wer hinter Quadrate steht, wie du uns erreichst und woher Karten, Fotos und Schriften kommen.</p>
+    </div>
+
+    <div class="prose">
+      <h2 id="anbieter">Angaben gemäß § 5 DDG</h2>
+      <address>
+        Projektgruppe „Quadrate“<br>
+        Matti Katila, Nikita Ermotschenko, Niko Eibach, Anes Sahbegovic, Lukas Niedling<br>
+        c/o Duale Hochschule Baden-Württemberg Mannheim<br>
+        Coblitzallee 1-9<br>
+        68163 Mannheim
+      </address>
+
+      <h2 id="kontakt">Kontakt</h2>
+      <p>E-Mail: <a href="mailto:info@quadrate.com">info@quadrate.com</a><br>
+        Telefon: +49 178 67123467</p>
+
+      <h2 id="projekt">Über dieses Projekt</h2>
+      <p>Quadrate ist ein nicht-kommerzielles Studienprojekt im Modul Webprogrammierung des Studiengangs Wirtschaftsinformatik an der DHBW Mannheim. Es gibt keine Werbung, keine Bezahlangebote und keine Partnerlinks. Anbieter ist die oben genannte Projektgruppe, nicht die Hochschule.</p>
+
+      <h2 id="haftung">Haftung für Inhalte und Links</h2>
+      <p>Wir haben die Inhalte sorgfältig erstellt. Die Orte stammen aus OpenStreetMap, einer Karte, die Freiwillige pflegen; sie können veraltet oder unvollständig sein. Für die Inhalte verlinkter fremder Websites ist allein deren Anbieter verantwortlich.</p>
+
+      <hr>
+
+      <h2 id="urheberrecht">Urheberrecht und Lizenzen</h2>
+      <h3>Eigene Inhalte</h3>
+      <p>Texte, Programmcode, Logo und Gestaltung hat die Projektgruppe selbst erstellt.</p>
+
+      <h3>Kartendaten</h3>
+      <p>Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, <a href="https://opendatacommons.org/licenses/odbl/1-0/">Open Database License (ODbL) 1.0</a>. Der Lageplan auf der Startseite, die Zahlen im Verzeichnis und die Lage der Klickflächen sind aus diesen Daten abgeleitet und stehen ebenfalls unter der ODbL 1.0.</p>
+
+      <h3 id="fotos">Fotos</h3>
+      <p>Die Fotos auf der Seite <a href="ueber-uns.html">Über uns</a> stammen von Wikimedia Commons und stehen unter freien Lizenzen. Wir haben sie auf 1200 Pixel Breite verkleinert; auf der Website ist jeweils ein Ausschnitt zu sehen.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table class="tech-table">
+        <caption>Fotonachweise</caption>
+        <thead>
+          <tr>
+            <th scope="col">Motiv</th>
+            <th scope="col">Urheber</th>
+            <th scope="col">Lizenz und Quelle</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Barockschloss</th>
+            <td>Hubert Berberich (HubiB)</td>
+            <td><a href="https://creativecommons.org/licenses/by/3.0/deed.de">CC BY 3.0</a>, <a href="https://commons.wikimedia.org/wiki/File:SchlossEhrenhof_2017.jpg">Wikimedia Commons</a></td>
+          </tr>
+          <tr>
+            <th scope="row">Planken</th>
+            <td>AnRo0002</td>
+            <td><a href="https://creativecommons.org/publicdomain/zero/1.0/deed.de">CC0 1.0</a>, <a href="https://commons.wikimedia.org/wiki/File:20171119Planken_Mannheim.jpg">Wikimedia Commons</a></td>
+          </tr>
+          <tr>
+            <th scope="row">Wasserturm</th>
+            <td>Flocci Nivis</td>
+            <td><a href="https://creativecommons.org/licenses/by/4.0/deed.de">CC BY 4.0</a>, <a href="https://commons.wikimedia.org/wiki/File:20180714_Mannheimer_Wasserturm_05.jpg">Wikimedia Commons</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prose">
+      <h3>Schriften</h3>
+      <p>Die Website nutzt die Schriften Archivo und IBM Plex Mono unter der SIL Open Font License 1.1. Die Lizenztexte liegen im Ordner <code>fonts/</code>: <a href="fonts/OFL-Archivo.txt">Lizenz Archivo</a>, <a href="fonts/OFL-IBM-Plex-Mono.txt">Lizenz IBM Plex Mono</a>.</p>
+      <p class="small">Stand: 7. Oktober 2026</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL</p>
+      <nav aria-label="Rechtliches">
+        <ul>
+          <li><a href="impressum.html" aria-current="page">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </nav>
+      <p>Studienprojekt · DHBW Mannheim · Webprogrammierung 2026 · Zwischenversion <span class="version-tag">V1</span></p>
+    </div>
+  </footer>
+</body>
+</html>

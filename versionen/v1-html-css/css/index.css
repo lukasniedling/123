@@ -1,0 +1,93 @@
+@charset "utf-8";
+/*
+ * index.css - the 2D map on the start page (index.html).                              [V1]
+ *
+ * How the map works, without JavaScript:
+ *   <div class="map-scroll">                    scrolls sideways on phones
+ *     <div class="map-box">                     position: relative = reference point
+ *       <img src="img/karte-2d.svg">            the plan, gives the box its height
+ *       <a class="block" style="left: …%; top: …%; width: …%; height: …%;">G1</a>
+ *                                               position: absolute, placed over its Quadrat
+ * Positioning: lecture 5 slide 16. Percent: lecture 4 slide 9. rgba: lecture 4 slide 14.
+ * Pseudo-classes :hover and :focus: lecture 4 slide 24. No transition, no animation (V1).
+ */
+
+
+/* The frame around the map. overflow-x: auto shows a scroll bar only if the
+   map is wider than the window (lecture 5 slide 14). */
+.map-scroll {
+  overflow-x: auto;
+  background-color: #e7e4dd;
+  border: 1px solid #c5c0b5;
+}
+
+/* Reference point for the links. min-width keeps the codes readable on phones:
+   the box stays at least 50rem (800 px) wide and scrolls instead of shrinking. */
+.map-box {
+  position: relative;
+  min-width: 50rem;
+}
+
+/* The picture fills the whole width; the height follows (height: auto in style.css). */
+.map-box img {
+  display: block;
+  width: 100%;
+}
+
+/* One link per Quadrat. The text (the code) stays in the HTML for screen readers
+   and search engines but is drawn transparent, because the picture shows the code
+   already. The border is transparent too, so it takes up its room from the start
+   and the link does not grow when the border gets a colour on hover. */
+a.block,
+a.block:link,
+a.block:visited {
+  position: absolute;
+  display: block;
+  overflow: hidden;
+  color: transparent;
+  font-size: 0.75rem;
+  text-decoration: none;
+  border: 2px solid transparent;
+}
+
+/* Mouse over a Quadrat or keyboard focus on it: half-transparent yellow
+   (rgba = red, green, blue and opacity) with a yellow frame. */
+a.block:hover,
+a.block:focus {
+  background-color: rgba(242, 194, 48, 0.45);
+  color: transparent;
+  border-color: #f2c230;
+}
+
+/* The Quadrat named in the address, e.g. index.html#G1 (link "Karte" in the
+   directory): the element whose id equals the part after # matches :target. */
+a.block:target {
+  background-color: rgba(242, 194, 48, 0.7);
+  border-color: #2b2d31;
+}
+
+/* Text under the map. */
+.map-footer {
+  padding: 0.75rem 1rem;
+  background-color: #f7f5f0;
+  border: 1px solid #c5c0b5;
+  border-top: 0;
+  font-size: 0.875rem;
+}
+
+.map-footer p {
+  margin: 0 0 0.25rem 0;
+}
+
+/* Hint for phones: hidden on large screens, shown below 48rem. */
+.map-hint {
+  display: none;
+  color: #54575e;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 48rem) {
+  .map-hint {
+    display: block;
+  }
+}

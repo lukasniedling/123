@@ -1,0 +1,463 @@
+@charset "utf-8";
+/*
+ * style.css - shared styles of the website "Quadrate", interim version V1.        [V1]
+ *
+ * Version V1 uses only HTML and CSS from lectures 2 to 5 (no JavaScript, no PHP).
+ * Every page links this file first, then one file for its own parts:
+ * index.css (map), verzeichnis.css (table), formular.css (form), info.css (text pages).
+ *
+ * Colour palette (the colours of the map; written as hex values, lecture 4 slide 13):
+ *   #e7e4dd  ground      page background, like the ground of the map
+ *   #f7f5f0  paper       boxes, table, form fields
+ *   #3a3d43  roof        city blocks, buttons, block codes
+ *   #62666e  wall        lower edge of blocks and buttons
+ *   #c5c0b5  ring        lines and borders (the ring road)
+ *   #dcd4c3  plaza       table header, hover
+ *   #f2e6cc  sand        current page in the navigation (the Planken)
+ *   #8a6d3b  sand text   edge under the current page
+ *   #f2c230  yellow      chosen Quadrat, focus
+ *   #fbeec0  light yellow  chosen table row
+ *   #2b2d31  text        normal text
+ *   #54575e  muted       hints and small print
+ *   Categories: Essen #d23f27, Trinken #d0901a, Kultur #6b5bd2, Shoppen #25a792
+ *
+ * Contents: 1. fonts  2. base elements  3. page frame  4. text and boxes  5. buttons
+ *           6. block codes  7. photos  8. phones
+ */
+
+
+/* =========================================================================
+   1. Fonts (lecture 4 slide 25, lecture 5 slide 3: @font-face)
+   The font files lie in the folder fonts/, so no request goes to Google.
+   Licence texts: fonts/OFL-Archivo.txt and fonts/OFL-IBM-Plex-Mono.txt.
+   ========================================================================= */
+
+@font-face {
+  font-family: "Archivo";
+  font-weight: 400;
+  src: url("../fonts/archivo-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Archivo";
+  font-weight: 600;
+  src: url("../fonts/archivo-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Archivo";
+  font-weight: 700;
+  src: url("../fonts/archivo-latin-700-normal.woff2") format("woff2");
+}
+
+/* Numbers in the table use a font in which every digit has the same width. */
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-weight: 400;
+  src: url("../fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2");
+}
+
+
+/* =========================================================================
+   2. Base elements
+   ========================================================================= */
+
+/* Width and height include padding and border (box model). Without this line an
+   input with width: 100% plus padding would stick out of its box. */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;              /* 1rem = the browser's font size, usually 16 px (lecture 4 slide 17) */
+}
+
+body {
+  margin: 0;
+  background-color: #e7e4dd;
+  color: #2b2d31;
+  font-family: "Archivo", Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+/* Several selectors at once (lecture 4 slide 20). */
+h1, h2, h3 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+h1 {
+  font-size: 2.25rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.125rem;
+}
+
+p, ul, ol, dl, table {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+strong, b {
+  font-weight: 700;
+}
+
+em, i {
+  font-style: italic;
+}
+
+code {
+  font-family: "IBM Plex Mono", Menlo, Consolas, monospace;
+  font-size: 0.9em;
+}
+
+/* Images never get wider than their box; height: auto keeps the proportions. */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+hr {
+  margin: 2rem 0;
+  border: 0;
+  border-top: 1px solid #c5c0b5;
+}
+
+/* Link states (lecture 4 slide 24, lecture 5 slide 9), in this order:
+   link, visited, focus, hover, active. A later rule wins over an earlier one. */
+a:link {
+  color: #2b2d31;
+}
+
+a:visited {
+  color: #54575e;
+}
+
+/* Keyboard focus (Tab key): a yellow background, clearly visible on every page. */
+a:focus {
+  background-color: #f2c230;
+  color: #2b2d31;
+}
+
+a:hover {
+  color: #8a6d3b;
+}
+
+a:active {
+  color: #000000;
+}
+
+
+/* =========================================================================
+   3. Page frame: skip link, header, navigation, main, footer
+   ========================================================================= */
+
+/* Skip link: the first link of every page. It waits above the window
+   (position: absolute, top: -4rem) and comes into view when it gets the focus. */
+.skip-link {
+  position: absolute;
+  top: -4rem;
+  left: 0.5rem;
+  z-index: 10;
+  padding: 0.5rem 1rem;
+  background-color: #3a3d43;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  top: 0.5rem;
+  background-color: #3a3d43;
+  color: #ffffff;
+}
+
+/* Centred column with a maximum width (lecture 5 slide 15). */
+.container {
+  max-width: 74rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.site-header {
+  border-bottom: 1px solid #c5c0b5;
+}
+
+/* Logo left, navigation right. Flexbox (named in lecture 3 slide 3) puts the two
+   side by side; flex-wrap moves the navigation below the logo on phones. */
+.site-header .container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.site-logo img {
+  display: block;
+  width: 200px;
+  height: 33px;
+}
+
+/* The navigation is a list; display: inline-block puts the items in a row (lecture 5 slide 17). */
+.site-nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-nav li {
+  display: inline-block;
+  margin: 0;
+}
+
+.site-nav a {
+  display: block;
+  padding: 0.625rem 0.75rem;
+  color: #2b2d31;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.site-nav a:hover {
+  background-color: #dcd4c3;
+  color: #2b2d31;
+}
+
+.site-nav a:focus {
+  background-color: #f2c230;
+}
+
+/* Current page: a sand strip with a darker edge, like the Planken on the map. */
+.site-nav a.current {
+  background-color: #f2e6cc;
+  border-bottom: 3px solid #8a6d3b;
+}
+
+/* main.container (element + class) is more specific than .container alone,
+   so these paddings win over "padding: 0 1rem" of .container (lecture 5 slide 6). */
+main.container {
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+}
+
+/* Footer: a thick top line like the ring road around the Quadrate. */
+.site-footer {
+  border-top: 4px solid #c5c0b5;
+  color: #54575e;
+  font-size: 0.875rem;
+}
+
+.site-footer .container {
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
+}
+
+.site-footer p {
+  margin: 0 0 0.5rem 0;
+}
+
+.site-footer ul {
+  margin: 0 0 0.5rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer li {
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+
+/* =========================================================================
+   4. Text and boxes
+   ========================================================================= */
+
+/* Heading and introduction at the top of a page. max-width keeps lines readable. */
+.page-intro {
+  max-width: 44rem;
+  margin-bottom: 2rem;
+}
+
+.lead {
+  color: #54575e;
+  font-size: 1.125rem;
+}
+
+/* Running text: limited line length. */
+.prose {
+  max-width: 44rem;
+}
+
+.small {
+  color: #54575e;
+  font-size: 0.8125rem;
+}
+
+/* A sheet of paper lying on the ground. */
+.box {
+  padding: 1.5rem;
+  background-color: #f7f5f0;
+  border: 1px solid #c5c0b5;
+}
+
+/* Notice with a coloured edge on the left (lecture 5 slide 12: border). */
+.notice {
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 1rem;
+  background-color: #dcebf2;
+  border-left: 5px solid #245266;
+}
+
+.notice p {
+  margin: 0;
+}
+
+/* Small label "V1", "V2", "V3" for the versions. */
+.version-tag {
+  display: inline-block;
+  padding: 0 0.375rem;
+  background-color: #f2e6cc;
+  border: 1px solid #d9c69b;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+
+/* =========================================================================
+   5. Buttons
+   A button looks like a city block from the map: dark roof, lighter wall below
+   (drawn with border-bottom). No animation in V1: hover only changes the colour.
+   ========================================================================= */
+
+.button {
+  display: inline-block;
+  margin: 0 0.5rem 0.5rem 0;
+  padding: 0.625rem 1.5rem;
+  background-color: #3a3d43;
+  color: #ffffff;
+  font-family: "Archivo", Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 0;
+  border-bottom: 4px solid #62666e;
+  cursor: pointer;
+}
+
+/* a.button:link and a.button:visited: the general link colours above
+   (a:link, a:visited) would otherwise turn the white text dark. */
+a.button:link,
+a.button:visited {
+  color: #ffffff;
+}
+
+.button:hover,
+a.button:hover {
+  background-color: #2b2d31;
+  color: #ffffff;
+}
+
+.button:focus,
+a.button:focus {
+  background-color: #f2c230;
+  color: #2b2d31;
+}
+
+/* Light button for less important actions. */
+.button-light,
+a.button-light:link,
+a.button-light:visited {
+  background-color: #f7f5f0;
+  color: #2b2d31;
+  border: 1px solid #7d7a72;
+  border-bottom: 4px solid #c5c0b5;
+}
+
+.button-light:hover,
+a.button-light:hover {
+  background-color: #dcd4c3;
+  color: #2b2d31;
+}
+
+
+/* =========================================================================
+   6. Block codes ("G1", "M3a")
+   Always shown as a small dark block with a white code, like on the map.
+   ========================================================================= */
+
+.block-code,
+a.block-code:link,
+a.block-code:visited {
+  display: inline-block;
+  min-width: 2.25em;
+  padding: 0 0.4em;
+  background-color: #3a3d43;
+  color: #ffffff;
+  font-size: 0.875em;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  border-bottom: 2px solid #62666e;
+}
+
+a.block-code:hover {
+  background-color: #2b2d31;
+  color: #f2c230;
+}
+
+a.block-code:focus {
+  background-color: #f2c230;
+  color: #2b2d31;
+}
+
+
+/* =========================================================================
+   7. Photos with credit
+   ========================================================================= */
+
+.photo img {
+  display: block;
+  width: 100%;
+  border: 1px solid #c5c0b5;
+}
+
+.photo-caption {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.photo-credit {
+  margin: 0;
+  color: #54575e;
+  font-size: 0.75rem;
+}
+
+
+/* =========================================================================
+   8. Phones (media query, lecture 5 slide 3)
+   Rules inside apply only when the window is at most 48rem (768 px) wide.
+   ========================================================================= */
+
+@media (max-width: 48rem) {
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.3125rem;
+  }
+
+  .site-nav a {
+    padding: 0.5rem 0.5rem;
+  }
+}

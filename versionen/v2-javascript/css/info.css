@@ -1,0 +1,475 @@
+@charset "utf-8";
+/*
+ * info.css - page styles for the text pages "Über uns", "Impressum" and "Datenschutz".
+ * Version: [V1] (plain CSS, no JavaScript needed).
+ *
+ * How it fits in: ueber-uns.html, impressum.html and datenschutz.html link
+ * css/style.css first (design tokens, page frame, prose, photo, notice, table)
+ * and then this file. Only what these three pages need on top of the shared
+ * design system lives here; every value comes from the tokens in style.css,
+ * so a colour change there reaches these pages too.
+ *
+ * Contents
+ *  1. Sections and in-page navigation (table of contents)
+ *  2. Placeholders the team still has to fill in
+ *  3. "Über uns": idea with map picture, photo row
+ *  4. "Über uns": numbered steps
+ *  5. "Über uns": team cards
+ *  6. "Über uns": logo, video, technology table
+ *  7. Legal pages: address blocks, date line
+ *  8. Print
+ */
+
+
+/* =========================================================================
+   1. Sections and in-page navigation
+   ========================================================================= */
+
+/* A large section of a text page. The thin line on top works like the edge
+   of a plan sheet and separates the topics clearly. */
+.info-section {
+  margin-top: var(--space-7);
+  padding-top: var(--space-6);
+  border-top: 0.0625rem solid var(--color-ring);
+}
+
+/* Sub-heading that starts a new part inside a section (e.g. the photo row). */
+.info-subtitle {
+  margin-top: var(--space-6);
+}
+
+/* A notice at the top of a text page is as wide as the text below it. */
+.info-notice {
+  max-width: var(--measure);
+}
+
+/* Short introduction under a section heading, same line length as prose. */
+.info-section__intro {
+  max-width: var(--measure);
+}
+
+/* Table of contents: a paper sheet with the list of anchor links.
+   <nav class="info-toc" aria-labelledby="toc-title"> <h2 class="info-toc__title" id="toc-title">Inhalt</h2> <ol> ... </ol> </nav> */
+.info-toc {
+  max-width: var(--measure);
+  margin: 0 0 var(--space-6);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-paper);
+  border: 0.0625rem solid var(--color-ring);
+  border-radius: var(--radius-panel);
+}
+
+.info-toc__title {
+  margin-bottom: var(--space-2);
+  font-size: var(--text-m);
+}
+
+.info-toc ol {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+/* Every entry gets at least 32 px height, so the links are easy to tap. */
+.info-toc li {
+  margin: 0;
+  padding-block: var(--space-1);
+}
+
+/* Two columns from tablet width; break-inside keeps an entry in one column. */
+@media (min-width: 40rem) {
+  .info-toc ol {
+    columns: 2;
+    column-gap: var(--space-6);
+  }
+
+  .info-toc li {
+    break-inside: avoid;
+  }
+}
+
+/* Variant for "Über uns": the section links sit in one row that wraps. */
+.info-toc--inline {
+  max-width: none;
+  padding-block: var(--space-3);
+}
+
+.info-toc--inline ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.info-toc--inline li {
+  margin: 0;
+}
+
+.info-toc--inline a {
+  display: inline-block;
+  padding-block: var(--space-2);
+}
+
+
+/* =========================================================================
+   2. Placeholders the team still has to fill in
+   <span class="placeholder">[Datum, z. B. Ende des Studienprojekts]</span>
+   A sand patch with a dashed edge: easy to spot while proofreading and
+   clearly different from normal text. Dark sand text on sand: 5.7:1.
+   ========================================================================= */
+
+.placeholder {
+  padding: 0 0.25em;
+  background: var(--color-sand);
+  color: var(--color-sand-ink);
+  outline: 0.0625rem dashed var(--color-sand-text);
+  outline-offset: -0.0625rem;         /* the dashed edge sits on the patch, not around it */
+  border-radius: 0.125rem;
+  -webkit-box-decoration-break: clone;   /* Safari still needs the prefix */
+  box-decoration-break: clone;        /* each line of a wrapped placeholder gets its own edge */
+}
+
+
+/* =========================================================================
+   3. "Über uns": idea with map picture, photo row
+   ========================================================================= */
+
+/* Text on the left, map picture on the right from 56rem; one column below. */
+.idea {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5) var(--space-6);
+  align-items: start;
+}
+
+@media (min-width: 56rem) {
+  .idea {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.idea > .prose > :last-child {
+  margin-bottom: 0;
+}
+
+/* The static map picture lies on the page like a plan sheet. */
+.idea__map {
+  margin: 0;
+}
+
+.idea__map img {
+  width: 100%;
+  background: var(--color-ground);
+  border: 0.0625rem solid var(--color-ring);
+  border-radius: var(--radius-panel);
+}
+
+.idea__map figcaption {
+  margin-top: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+}
+
+/* Small print for a source line under a text. */
+.source-note {
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+}
+
+/* Three photos side by side from 40rem; below that one under the other,
+   limited to 30rem so a single photo does not fill a whole phone screen. */
+.photo-row {
+  display: grid;
+  grid-template-columns: minmax(0, 30rem);
+  gap: var(--space-5);
+  margin: var(--space-5) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.photo-row > li {
+  margin: 0;
+}
+
+@media (min-width: 40rem) {
+  .photo-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.photo-row .photo {
+  margin: 0;
+}
+
+
+/* =========================================================================
+   4. "Über uns": numbered steps
+   <ol class="steps"> <li> <h3 class="steps__title">...</h3> <p>...</p> </li> </ol>
+   The number is drawn with a CSS counter as a small charcoal block with a
+   wall edge, like the block codes on the map ("1" instead of "G1").
+   ========================================================================= */
+
+.steps {
+  display: grid;
+  gap: var(--space-5);
+  max-width: var(--measure);
+  margin: var(--space-5) 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;                /* start counting at 0 for this list */
+}
+
+.steps > li {
+  position: relative;
+  min-height: 2.5rem;
+  margin: 0;
+  padding-left: 3.5rem;               /* room for the number block */
+  counter-increment: step;            /* every item adds 1 */
+}
+
+.steps > li::before {
+  content: counter(step);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  background: var(--color-roof);
+  color: var(--color-text-on-dark);
+  font-weight: 700;
+  border-radius: var(--radius-block);
+  box-shadow: 0 var(--wall) 0 var(--color-wall);
+}
+
+.steps__title {
+  margin: 0.375rem 0 var(--space-1);  /* the title line sits level with the middle of the block */
+  font-size: var(--text-l);
+}
+
+.steps > li > p {
+  margin: 0;
+}
+
+
+/* =========================================================================
+   5. "Über uns": team cards
+   ========================================================================= */
+
+/* As many columns as fit, each at least 13rem wide: 1 on phones, all five members
+   in one row on large screens (5 x 13rem + 4 gaps = 69rem fits into the 72rem page). */
+.team {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  gap: var(--space-4);
+  margin: var(--space-5) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.team > li {
+  margin: 0;
+}
+
+/* One card per member; .panel from style.css gives paper, border and padding. */
+.team-card {
+  height: 100%;                       /* all cards in a row get the same height */
+}
+
+.team-card .block-tile {
+  margin-bottom: var(--space-4);
+}
+
+.team-card__name {
+  margin-bottom: var(--space-1);
+  font-size: var(--text-l);
+}
+
+.team-card__role {
+  margin-bottom: var(--space-3);
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+
+/* =========================================================================
+   6. "Über uns": logo, video, technology table
+   ========================================================================= */
+
+/* Logo on the left, explanation on the right from 56rem. */
+.logo-show {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5) var(--space-6);
+  align-items: start;
+  margin-top: var(--space-5);
+}
+
+@media (min-width: 56rem) {
+  .logo-show {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  }
+}
+
+/* The logo lies on a paper sheet, the favicon next to it in its real use size. */
+.logo-show__figure {
+  margin: 0;
+  padding: var(--space-6) var(--space-5);
+  background: var(--color-paper);
+  border: 0.0625rem solid var(--color-ring);
+  border-radius: var(--radius-panel);
+}
+
+.logo-show__logo {
+  width: 100%;
+  max-width: 25rem;
+  height: auto;
+}
+
+.logo-show__small {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 0.0625rem solid var(--color-ring);
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+}
+
+.logo-show__small img {
+  flex-shrink: 0;
+}
+
+/* Explanation of the mark: term with a colour swatch, then the text. */
+.logo-parts {
+  display: grid;
+  gap: var(--space-4);
+  max-width: var(--measure);
+  margin: 0;
+}
+
+.logo-parts dt {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 700;
+}
+
+.logo-parts dd {
+  margin: var(--space-1) 0 0;
+}
+
+/* Extra swatch colours for the logo parts (the .swatch base is in style.css). */
+.swatch--roof { --swatch: var(--color-roof); }
+.swatch--wall { --swatch: var(--color-wall); }
+.swatch--sand { --swatch: var(--color-sand); }
+
+/* The video frame (.embed in style.css) should not get wider than about 768 px. */
+.video-block {
+  max-width: 48rem;
+  margin-top: var(--space-5);
+}
+
+/* Technology table: the row heading names the technique and its version,
+   the lecture number stands below it in small grey text. */
+.tech-table__lecture {
+  display: block;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.tech-table td ul {
+  margin: 0;
+  padding-left: 1.125rem;
+}
+
+/* style.css keeps table headings on one line. These two tables have long
+   headings, which may wrap here, so the tables fit into 360 px. */
+.tech-table thead th,
+.credit-table thead th {
+  white-space: normal;
+}
+
+
+/* =========================================================================
+   7. Legal pages: address blocks, date line
+   ========================================================================= */
+
+/* <address> is shown in italics by browsers; postal data reads better upright. */
+.legal-address {
+  margin: 0 0 var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  font-style: normal;
+  background: var(--color-paper);
+  border: 0.0625rem solid var(--color-ring);
+  border-left: var(--wall) solid var(--color-roof);   /* thick dark edge like a block wall */
+  border-radius: var(--radius-panel);
+}
+
+.legal-address p {
+  margin: 0;
+}
+
+.legal-address p + p {
+  margin-top: var(--space-3);
+}
+
+/* Date of the current version at the end of a legal page. */
+.legal-date {
+  margin-top: var(--space-6);
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+}
+
+/* The photo credit table in the Impressum sits inside the prose column. */
+.prose .table-wrap {
+  margin-top: var(--space-4);
+}
+
+/* Photo credit table: on phones the cells get less side padding, so the three
+   columns fit into 360 px without scrolling sideways. From 40rem the licence
+   name and the source link each stay on one line. */
+.credit-table th,
+.credit-table td {
+  padding-inline: 0.375rem;          /* 6 px: the longest words ("Konkordienkirche,") still fit */
+}
+
+@media (min-width: 40rem) {
+  .credit-table th,
+  .credit-table td {
+    padding-inline: var(--space-4);
+  }
+
+  .credit-table td a {
+    white-space: nowrap;
+  }
+}
+
+
+/* =========================================================================
+   8. Print
+   ========================================================================= */
+
+@media print {
+  .info-toc,
+  .video-block {
+    display: none;                    /* links and a video player are no use on paper */
+  }
+
+  .placeholder {
+    outline: 0.0625rem dashed #000000;
+    background: none;
+    color: #000000;
+  }
+
+  .legal-address {
+    border-left-width: 0.0625rem;
+  }
+}

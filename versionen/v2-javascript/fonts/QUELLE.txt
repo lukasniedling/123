@@ -1,0 +1,21 @@
+Fonts in this folder - where they come from  [V1]
+
+Downloaded once on 2026-09-28 from the npm packages of Fontsource via
+cdn.jsdelivr.net. The website loads them only from this folder (css/style.css,
+section 1); no request goes to Google Fonts or any CDN when a page is opened.
+
+Archivo, weights 400 / 600 / 700, subsets "latin" and "latin-ext"
+  Package:  @fontsource/archivo 5.3.0
+  Files:    https://cdn.jsdelivr.net/npm/@fontsource/archivo@5.3.0/files/archivo-<subset>-<weight>-normal.woff2
+  Licence:  SIL Open Font License 1.1, text in OFL-Archivo.txt
+  Author:   The Archivo Project Authors (https://github.com/Omnibus-Type/Archivo)
+
+IBM Plex Mono, weights 400 / 600, subsets "latin" and "latin-ext"
+  Package:  @fontsource/ibm-plex-mono 5.3.0
+  Files:    https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5.3.0/files/ibm-plex-mono-<subset>-<weight>-normal.woff2
+  Licence:  SIL Open Font License 1.1, text in OFL-IBM-Plex-Mono.txt
+  Author:   IBM Corp.
+
+The wordmark in img/logo.svg is Archivo Bold (width axis 112 of the variable
+font @fontsource-variable/archivo 5.3.0) converted to outlines. The OFL allows
+this; the logo contains no font file.

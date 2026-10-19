@@ -1,0 +1,117 @@
+@charset "utf-8";
+/*
+ * verzeichnis.css - directory page (quadrate.html): jump list and table.             [V1]
+ * Tables: lecture 3 slide 2. :target works like :hover (lecture 4 slide 24) but matches
+ * the element whose id is named in the address after #, e.g. quadrate.html#q-G1.
+ */
+
+
+/* --- Jump list: one block code per row letter, side by side --- */
+.jump-list {
+  margin: 1.5rem 0;
+}
+
+.jump-list h2 {
+  font-size: 1rem;
+}
+
+.jump-list ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.jump-list li {
+  display: inline-block;
+  margin: 0 0.25rem 0.5rem 0;
+}
+
+.jump-list a.block-code {
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
+}
+
+
+/* --- Table --- */
+
+/* The box scrolls sideways if the table is wider than the window (lecture 5 slide 14). */
+.table-wrap {
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+  background-color: #f7f5f0;
+  border: 1px solid #c5c0b5;
+}
+
+.directory {
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;      /* neighbouring cells share one line instead of two */
+  font-size: 0.875rem;
+}
+
+.directory caption {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: left;
+}
+
+.directory th,
+.directory td {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid #c5c0b5;
+}
+
+.directory thead th {
+  background-color: #dcd4c3;
+  border-bottom: 2px solid #7d7a72;
+  white-space: nowrap;
+}
+
+/* Each category heading gets a thick line in its category colour. */
+.directory th.essen   { border-bottom: 4px solid #d23f27; }
+.directory th.trinken { border-bottom: 4px solid #d0901a; }
+.directory th.kultur  { border-bottom: 4px solid #6b5bd2; }
+.directory th.shoppen { border-bottom: 4px solid #25a792; }
+
+/* Mouse over a row: the plaza colour, half transparent (rgba, lecture 4 slide 14). */
+.directory tbody tr:hover {
+  background-color: rgba(220, 212, 195, 0.45);
+}
+
+/* Numbers: right-aligned, in a font whose digits all have the same width. */
+.directory .num {
+  font-family: "IBM Plex Mono", Menlo, Consolas, monospace;
+  text-align: right;
+}
+
+/* A zero is shown lighter, so the eye finds the cells with places. */
+.directory .num--zero {
+  color: #9a978f;
+}
+
+.directory .total {
+  font-weight: 700;
+}
+
+/* Kind and location: wide enough for "links der Kurpfalzstraße" in one line. */
+.directory td.place {
+  min-width: 12rem;
+}
+
+/* The short text needs room: at least 22rem, so it does not become a narrow column. */
+.directory td.info {
+  min-width: 22rem;
+}
+
+/* Row reached by an anchor link (quadrate.html#q-G1): light yellow with a yellow edge,
+   like the chosen Quadrat on the map. */
+.directory tr:target {
+  background-color: #fbeec0;
+}
+
+.directory tr:target th {
+  border-left: 5px solid #f2c230;
+}

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<!--
+  index.html - start page of the website "Quadrate": 2D map of the Quadrate.          [V1]
+
+  Interim version V1: HTML and CSS only (lectures 2 to 5), no JavaScript, no PHP.
+  - The map is a picture (img/karte-2d.svg, a plan seen from straight above).
+  - Over the picture lies one link per Quadrat (146 links, class "block"). The box
+    .map-box has position: relative, each link has position: absolute, and its place
+    and size come from the inline style in percent (lecture 5 slide 16, lecture 3 slide 3).
+    Percent means: the links grow and shrink together with the picture.
+  - A click on a Quadrat jumps to its row in the directory (quadrate.html#q-G1, an anchor
+    on another page, lecture 3 slide 2). The way back, index.html#G1, highlights the
+    Quadrat G1 here with the pseudo-class :target (css/index.css).
+  - The 146 links between the two "generated" comments are written by the build tool
+    tools/export_v1.py from OpenStreetMap data (the tool is not part of this folder).
+    Do not edit them by hand: run the tool again instead.
+  Map data (c) OpenStreetMap contributors, ODbL 1.0.
+  Page-specific styles: css/index.css.
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Karte – Quadrate</title>
+  <meta name="description" content="Karte der Mannheimer Quadrate: alle 146 Quadrate auf einem Lageplan, mit einem Klick zu ihren Orten.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="site-logo" href="index.html"><img src="img/logo.svg" alt="Quadrate – zur Karte" width="200" height="33"></a>
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <ul>
+          <li><a class="current" href="index.html" aria-current="page">Karte</a></li>
+          <li><a href="quadrate.html">Quadrate</a></li>
+          <li><a href="vorschlagen.html">Ort vorschlagen</a></li>
+          <li><a href="ueber-uns.html">Über uns</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhalt" class="container">
+    <div class="page-intro">
+      <h1>Die Quadrate auf einen Blick</h1>
+      <p class="lead">Die Mannheimer Innenstadt besteht aus 144 Quadraten, dazu kommen die Teilblöcke M3a und M4a. Klick auf ein Quadrat: Im <a href="quadrate.html">Verzeichnis</a> siehst du, wie viele Orte es dort zum Essen, Trinken, für Kultur und zum Shoppen gibt, und was das Quadrat besonders macht.</p>
+    </div>
+
+    <p class="map-hint">Tipp: Die Karte lässt sich seitlich verschieben.</p>
+
+    <!-- .map-scroll scrolls sideways on narrow screens (overflow-x: auto, lecture 5 slide 14),
+         .map-box is the reference point for the absolutely positioned links. -->
+    <div class="map-scroll">
+      <div class="map-box">
+        <!-- alt describes the picture for people who cannot see it; title is the tooltip (lecture 2 slide 7). -->
+        <img src="img/karte-2d.svg" alt="Lageplan der Mannheimer Innenstadt von oben: die Quadrate als dunkelgraue Blöcke mit ihren Kürzeln von A1 bis U6, dazwischen die Kurpfalzstraße und die Planken, unten das Schloss, rechts der Wasserturm." title="Lageplan der Quadrate" width="1600" height="1346">
+        <!-- BEGIN generated: map links -->
+        <a class="block" id="A1" href="quadrate.html#q-A1" title="A1" style="left: 46.19%; top: 76.78%; width: 2.69%; height: 5.07%;">A1</a>
+        <a class="block" id="A2" href="quadrate.html#q-A2" title="A2" style="left: 42.00%; top: 76.84%; width: 3.33%; height: 5.77%;">A2</a>
+        <a class="block" id="A3" href="quadrate.html#q-A3" title="A3" style="left: 38.15%; top: 76.80%; width: 3.00%; height: 5.23%;">A3</a>
+        <a class="block" id="A4" href="quadrate.html#q-A4" title="A4" style="left: 29.52%; top: 76.58%; width: 7.42%; height: 5.03%;">A4</a>
+        <a class="block" id="A5" href="quadrate.html#q-A5" title="A5" style="left: 14.47%; top: 77.03%; width: 13.02%; height: 3.69%;">A5</a>
+        <a class="block" id="B1" href="quadrate.html#q-B1" title="B1" style="left: 46.18%; top: 69.01%; width: 3.12%; height: 6.44%;">B1</a>
+        <a class="block" id="B2" href="quadrate.html#q-B2" title="B2" style="left: 41.97%; top: 69.05%; width: 3.27%; height: 6.61%;">B2</a>
+        <a class="block" id="B3" href="quadrate.html#q-B3" title="B3 – Schillerplatz" style="left: 37.96%; top: 69.13%; width: 3.13%; height: 6.47%;">B3</a>
+        <a class="block" id="B4" href="quadrate.html#q-B4" title="B4" style="left: 33.71%; top: 69.10%; width: 3.23%; height: 6.58%;">B4</a>
+        <a class="block" id="B5" href="quadrate.html#q-B5" title="B5" style="left: 29.61%; top: 69.38%; width: 3.25%; height: 6.32%;">B5</a>
+        <a class="block" id="B6" href="quadrate.html#q-B6" title="B6" style="left: 17.72%; top: 68.08%; width: 10.44%; height: 7.29%;">B6</a>
+        <a class="block" id="B7" href="quadrate.html#q-B7" title="B7" style="left: 11.94%; top: 68.19%; width: 4.73%; height: 7.62%;">B7</a>
+        <a class="block" id="C1" href="quadrate.html#q-C1" title="C1" style="left: 46.12%; top: 60.55%; width: 3.16%; height: 7.21%;">C1</a>
+        <a class="block" id="C2" href="quadrate.html#q-C2" title="C2" style="left: 42.01%; top: 60.66%; width: 3.23%; height: 7.30%;">C2</a>
+        <a class="block" id="C3" href="quadrate.html#q-C3" title="C3" style="left: 37.90%; top: 60.59%; width: 3.16%; height: 7.44%;">C3</a>
+        <a class="block" id="C4" href="quadrate.html#q-C4" title="C4" style="left: 33.69%; top: 60.63%; width: 3.22%; height: 7.47%;">C4</a>
+        <a class="block" id="C5" href="quadrate.html#q-C5" title="C5 – Toulonplatz" style="left: 29.49%; top: 60.66%; width: 3.35%; height: 7.35%;">C5</a>
+        <a class="block" id="C6" href="quadrate.html#q-C6" title="C6" style="left: 25.53%; top: 60.76%; width: 3.04%; height: 6.15%;">C6</a>
+        <a class="block" id="C7" href="quadrate.html#q-C7" title="C7" style="left: 15.76%; top: 60.76%; width: 8.67%; height: 6.17%;">C7</a>
+        <a class="block" id="C8" href="quadrate.html#q-C8" title="C8" style="left: 9.59%; top: 60.93%; width: 5.26%; height: 5.96%;">C8</a>
+        <a class="block" id="D1" href="quadrate.html#q-D1" title="D1" style="left: 46.09%; top: 53.80%; width: 3.18%; height: 5.47%;">D1</a>
+        <a class="block" id="D2" href="quadrate.html#q-D2" title="D2" style="left: 41.97%; top: 53.85%; width: 3.23%; height: 5.37%;">D2</a>
+        <a class="block" id="D3" href="quadrate.html#q-D3" title="D3" style="left: 37.79%; top: 53.69%; width: 3.21%; height: 5.62%;">D3</a>
+        <a class="block" id="D4" href="quadrate.html#q-D4" title="D4" style="left: 33.74%; top: 53.79%; width: 3.15%; height: 5.58%;">D4</a>
+        <a class="block" id="D5" href="quadrate.html#q-D5" title="D5" style="left: 29.52%; top: 53.85%; width: 3.16%; height: 5.55%;">D5</a>
+        <a class="block" id="D6" href="quadrate.html#q-D6" title="D6" style="left: 24.39%; top: 54.54%; width: 4.20%; height: 4.92%;">D6</a>
+        <a class="block" id="D7" href="quadrate.html#q-D7" title="D7" style="left: 13.84%; top: 55.02%; width: 9.37%; height: 4.24%;">D7</a>
+        <a class="block" id="E1" href="quadrate.html#q-E1" title="E1" style="left: 46.08%; top: 47.76%; width: 3.48%; height: 4.58%;">E1</a>
+        <a class="block" id="E2" href="quadrate.html#q-E2" title="E2" style="left: 41.96%; top: 47.71%; width: 3.25%; height: 4.46%;">E2</a>
+        <a class="block" id="E3" href="quadrate.html#q-E3" title="E3" style="left: 37.81%; top: 47.80%; width: 3.31%; height: 4.44%;">E3</a>
+        <a class="block" id="E4" href="quadrate.html#q-E4" title="E4" style="left: 33.60%; top: 47.80%; width: 3.33%; height: 4.51%;">E4</a>
+        <a class="block" id="E5" href="quadrate.html#q-E5" title="E5" style="left: 29.49%; top: 48.04%; width: 3.23%; height: 4.72%;">E5</a>
+        <a class="block" id="E6" href="quadrate.html#q-E6" title="E6" style="left: 24.19%; top: 47.82%; width: 4.24%; height: 4.74%;">E6</a>
+        <a class="block" id="E7" href="quadrate.html#q-E7" title="E7" style="left: 12.99%; top: 48.06%; width: 10.37%; height: 4.66%;">E7</a>
+        <a class="block" id="F1" href="quadrate.html#q-F1" title="F1" style="left: 46.03%; top: 40.71%; width: 3.39%; height: 5.86%;">F1</a>
+        <a class="block" id="F2" href="quadrate.html#q-F2" title="F2" style="left: 41.90%; top: 40.74%; width: 3.35%; height: 5.88%;">F2</a>
+        <a class="block" id="F3" href="quadrate.html#q-F3" title="F3" style="left: 37.72%; top: 40.83%; width: 3.34%; height: 5.97%;">F3</a>
+        <a class="block" id="F4" href="quadrate.html#q-F4" title="F4" style="left: 33.61%; top: 40.83%; width: 3.35%; height: 5.99%;">F4</a>
+        <a class="block" id="F5" href="quadrate.html#q-F5" title="F5" style="left: 29.47%; top: 40.83%; width: 3.29%; height: 5.98%;">F5</a>
+        <a class="block" id="F6" href="quadrate.html#q-F6" title="F6" style="left: 24.33%; top: 40.86%; width: 4.30%; height: 5.99%;">F6</a>
+        <a class="block" id="F7" href="quadrate.html#q-F7" title="F7 – Grünanlage" style="left: 9.72%; top: 41.00%; width: 13.50%; height: 5.75%;">F7</a>
+        <a class="block" id="G1" href="quadrate.html#q-G1" title="G1 – Marktplatz" style="left: 46.07%; top: 33.68%; width: 3.38%; height: 6.14%;">G1</a>
+        <a class="block" id="G2" href="quadrate.html#q-G2" title="G2" style="left: 42.01%; top: 33.79%; width: 3.23%; height: 6.01%;">G2</a>
+        <a class="block" id="G3" href="quadrate.html#q-G3" title="G3" style="left: 37.79%; top: 33.76%; width: 3.25%; height: 6.02%;">G3</a>
+        <a class="block" id="G4" href="quadrate.html#q-G4" title="G4" style="left: 33.66%; top: 33.86%; width: 3.23%; height: 5.99%;">G4</a>
+        <a class="block" id="G5" href="quadrate.html#q-G5" title="G5" style="left: 29.46%; top: 33.85%; width: 3.30%; height: 6.08%;">G5</a>
+        <a class="block" id="G6" href="quadrate.html#q-G6" title="G6" style="left: 26.14%; top: 34.51%; width: 2.51%; height: 5.47%;">G6</a>
+        <a class="block" id="G7" href="quadrate.html#q-G7" title="G7" style="left: 11.43%; top: 33.88%; width: 10.95%; height: 6.09%;">G7</a>
+        <a class="block" id="H1" href="quadrate.html#q-H1" title="H1" style="left: 46.07%; top: 26.85%; width: 3.26%; height: 5.90%;">H1</a>
+        <a class="block" id="H2" href="quadrate.html#q-H2" title="H2" style="left: 41.97%; top: 26.86%; width: 3.25%; height: 6.00%;">H2</a>
+        <a class="block" id="H3" href="quadrate.html#q-H3" title="H3" style="left: 37.77%; top: 26.81%; width: 3.33%; height: 6.03%;">H3</a>
+        <a class="block" id="H4" href="quadrate.html#q-H4" title="H4" style="left: 33.59%; top: 28.34%; width: 3.34%; height: 4.52%;">H4</a>
+        <a class="block" id="H5" href="quadrate.html#q-H5" title="H5" style="left: 29.43%; top: 29.45%; width: 3.40%; height: 3.46%;">H5</a>
+        <a class="block" id="H6" href="quadrate.html#q-H6" title="H6 – Swanseaplatz" style="left: 25.69%; top: 28.67%; width: 2.79%; height: 4.19%;">H6</a>
+        <a class="block" id="H7" href="quadrate.html#q-H7" title="H7" style="left: 13.90%; top: 26.90%; width: 10.93%; height: 6.00%;">H7</a>
+        <a class="block" id="I1" href="quadrate.html#q-I1" title="I1" style="left: 46.07%; top: 19.84%; width: 3.39%; height: 6.00%;">I1</a>
+        <a class="block" id="I2" href="quadrate.html#q-I2" title="I2" style="left: 41.99%; top: 20.02%; width: 3.25%; height: 5.82%;">I2</a>
+        <a class="block" id="I3" href="quadrate.html#q-I3" title="I3" style="left: 37.78%; top: 19.91%; width: 3.32%; height: 5.92%;">I3</a>
+        <a class="block" id="I4" href="quadrate.html#q-I4" title="I4" style="left: 33.67%; top: 19.94%; width: 3.26%; height: 7.53%;">I4</a>
+        <a class="block" id="I5" href="quadrate.html#q-I5" title="I5" style="left: 29.51%; top: 20.06%; width: 3.30%; height: 8.46%;">I5</a>
+        <a class="block" id="I6" href="quadrate.html#q-I6" title="I6" style="left: 25.61%; top: 19.96%; width: 3.16%; height: 6.22%;">I6</a>
+        <a class="block" id="I7" href="quadrate.html#q-I7" title="I7" style="left: 18.50%; top: 20.88%; width: 6.27%; height: 5.09%;">I7</a>
+        <a class="block" id="K1" href="quadrate.html#q-K1" title="K1" style="left: 46.18%; top: 8.20%; width: 3.20%; height: 10.79%;">K1</a>
+        <a class="block" id="K2" href="quadrate.html#q-K2" title="K2" style="left: 41.92%; top: 6.90%; width: 3.33%; height: 12.01%;">K2</a>
+        <a class="block" id="K3" href="quadrate.html#q-K3" title="K3" style="left: 37.79%; top: 7.99%; width: 3.24%; height: 11.08%;">K3</a>
+        <a class="block" id="K4" href="quadrate.html#q-K4" title="K4" style="left: 33.80%; top: 9.59%; width: 3.05%; height: 9.45%;">K4</a>
+        <a class="block" id="K5" href="quadrate.html#q-K5" title="K5" style="left: 29.55%; top: 12.16%; width: 3.24%; height: 6.84%;">K5</a>
+        <a class="block" id="K6" href="quadrate.html#q-K6" title="K6" style="left: 25.66%; top: 14.79%; width: 3.13%; height: 4.30%;">K6</a>
+        <a class="block" id="K7" href="quadrate.html#q-K7" title="K7" style="left: 22.11%; top: 17.11%; width: 2.55%; height: 2.07%;">K7</a>
+        <a class="block" id="L1" href="quadrate.html#q-L1" title="L1" style="left: 51.17%; top: 76.65%; width: 2.75%; height: 5.39%;">L1</a>
+        <a class="block" id="L2" href="quadrate.html#q-L2" title="L2" style="left: 54.78%; top: 76.61%; width: 3.53%; height: 5.95%;">L2</a>
+        <a class="block" id="L3" href="quadrate.html#q-L3" title="L3" style="left: 59.15%; top: 76.54%; width: 3.27%; height: 6.01%;">L3</a>
+        <a class="block" id="L4" href="quadrate.html#q-L4" title="L4" style="left: 63.23%; top: 76.48%; width: 3.12%; height: 6.05%;">L4</a>
+        <a class="block" id="L5" href="quadrate.html#q-L5" title="L5" style="left: 64.71%; top: 85.24%; width: 1.91%; height: 8.48%;">L5</a>
+        <a class="block" id="L6" href="quadrate.html#q-L6" title="L6" style="left: 67.20%; top: 76.42%; width: 3.35%; height: 6.05%;">L6</a>
+        <a class="block" id="L7" href="quadrate.html#q-L7" title="L7" style="left: 67.89%; top: 85.04%; width: 2.60%; height: 8.35%;">L7</a>
+        <a class="block" id="L8" href="quadrate.html#q-L8" title="L8" style="left: 71.42%; top: 76.48%; width: 4.17%; height: 5.85%;">L8</a>
+        <a class="block" id="L9" href="quadrate.html#q-L9" title="L9" style="left: 71.61%; top: 85.03%; width: 3.93%; height: 7.42%;">L9</a>
+        <a class="block" id="L10" href="quadrate.html#q-L10" title="L10" style="left: 76.47%; top: 76.44%; width: 3.45%; height: 5.81%;">L10</a>
+        <a class="block" id="L11" href="quadrate.html#q-L11" title="L11" style="left: 76.48%; top: 84.97%; width: 3.44%; height: 7.46%;">L11</a>
+        <a class="block" id="L12" href="quadrate.html#q-L12" title="L12" style="left: 81.03%; top: 76.41%; width: 3.71%; height: 5.70%;">L12</a>
+        <a class="block" id="L13" href="quadrate.html#q-L13" title="L13" style="left: 80.98%; top: 84.93%; width: 3.40%; height: 7.38%;">L13</a>
+        <a class="block" id="L14" href="quadrate.html#q-L14" title="L14" style="left: 85.89%; top: 76.42%; width: 3.91%; height: 5.62%;">L14</a>
+        <a class="block" id="L15" href="quadrate.html#q-L15" title="L15" style="left: 86.44%; top: 84.82%; width: 2.74%; height: 7.52%;">L15</a>
+        <a class="block" id="M1" href="quadrate.html#q-M1" title="M1" style="left: 50.75%; top: 68.95%; width: 3.19%; height: 6.67%;">M1</a>
+        <a class="block" id="M2" href="quadrate.html#q-M2" title="M2" style="left: 54.78%; top: 68.86%; width: 3.47%; height: 6.73%;">M2</a>
+        <a class="block" id="M3" href="quadrate.html#q-M3" title="M3" style="left: 59.09%; top: 68.82%; width: 3.28%; height: 2.89%;">M3</a>
+        <a class="block" id="M3a" href="quadrate.html#q-M3a" title="M3a" style="left: 59.12%; top: 72.72%; width: 3.28%; height: 2.70%;">M3a</a>
+        <a class="block" id="M4" href="quadrate.html#q-M4" title="M4" style="left: 63.24%; top: 68.80%; width: 3.11%; height: 2.82%;">M4</a>
+        <a class="block" id="M4a" href="quadrate.html#q-M4a" title="M4a – Parkplatz" style="left: 63.19%; top: 72.65%; width: 3.18%; height: 2.72%;">M4a</a>
+        <a class="block" id="M5" href="quadrate.html#q-M5" title="M5" style="left: 67.24%; top: 68.81%; width: 3.20%; height: 6.57%;">M5</a>
+        <a class="block" id="M6" href="quadrate.html#q-M6" title="M6 – Lauersche Gärten" style="left: 71.51%; top: 68.73%; width: 8.38%; height: 6.41%;">M6</a>
+        <a class="block" id="M7" href="quadrate.html#q-M7" title="M7" style="left: 80.83%; top: 68.66%; width: 9.13%; height: 6.27%;">M7</a>
+        <a class="block" id="N1" href="quadrate.html#q-N1" title="N1" style="left: 50.62%; top: 60.32%; width: 3.31%; height: 7.44%;">N1</a>
+        <a class="block" id="N2" href="quadrate.html#q-N2" title="N2 – Dalbergplatz" style="left: 54.72%; top: 60.28%; width: 3.47%; height: 7.49%;">N2</a>
+        <a class="block" id="N3" href="quadrate.html#q-N3" title="N3" style="left: 58.98%; top: 60.26%; width: 3.27%; height: 7.56%;">N3</a>
+        <a class="block" id="N4" href="quadrate.html#q-N4" title="N4" style="left: 63.14%; top: 60.13%; width: 3.21%; height: 7.57%;">N4</a>
+        <a class="block" id="N5" href="quadrate.html#q-N5" title="N5 – Scipiogarten" style="left: 67.17%; top: 60.20%; width: 3.33%; height: 7.55%;">N5</a>
+        <a class="block" id="N6" href="quadrate.html#q-N6" title="N6" style="left: 71.34%; top: 60.34%; width: 3.15%; height: 7.36%;">N6</a>
+        <a class="block" id="N7" href="quadrate.html#q-N7" title="N7" style="left: 75.94%; top: 60.87%; width: 14.38%; height: 6.58%;">N7</a>
+        <a class="block" id="O1" href="quadrate.html#q-O1" title="O1 – Paradeplatz" style="left: 50.46%; top: 53.28%; width: 3.49%; height: 5.91%;">O1</a>
+        <a class="block" id="O2" href="quadrate.html#q-O2" title="O2" style="left: 54.69%; top: 53.22%; width: 3.50%; height: 6.02%;">O2</a>
+        <a class="block" id="O3" href="quadrate.html#q-O3" title="O3" style="left: 59.00%; top: 53.53%; width: 3.28%; height: 5.68%;">O3</a>
+        <a class="block" id="O4" href="quadrate.html#q-O4" title="O4" style="left: 63.08%; top: 53.69%; width: 3.23%; height: 5.45%;">O4</a>
+        <a class="block" id="O5" href="quadrate.html#q-O5" title="O5 – Kapuzinerplanken" style="left: 67.14%; top: 53.63%; width: 3.35%; height: 5.47%;">O5</a>
+        <a class="block" id="O6" href="quadrate.html#q-O6" title="O6 – Kapuzinerplanken" style="left: 71.28%; top: 53.53%; width: 4.28%; height: 5.69%;">O6</a>
+        <a class="block" id="O7" href="quadrate.html#q-O7" title="O7" style="left: 76.37%; top: 53.88%; width: 14.27%; height: 4.87%;">O7</a>
+        <a class="block" id="P1" href="quadrate.html#q-P1" title="P1" style="left: 50.57%; top: 47.72%; width: 3.28%; height: 4.10%;">P1</a>
+        <a class="block" id="P2" href="quadrate.html#q-P2" title="P2" style="left: 54.75%; top: 47.59%; width: 3.43%; height: 4.59%;">P2</a>
+        <a class="block" id="P3" href="quadrate.html#q-P3" title="P3" style="left: 58.96%; top: 47.51%; width: 3.31%; height: 4.34%;">P3</a>
+        <a class="block" id="P4" href="quadrate.html#q-P4" title="P4" style="left: 63.13%; top: 47.48%; width: 3.21%; height: 4.36%;">P4</a>
+        <a class="block" id="P5" href="quadrate.html#q-P5" title="P5" style="left: 67.14%; top: 47.31%; width: 3.35%; height: 4.63%;">P5</a>
+        <a class="block" id="P6" href="quadrate.html#q-P6" title="P6" style="left: 71.24%; top: 47.49%; width: 4.85%; height: 4.53%;">P6</a>
+        <a class="block" id="P7" href="quadrate.html#q-P7" title="P7" style="left: 76.95%; top: 47.40%; width: 13.93%; height: 4.37%;">P7</a>
+        <a class="block" id="Q1" href="quadrate.html#q-Q1" title="Q1" style="left: 50.58%; top: 40.76%; width: 3.32%; height: 5.72%;">Q1</a>
+        <a class="block" id="Q2" href="quadrate.html#q-Q2" title="Q2" style="left: 54.74%; top: 40.73%; width: 3.30%; height: 5.58%;">Q2</a>
+        <a class="block" id="Q3" href="quadrate.html#q-Q3" title="Q3" style="left: 58.92%; top: 40.72%; width: 3.24%; height: 5.61%;">Q3</a>
+        <a class="block" id="Q4" href="quadrate.html#q-Q4" title="Q4" style="left: 63.04%; top: 40.70%; width: 3.25%; height: 5.55%;">Q4</a>
+        <a class="block" id="Q5" href="quadrate.html#q-Q5" title="Q5" style="left: 67.14%; top: 40.74%; width: 3.29%; height: 5.47%;">Q5</a>
+        <a class="block" id="Q6" href="quadrate.html#q-Q6" title="Q6" style="left: 71.32%; top: 40.94%; width: 3.98%; height: 5.10%;">Q6</a>
+        <a class="block" id="Q7" href="quadrate.html#q-Q7" title="Q7" style="left: 77.58%; top: 40.65%; width: 11.55%; height: 5.28%;">Q7</a>
+        <a class="block" id="R1" href="quadrate.html#q-R1" title="R1" style="left: 50.69%; top: 33.89%; width: 3.18%; height: 5.92%;">R1</a>
+        <a class="block" id="R2" href="quadrate.html#q-R2" title="R2" style="left: 54.81%; top: 33.78%; width: 3.25%; height: 5.95%;">R2</a>
+        <a class="block" id="R3" href="quadrate.html#q-R3" title="R3" style="left: 58.85%; top: 33.71%; width: 3.33%; height: 6.02%;">R3</a>
+        <a class="block" id="R4" href="quadrate.html#q-R4" title="R4" style="left: 63.03%; top: 33.75%; width: 3.21%; height: 5.90%;">R4</a>
+        <a class="block" id="R5" href="quadrate.html#q-R5" title="R5" style="left: 67.17%; top: 33.69%; width: 3.26%; height: 5.96%;">R5</a>
+        <a class="block" id="R6" href="quadrate.html#q-R6" title="R6" style="left: 71.34%; top: 35.65%; width: 1.84%; height: 3.74%;">R6</a>
+        <a class="block" id="R7" href="quadrate.html#q-R7" title="R7 – Lameygarten" style="left: 76.73%; top: 33.67%; width: 11.17%; height: 5.81%;">R7</a>
+        <a class="block" id="S1" href="quadrate.html#q-S1" title="S1" style="left: 50.57%; top: 26.76%; width: 3.36%; height: 6.01%;">S1</a>
+        <a class="block" id="S2" href="quadrate.html#q-S2" title="S2" style="left: 54.72%; top: 26.79%; width: 3.28%; height: 6.05%;">S2</a>
+        <a class="block" id="S3" href="quadrate.html#q-S3" title="S3" style="left: 58.84%; top: 26.77%; width: 3.39%; height: 6.06%;">S3</a>
+        <a class="block" id="S4" href="quadrate.html#q-S4" title="S4" style="left: 63.03%; top: 26.68%; width: 3.30%; height: 5.99%;">S4</a>
+        <a class="block" id="S5" href="quadrate.html#q-S5" title="S5" style="left: 67.18%; top: 26.55%; width: 3.14%; height: 5.99%;">S5</a>
+        <a class="block" id="S6" href="quadrate.html#q-S6" title="S6" style="left: 71.30%; top: 26.68%; width: 12.80%; height: 5.85%;">S6</a>
+        <a class="block" id="T1" href="quadrate.html#q-T1" title="T1" style="left: 50.56%; top: 19.87%; width: 3.32%; height: 6.00%;">T1</a>
+        <a class="block" id="T2" href="quadrate.html#q-T2" title="T2" style="left: 54.70%; top: 19.87%; width: 3.33%; height: 5.95%;">T2</a>
+        <a class="block" id="T3" href="quadrate.html#q-T3" title="T3" style="left: 58.85%; top: 19.86%; width: 3.39%; height: 5.87%;">T3</a>
+        <a class="block" id="T4" href="quadrate.html#q-T4" title="T4 – Quartiersplatz" style="left: 62.98%; top: 19.84%; width: 3.42%; height: 6.06%;">T4</a>
+        <a class="block" id="T5" href="quadrate.html#q-T5" title="T5" style="left: 67.06%; top: 19.85%; width: 3.38%; height: 6.02%;">T5</a>
+        <a class="block" id="T6" href="quadrate.html#q-T6" title="T6" style="left: 71.22%; top: 19.75%; width: 8.98%; height: 5.98%;">T6</a>
+        <a class="block" id="U1" href="quadrate.html#q-U1" title="U1" style="left: 50.64%; top: 8.00%; width: 3.22%; height: 10.91%;">U1</a>
+        <a class="block" id="U2" href="quadrate.html#q-U2" title="U2 – Herschelplatz" style="left: 54.77%; top: 5.34%; width: 3.14%; height: 13.64%;">U2</a>
+        <a class="block" id="U3" href="quadrate.html#q-U3" title="U3" style="left: 58.77%; top: 6.64%; width: 3.24%; height: 12.29%;">U3</a>
+        <a class="block" id="U4" href="quadrate.html#q-U4" title="U4" style="left: 63.00%; top: 7.34%; width: 3.33%; height: 11.58%;">U4</a>
+        <a class="block" id="U5" href="quadrate.html#q-U5" title="U5" style="left: 67.09%; top: 9.81%; width: 3.29%; height: 9.11%;">U5</a>
+        <a class="block" id="U6" href="quadrate.html#q-U6" title="U6" style="left: 70.87%; top: 13.60%; width: 4.98%; height: 5.17%;">U6</a>
+        <!-- END generated: map links -->
+      </div>
+    </div>
+
+    <div class="map-footer">
+      <p>Orte: OpenStreetMap, Stand 28.09.2026, ohne Gewähr. Alle Quadrate als Liste: <a href="quadrate.html">Verzeichnis der Quadrate</a></p>
+      <p class="small">Was noch kommt: Mit JavaScript färbt sich die Karte nach Wochentag, Uhrzeit und Kategorie, und ein Klick öffnet den Steckbrief direkt hier. Später wird die Karte dreidimensional.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL</p>
+      <nav aria-label="Rechtliches">
+        <ul>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </nav>
+      <p>Studienprojekt · DHBW Mannheim · Webprogrammierung 2026 · Zwischenversion <span class="version-tag">V1</span></p>
+    </div>
+  </footer>
+</body>
+</html>
