@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- Quadrate illustration "Gerade offen": a hanging "open" sign and a clock. Drawn for this website (final-v3, 2026-10-14). [V1] -->
+  <path d="M30 14h44" stroke="#3a3d43" stroke-width="4" stroke-linecap="round"/>
+  <path d="M40 14l-8 22M64 14l8 22" stroke="#3a3d43" stroke-width="3"/>
+  <rect x="14" y="36" width="76" height="34" rx="8" fill="#1e7a34"/>
+  <text x="52" y="60" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#ffffff">OFFEN</text>
+  <circle cx="88" cy="90" r="22" fill="#ffffff" stroke="#D0901A" stroke-width="6"/>
+  <path d="M88 76v14l9 6" stroke="#1d1d1f" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>

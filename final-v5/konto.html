@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<!--
+  konto.html - account page: log in, register, and the account ("Mein Konto").
+
+  How it works (decision D-042): accounts and saved places live in the browser (localStorage),
+  so this page works by double-click without any server. js/konto.js stores and reads the data
+  (window.Konto), js/konto-seite.js shows the right part of this page:
+    not logged in  -> #konto-anmelden: the forms "Anmelden" and "Konto anlegen" (e-mail and password)
+    not confirmed  -> #konto-bestaetigen: the simulated e-mail with the code and the form for the code
+    logged in      -> #konto-orte: profile picture, preferences, overview, history and day plans, and the
+                      buttons "Abmelden" and "Konto löschen" (the saved places themselves stand on merkliste.html)
+  All three parts carry the attribute hidden; the script shows one of them. The names of the saved
+  places come from js/data/orte.js, the names of the Quadrate from js/data/quadrate.js.
+  Page styles: css/konto.css.
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Konto – Quadrate</title>
+  <meta name="description" content="Anmelden, Konto anlegen, Profilbild, Vorlieben und Verlauf deiner Merkliste für die Mannheimer Quadrate.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/konto.css">
+</head>
+<body>
+  <!-- Skip link: first element on the page, lets keyboard users jump over the navigation. -->
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="site-header">
+    <div class="site-header__inner container">
+      <a class="site-logo" href="index.html">
+        <img src="img/logo.svg" alt="Quadrate – zur Karte" width="200" height="33">
+      </a>
+
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <ul class="site-nav__list">
+          <li><a href="index.html">Karte</a></li>
+          <!-- events in the Quadrate (events.html, added 2026-10-13) -->
+          <li><a href="events.html">Events</a></li>
+          <li><a href="quadrate.html">Orte</a></li>
+          <!-- saved places with or without an account (merkliste.html, added 2026-10-13) -->
+          <li><a href="merkliste.html">Merkliste</a></li>
+          <!-- "Ort vorschlagen" is part of the page "Orte" since 2026-10-14 -->
+          <!-- account page: log in, register, saved places (js/konto.js, localStorage) -->
+          <li class="site-nav__item--account"><a href="konto.html" aria-current="page">Konto</a></li>
+          <!-- "Über uns" back in the menu on 2026-10-14 (final-v5), on the far right next to "Konto" -->
+          <li><a href="ueber-uns.html">Über uns</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhalt" class="container">
+    <noscript>
+      <div class="notice notice--warning">
+        <p class="notice__title">JavaScript nötig</p>
+        <p>Konten und gemerkte Orte speichert die Website mit JavaScript in deinem Browser.</p>
+      </div>
+    </noscript>
+
+    <!-- Shown by js/konto-seite.js when the browser blocks localStorage (e.g. some private windows). -->
+    <div class="notice notice--warning" id="konto-gesperrt" hidden>
+      <p class="notice__title">Speichern nicht möglich</p>
+      <p>Dein Browser erlaubt dieser Seite nicht, Daten zu speichern (zum Beispiel in einem privaten Fenster). Konten und gemerkte Orte funktionieren deshalb hier nicht.</p>
+    </div>
+
+    <!-- ============================== Not logged in ============================== -->
+    <div id="konto-anmelden" hidden>
+      <div class="page-intro page-intro--band band-konto">
+        <h1>Konto</h1>
+        <p class="lead">Mit einem Konto merkst du dir Orte aus dem Steckbrief. Quadrate mit gemerkten Orten bekommen auf der Karte eine Stecknadel.</p>
+      </div>
+
+      <div class="account-layout">
+        <section class="panel account-panel" aria-labelledby="anmelden-titel">
+          <h2 class="account-panel__title" id="anmelden-titel">Anmelden</h2>
+          <!-- shown by js/konto-seite.js after the e-mail address was confirmed -->
+          <p class="notice notice--success" id="anmelden-info" role="status" hidden></p>
+          <form class="form" id="anmelden-formular" novalidate>
+            <div class="field">
+              <label class="field__label" for="anmelden-email">E-Mail-Adresse</label>
+              <input id="anmelden-email" name="email" type="email" required autocomplete="username" autocapitalize="none" spellcheck="false">
+            </div>
+            <div class="field">
+              <label class="field__label" for="anmelden-passwort">Passwort</label>
+              <input id="anmelden-passwort" name="passwort" type="password" required autocomplete="current-password">
+            </div>
+            <p class="account-error" id="anmelden-fehler" role="alert"></p>
+            <div class="button-row">
+              <button class="button" type="submit">Anmelden</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel account-panel" aria-labelledby="registrieren-titel">
+          <h2 class="account-panel__title" id="registrieren-titel">Konto anlegen</h2>
+          <form class="form" id="registrieren-formular" novalidate>
+            <div class="field">
+              <label class="field__label" for="registrieren-email">E-Mail-Adresse</label>
+              <p class="field__hint" id="registrieren-email-hinweis">Du bekommst einen Code, mit dem du die Adresse bestätigst. Erst danach kannst du dich anmelden.</p>
+              <input id="registrieren-email" name="email" type="email" required maxlength="100" autocomplete="email" autocapitalize="none" spellcheck="false" aria-describedby="registrieren-email-hinweis">
+            </div>
+            <div class="field">
+              <label class="field__label" for="registrieren-passwort">Passwort</label>
+              <p class="field__hint" id="registrieren-passwort-hinweis">Mindestens 6 Zeichen. Bitte kein echtes Passwort: Es wird nur in diesem Browser gespeichert, ohne Verschlüsselung.</p>
+              <input id="registrieren-passwort" name="passwort" type="password" required autocomplete="new-password" aria-describedby="registrieren-passwort-hinweis">
+            </div>
+            <p class="account-error" id="registrieren-fehler" role="alert"></p>
+            <div class="button-row">
+              <button class="button" type="submit">Konto anlegen</button>
+            </div>
+          </form>
+        </section>
+      </div>
+    </div>
+
+    <!-- ============================== Registered, not confirmed yet ============================== -->
+    <div id="konto-bestaetigen" hidden>
+      <div class="page-intro page-intro--band band-konto">
+        <h1>E-Mail bestätigen</h1>
+        <p class="lead">Wir haben einen Bestätigungscode an <strong id="bestaetigen-email"></strong> geschickt. Gib ihn hier ein, dann kannst du dich mit dieser Adresse anmelden.</p>
+      </div>
+
+      <div class="account-layout">
+        <section class="panel account-panel" aria-labelledby="code-titel">
+          <h2 class="account-panel__title" id="code-titel">Code eingeben</h2>
+          <form class="form" id="bestaetigen-formular" novalidate>
+            <div class="field">
+              <label class="field__label" for="bestaetigen-code">Bestätigungscode</label>
+              <p class="field__hint" id="bestaetigen-code-hinweis">6 Ziffern aus der E-Mail.</p>
+              <input id="bestaetigen-code" name="code" type="text" required inputmode="numeric" maxlength="6" autocomplete="one-time-code" aria-describedby="bestaetigen-code-hinweis">
+            </div>
+            <p class="account-error" id="bestaetigen-fehler" role="alert"></p>
+            <div class="button-row">
+              <button class="button" type="submit">Bestätigen</button>
+              <button class="button button--secondary" type="button" id="bestaetigen-zurueck">Zurück zum Anmelden</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Simulated inbox: the site has no server and cannot send a real e-mail, so the e-mail
+             that a server would send is shown here. Filled by js/konto-seite.js. -->
+        <section class="panel account-panel mail" aria-labelledby="postfach-titel">
+          <h2 class="account-panel__title" id="postfach-titel">Postfach (Simulation)</h2>
+          <p class="notice notice--info">Diese Website läuft ohne Server und kann keine echten E-Mails verschicken. Die E-Mail, die du sonst bekommen würdest, steht deshalb hier.</p>
+          <dl class="mail__head">
+            <dt>Von</dt><dd>Quadrate</dd>
+            <dt>An</dt><dd id="mail-an"></dd>
+            <dt>Betreff</dt><dd>Bestätige deine E-Mail-Adresse</dd>
+          </dl>
+          <div class="mail__body">
+            <p>Hallo,</p>
+            <p>danke für deine Anmeldung bei Quadrate. Dein Bestätigungscode lautet:</p>
+            <p class="mail__code" id="mail-code"></p>
+            <p>Gib ihn auf der Seite „Konto“ ein. Hast du dich nicht angemeldet, kannst du diese E-Mail ignorieren.</p>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ============================== Logged in: the account ============================== -->
+    <div id="konto-orte" hidden>
+      <div class="page-intro page-intro--band band-konto">
+        <h1>Mein Konto</h1>
+        <p class="lead">Angemeldet als <strong id="konto-name"></strong>. Hier stehen dein Profilbild, deine Vorlieben und dein Verlauf. Deine gemerkten Orte und Events findest du auf der <a href="merkliste.html">Merkliste</a>.</p>
+      </div>
+
+      <!-- profile picture (js/avatar.js, added 2026-10-14): chosen here, stored in this browser, shown in the menu.
+           The file field itself is hidden visually; its label is drawn as a button, and the focus ring of the
+           field is shown on the label (css/konto.css). -->
+      <section class="panel profile-picture" aria-labelledby="profilbild-titel">
+        <h2 class="account-panel__title" id="profilbild-titel">Profilbild</h2>
+        <div class="profile-picture__row">
+          <span class="avatar avatar--large">
+            <img id="profilbild-bild" src="" alt="Dein Profilbild" width="96" height="96" hidden>
+            <span class="avatar__letter" id="profilbild-buchstabe" aria-hidden="true"></span>
+          </span>
+          <div class="profile-picture__tools">
+            <div class="button-row">
+              <input class="visually-hidden" type="file" id="profilbild-datei" accept="image/*">
+              <label class="button button--secondary" for="profilbild-datei">Bild wählen</label>
+              <button class="button button--secondary" type="button" id="profilbild-entfernen" hidden>Bild entfernen</button>
+            </div>
+            <p class="field__hint">Das Bild wird verkleinert und nur in diesem Browser gespeichert. Es erscheint oben im Menü neben „Konto“.</p>
+            <p class="profile-picture__message" id="profilbild-meldung" role="status"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- directly under the profile picture since 2026-10-14: what the map and the place search start with -->
+      <section class="panel account-preferences" aria-labelledby="vorlieben-titel">
+        <h2 class="account-panel__title" id="vorlieben-titel">Deine Vorlieben</h2>
+        <p class="field__hint">Die Karte und die Ortssuche starten mit deiner Lieblingskategorie. Orte mit dem, was dir wichtig ist, stehen im Steckbrief und in der Ortssuche oben und tragen einen Stern. Gespeichert wird sofort.</p>
+        <form class="form" id="vorlieben-formular" action="#">
+          <fieldset class="filter-group">
+            <legend class="field__label">Lieblingskategorie</legend>
+            <ul class="chip-group">
+              <li><input class="chip-input visually-hidden" type="radio" name="lieblingskategorie" id="liebling-keine" value="" checked><label class="chip" for="liebling-keine"><span class="chip__swatch"></span>keine</label></li>
+              <li><input class="chip-input visually-hidden" type="radio" name="lieblingskategorie" id="liebling-essen" value="essen"><label class="chip cat-essen" for="liebling-essen"><span class="chip__swatch"></span><span class="cat-icon cat-icon--essen" aria-hidden="true"></span>Essen</label></li>
+              <li><input class="chip-input visually-hidden" type="radio" name="lieblingskategorie" id="liebling-trinken" value="trinken"><label class="chip cat-trinken" for="liebling-trinken"><span class="chip__swatch"></span><span class="cat-icon cat-icon--trinken" aria-hidden="true"></span>Trinken</label></li>
+              <li><input class="chip-input visually-hidden" type="radio" name="lieblingskategorie" id="liebling-kultur" value="kultur"><label class="chip cat-kultur" for="liebling-kultur"><span class="chip__swatch"></span><span class="cat-icon cat-icon--kultur" aria-hidden="true"></span>Kultur</label></li>
+              <li><input class="chip-input visually-hidden" type="radio" name="lieblingskategorie" id="liebling-shoppen" value="shoppen"><label class="chip cat-shoppen" for="liebling-shoppen"><span class="chip__swatch"></span><span class="cat-icon cat-icon--shoppen" aria-hidden="true"></span>Shoppen</label></li>
+            </ul>
+          </fieldset>
+          <div class="field account-preferences__feature">
+            <label class="field__label" for="vorlieben-merkmal">Was dir wichtig ist</label>
+            <select id="vorlieben-merkmal" name="merkmal">
+              <option value="">nichts Bestimmtes</option>
+              <option value="vegan">vegan</option>
+              <option value="vegetarisch">vegetarisch</option>
+              <option value="rollstuhlgerecht">rollstuhlgerecht</option>
+              <option value="draußen sitzen">draußen sitzen</option>
+              <option value="WLAN">WLAN</option>
+            </select>
+          </div>
+          <p class="profile-picture__message" id="vorlieben-meldung" role="status"></p>
+        </form>
+      </section>
+
+      <!-- Overview, history and preferences (added 2026-10-14): stored by js/verlauf.js, drawn by js/konto-seite.js -->
+      <section class="panel account-overview" aria-labelledby="ueberblick-titel">
+        <h2 class="account-panel__title" id="ueberblick-titel">Dein Überblick</h2>
+        <!-- filled by showOverview(): numbers and one bar per category -->
+        <div id="ueberblick"></div>
+      </section>
+
+      <div class="account-history">
+        <section class="panel" aria-labelledby="gesehen-titel">
+          <h2 class="account-panel__title" id="gesehen-titel">Zuletzt angesehen</h2>
+          <!-- the Quadrate opened on the map, newest first (showHistory) -->
+          <ul class="seen-list" id="gesehen-liste"></ul>
+        </section>
+        <section class="panel" aria-labelledby="merkverlauf-titel">
+          <h2 class="account-panel__title" id="merkverlauf-titel">Verlauf deiner Merkliste</h2>
+          <!-- saved and removed places and events, newest first (showHistory) -->
+          <ol class="timeline" id="merkverlauf-liste"></ol>
+          <!-- fold the list open or shut, or empty it (js/konto-seite.js, setupHistoryButtons, 2026-10-14) -->
+          <div class="button-row timeline__tools" id="merkverlauf-knoepfe" hidden>
+            <button class="button button--secondary button--small" type="button" id="merkverlauf-mehr" aria-controls="merkverlauf-liste" aria-expanded="false">Alle anzeigen</button>
+            <button class="button button--secondary button--small" type="button" id="merkverlauf-leeren">Verlauf leeren</button>
+          </div>
+        </section>
+      </div>
+
+      <!-- saved day plans of "Tag planen" on merkliste.html (js/verlauf.js, drawn by showPlans, 2026-10-14) -->
+      <section class="panel account-plans" aria-labelledby="tagesplaene-titel">
+        <h2 class="account-panel__title" id="tagesplaene-titel">Deine Tagespläne</h2>
+        <ul class="account-plans__list" id="tagesplaene-liste"></ul>
+      </section>
+
+
+    </div>
+
+    <!-- Log out and delete the account: at the very end of the page since 2026-10-14, after everything else.
+         Shown only when someone is logged in (js/konto-seite.js, show()). -->
+    <div class="button-row account-actions" id="konto-aktionen" hidden>
+      <button class="button" type="button" id="abmelden">Abmelden</button>
+      <button class="button button--secondary" type="button" id="konto-loeschen">Konto löschen</button>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner container">
+      <p>Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL</p>
+      <nav class="site-footer__links" aria-label="Weitere Seiten">
+        <ul>
+          <li><a href="ueber-uns.html">Über uns</a></li>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </nav>
+      <p>Studienprojekt <span aria-hidden="true">·</span> DHBW Mannheim <span aria-hidden="true">·</span> Webprogrammierung 2026</p>
+    </div>
+  </footer>
+
+  <!-- data for the names of the saved places and Quadrate, then the account module and this page -->
+  <script src="js/data/orte.js"></script>
+  <script src="js/data/quadrate.js"></script>
+  <script src="js/konto.js"></script>
+  <script src="js/merkliste.js"></script>
+  <!-- profile picture on this page (added 2026-10-14) -->
+  <script src="js/avatar.js"></script>
+  <!-- history and preferences of the account (js/verlauf.js, 2026-10-14) -->
+  <script src="js/verlauf.js"></script>
+  <!-- the events: for their names in "Verlauf deiner Merkliste" -->
+  <script src="js/data/events.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/konto-seite.js"></script>
+</body>
+</html>

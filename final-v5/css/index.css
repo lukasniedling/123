@@ -1,0 +1,590 @@
+@charset "utf-8";
+/*
+ * index.css - styles that only the start page (index.html) needs.     [V1 fallback, V2 interactive]
+ *
+ * How it fits in: loaded after css/style.css (design system) and css/karte.css (map of the variant).
+ * style.css already styles the layout of this page (map-layout, filter-bar, map-frame, map-footer,
+ * profile, place-group, place, badge, legend, photo). This file only adds what is new here:
+ * the "Jetzt" button next to the time, the list "Quadrat wählen" with its jump link, the live
+ * summary under the legend and the extra parts of the profile panel made by js/steckbrief.js.
+ *
+ * It also changes the layout on large screens (from 72rem, section "Large screens"): intro and filter
+ * become a column on the left, the map gets the rest and is only as big as fits into the window, and
+ * the profile opens as a panel over the right part of the map instead of below it.
+ */
+
+/* Elements that need JavaScript [V2] carry the attribute hidden in index.html; js/app.js removes it.
+   The rule that makes hidden always win is in css/style.css (section 4, Utilities). */
+
+
+/* ---------- Filter bar [V2] ---------- */
+
+/* A wider start size for the time group than in style.css (18rem): on laptop screens weekday and
+   slider then fill the first row, and the categories share the second row with the list. */
+.filter-bar .filter-group--time {
+  flex-basis: 28rem;
+}
+
+/* Readout of the time and the button "Jetzt" side by side, on the right of the label. */
+.time-now {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* The small button needs no room for a wall edge below it inside this row. */
+.time-now .button {
+  margin-bottom: 0;
+}
+
+/* Button "Zeitraffer" (js/filter.js, added 2026-10-13): play icon while stopped, stop icon and the
+   sand colour while it runs (aria-pressed="true"). The row may wrap on narrow screens. */
+.time-now {
+  flex-wrap: wrap;
+}
+
+.time-play {
+  gap: 0.375rem;
+}
+
+.time-play__stop,
+.time-play[aria-pressed="true"] .time-play__start {
+  display: none;
+}
+
+.time-play[aria-pressed="true"] .time-play__stop {
+  display: inline;
+}
+
+.time-play[aria-pressed="true"] {
+  background: var(--color-sand);
+}
+
+/* Button "In meiner Nähe" under the list "Quadrat wählen" (js/app.js, added 2026-10-13). */
+.near-button {
+  margin: var(--space-2) 0 0;
+}
+
+/* Arrow buttons left and right of the slider. The slider and its hour labels share the middle
+   column, so the labels stay exactly under their values. The buttons sit at the height of the
+   slider (align-items: start), not in the middle of slider and labels together. */
+.time-stepper {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.time-stepper__track {
+  flex: 1 1 auto;
+  min-width: 0;                     /* lets the slider get narrower than its default width */
+}
+
+/* round, as big as the touch target (44 px), only the arrow inside */
+.time-step {
+  flex: 0 0 auto;
+  width: var(--target);
+  padding: 0;
+  margin-bottom: 0;
+}
+
+/* The list "Quadrat wählen": full width on phones. From 48rem on it is wide enough for
+   "M4a – Parkplatz", not wider, and margin-left: auto pushes it to the right end of its row. */
+.filter-group--block {
+  flex: 1 1 100%;
+}
+
+@media (min-width: 48rem) {
+  .filter-group--block {
+    flex: 0 1 14rem;
+    margin-left: auto;
+  }
+}
+
+/* Jump link after the list: hidden like .visually-hidden until it gets the keyboard focus. */
+.jump-link:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.jump-link:focus {
+  display: inline-block;
+  margin-top: var(--space-2);
+  font-weight: 600;
+}
+
+
+/* ---------- Map ---------- */
+
+/* Hint for phones: the map is wider than the screen and scrolls sideways, but mobile browsers show
+   no scroll bar. Shown only below 48rem, the width from which the whole map fits. */
+.map-hint {
+  display: none;
+  margin: 0;
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-paper);
+  border-bottom: 0.0625rem solid var(--color-ring);
+  font-size: var(--text-s);
+}
+
+@media (max-width: 47.99rem) {
+  .map-hint {
+    display: block;
+  }
+}
+
+/* The data source always sits at the right end of the strip, also when the legend is hidden
+   (page without JavaScript), so its right-aligned lines line up. */
+.map-footer__meta {
+  margin-left: auto;
+}
+
+
+/* ---------- Legend strip and live summary [V2] ---------- */
+
+.map-footer__legend {
+  display: grid;
+  gap: var(--space-2);
+}
+
+/* "In 23 Quadraten haben jetzt ... geöffnet (58 Orte)." */
+.map-summary {
+  margin: 0;
+  color: var(--color-text);
+  font-size: var(--text-m);
+  font-weight: 600;
+}
+
+.map-summary__note {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+/* ---------- Profile panel [V2] ---------- */
+
+/* scrollIntoView (smaller screens) and the jump link stop a little above the panel, not at its very edge.
+   The sticky header is already taken into account by scroll-padding-top in css/style.css. */
+#steckbrief {
+  scroll-margin-top: var(--space-4);
+}
+
+/* The panel sits inside the map frame (div.map-area), directly below the map. As part of the frame it
+   needs no card of its own: a line separates it from the map. */
+.map-area > .profile {
+  padding: var(--space-5);
+  border-top: 0.0625rem solid var(--color-plaza);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* The frame cuts off what sticks out over its round corners. style.css does it with overflow: hidden, but
+   that would stop the sticky close button of the panel (below); overflow: clip cuts the same way and
+   leaves position: sticky working. Browsers without clip keep hidden. */
+.map-frame {
+  overflow: clip;
+}
+
+/* Before a Quadrat is chosen (and after closing) the panel is not shown at all;
+   the intro above the filter already says how to open it. */
+.map-area > .profile--empty {
+  display: none;
+}
+
+/* Tile and title stay in one row; the title wraps. */
+.map-area .profile__head {
+  flex-wrap: nowrap;
+}
+
+/* Close button "×": a round button with a 44 px touch target, the first child of the panel.
+   float: right puts it next to the head (the head makes room for it); position: sticky keeps it in view
+   while the visitor scrolls down: on smaller screens below the sticky page header, in the panel over the
+   map (from 72rem, see below) at the top of the panel. A soft shadow lifts it above the text under it. */
+.profile__close {
+  position: sticky;
+  top: calc(var(--header-offset, var(--header-height)) + var(--space-2));   /* --header-offset: js/steckbrief.js */
+  z-index: 2;
+  float: right;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--target);
+  height: var(--target);
+  margin: calc(-1 * var(--space-2)) calc(-1 * var(--space-2)) 0 var(--space-3);
+  padding: 0;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.12);
+  color: var(--color-text);
+  background: var(--color-ground);
+  border: 0;
+  border-radius: 50%;
+  font: inherit;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.profile__close:hover {
+  background: var(--color-plaza);
+}
+
+/* Small heading above the counts per category. */
+.profile__subtitle {
+  margin: var(--space-5) 0 var(--space-3);
+  font-size: var(--text-m);
+}
+
+/* Counts per category, "swatch  Essen  3 (2 geöffnet)": as many columns of at least 10rem as fit
+   (one on phones, two in the left column of the panel). */
+.profile-counts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-s);
+}
+
+.profile-counts li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--space-2);
+  margin: 0;
+}
+
+.profile-counts__name {
+  font-weight: 600;
+}
+
+.profile-counts__number {
+  font-family: var(--font-code);
+  font-weight: 600;
+}
+
+.profile-counts__open,
+.profile-counts__item--zero {
+  color: var(--color-text-muted);
+}
+
+/* The place list sits right under its heading; the heading of the active group has no line of its own. */
+.profile__places .place-group__title {
+  font-weight: 700;
+}
+
+/* "Keine Orte der Kategorie ... in diesem Quadrat." */
+.place-group__empty {
+  margin: 0;
+  padding: var(--space-3) 0;
+  color: var(--color-text-muted);
+  border-top: 0.0625rem solid var(--color-ring);
+}
+
+/* --- Folded categories: <details> with the category line as <summary> --- */
+.place-group--folded {
+  margin-bottom: var(--space-3);
+}
+
+/* The summary looks like a flat block you can open. "list-style: none" and the WebKit rule below
+   remove the browser's triangle; a chevron drawn with two borders (::after) replaces it. */
+.place-group--folded > summary {
+  min-height: var(--target);
+  margin-bottom: 0;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-ground);
+  border: 0.0625rem solid var(--color-ring);
+  border-radius: var(--radius-block);
+  cursor: pointer;
+  list-style: none;
+}
+
+/* Safari still draws its triangle through this pseudo-element and ignores "list-style: none". */
+.place-group--folded > summary::-webkit-details-marker {
+  display: none;
+}
+
+.place-group--folded > summary:hover {
+  background: var(--color-plaza);
+}
+
+/* Chevron at the right end: points down when closed, up when open. */
+.place-group--folded > summary::after {
+  content: "";
+  flex-shrink: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-left: auto;
+  border-right: 0.125rem solid var(--color-text);
+  border-bottom: 0.125rem solid var(--color-text);
+  transform: translateY(-0.125rem) rotate(45deg);
+}
+
+.place-group--folded[open] > summary::after {
+  transform: translateY(0.125rem) rotate(-135deg);
+}
+
+.place-group--folded[open] > summary {
+  margin-bottom: var(--space-2);
+}
+
+/* --- One place: extra parts next to the classes of style.css --- */
+
+/* "vom Vortag bis 02:00": the place is open because yesterday's hours go past midnight. */
+.place__note {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+/* Badge "schließt bald" (js/steckbrief.js): an open place that closes within an hour. Next to the
+   badges of style.css (part 16) it gets the warning colours and a half-filled dot, so the state does
+   not depend on colour alone (filled = open, half = closes soon, ring = closed). */
+.badge--soon {
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+}
+
+.badge--soon::before {
+  border: 0.125rem solid var(--color-warning);
+  background: linear-gradient(to right, var(--color-warning) 50%, transparent 50%);
+}
+
+/* Link "Route" under the type of a place: opens Google Maps in a new tab (js/steckbrief.js). */
+.place__route {
+  display: inline-block;
+  margin-top: var(--space-1);
+  font-size: var(--text-s);
+}
+
+/* "Merken" toggle button (aria-pressed): the pressed state gets the sand colour of "current"
+   things and a tick in front of the word, so the state does not depend on colour alone. */
+.place__save {
+  margin-bottom: 0;
+}
+
+.place__save[aria-pressed="true"] {
+  background: var(--color-sand);
+  box-shadow: inset 0 0 0 0.0625rem var(--color-sand-line), 0 var(--wall) 0 var(--color-sand-line);
+}
+
+/* The tick is drawn with two borders of a turned box (no text, so screen readers do not read it). */
+.place__save[aria-pressed="true"]::before {
+  content: "";
+  width: 0.3125rem;
+  height: 0.625rem;
+  margin: -0.125rem 0.125rem 0 0;
+  border-right: 0.125rem solid currentColor;
+  border-bottom: 0.125rem solid currentColor;
+  transform: rotate(45deg);
+}
+
+.profile__save-hint {
+  font-size: var(--text-s);
+}
+
+/* Friendly note for a Quadrat without any place. */
+.profile-empty-note {
+  padding: var(--space-4);
+  background: var(--color-ground);
+  border: 0.0625rem dashed var(--color-control-line);
+  border-radius: var(--radius-panel);
+}
+
+.profile-empty-note > :last-child {
+  margin-bottom: 0;
+}
+
+/* The OSM credit under the lists keeps some distance from the last list. */
+.profile__places .profile__source {
+  margin-top: var(--space-5);
+}
+
+
+/* ---------- Large screens: filter on the left, map on the right, profile over the map ---------- */
+
+/* From 72rem (1152 px, laptops) there is room for two columns. The map column is only as wide as a map
+   that fits the height of the window: the map has the shape 3 : 2, so its width is 1.5 x the free height.
+   100vh = height of the window; 6rem = sticky header, space above the map and a small margin below it.
+   max(50rem, ...): never narrower than 50rem (800 px), the smallest size of the map in js/karte.js
+   (MIN_SCALE 0.5); below it the map would be cut off at the side.
+   minmax(17rem, 1fr): the left column never gets narrower than 17rem, on very wide windows it grows. */
+@media (min-width: 72rem) {
+  .map-layout {
+    grid-template-columns: minmax(17rem, 1fr) minmax(0, max(50rem, calc((100vh - 6rem) * 1.5)));
+    grid-template-rows: auto auto 1fr;
+    align-items: start;
+    gap: var(--space-4) var(--space-5);
+    padding-top: var(--space-4);
+  }
+
+  /* Intro and filter on the left, the map frame on the right over all rows. */
+  .map-layout > .page-intro {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .map-layout > .filter-bar {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .map-layout > .map-frame {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+  }
+
+  /* A smaller heading and intro, so the filter moves up next to the map. */
+  .page-intro h1 {
+    margin-bottom: var(--space-2);
+    font-size: var(--text-2xl);
+  }
+
+  .page-intro .lead {
+    font-size: var(--text-s);
+  }
+
+  /* In the narrow column every group of the filter gets its own full-width row. */
+  .filter-bar {
+    gap: var(--space-4);
+    padding: var(--space-4);
+  }
+
+  .filter-bar .filter-group,
+  .filter-bar .filter-group--time,
+  .filter-group--block {
+    flex: 1 1 100%;
+    margin-left: 0;
+  }
+
+  /* "17:30 Uhr" stays on one line; if the column is too narrow, time and "Jetzt" move below "Uhrzeit". */
+  .time-readout {
+    white-space: nowrap;
+  }
+
+  .filter-bar .filter-group__head {
+    flex-wrap: wrap;
+  }
+
+  /* The panel lies over the right part of the map (about a third) and scrolls on its own.
+     position: absolute places it relative to div.map-area (position: relative), which is exactly as
+     high as the map, so the panel never covers the legend below the map. */
+  .map-area {
+    position: relative;
+  }
+
+  .map-area > .profile {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-3);
+    bottom: var(--space-3);
+    z-index: 10;                      /* above the 3D map */
+    width: 36%;
+    min-width: 20rem;
+    overflow-y: auto;                 /* long lists scroll inside the panel */
+    overscroll-behavior: contain;     /* scrolling to the end of the panel does not scroll the page */
+    padding: var(--space-5);
+    border-top: 0;
+    border-radius: var(--radius-panel);
+    box-shadow: 0 0.25rem 1.5rem rgba(0, 0, 0, 0.18);
+  }
+
+  /* Only one column inside the narrow panel (style.css uses two from 56rem window width). */
+  .map-area .profile__body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .map-area .profile__title {
+    font-size: var(--text-xl);
+  }
+
+  .map-area .profile__head {
+    margin-bottom: var(--space-4);
+  }
+
+  /* the panel scrolls on its own, so the button sticks to the top of the panel */
+  .map-area .profile__close {
+    top: 0;
+  }
+
+  /* One place in the narrow panel: name and type on the left with all the room they need; on the right,
+     one below the other, the hours, the status and "Merken". Before, all three stood in one row and pushed
+     into the name. A long name wraps between words (overflow-wrap only breaks a word that does not fit). */
+  .map-area .place__name {
+    overflow-wrap: break-word;
+  }
+
+  .map-area .place__status {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--space-1);
+    text-align: right;
+  }
+
+  .map-area .place__hours {
+    white-space: nowrap;            /* "10:30–01:00" never breaks */
+  }
+}
+
+/* The panel slides in from the right when it opens. The animation runs when the element is shown
+   (display: none -> block), not when js/steckbrief.js only replaces the content for another Quadrat.
+   Only for visitors who did not ask their system for less motion. */
+@media (min-width: 72rem) and (prefers-reduced-motion: no-preference) {
+  .map-area > .profile {
+    animation: profile-slide-in 250ms var(--ease-out);
+  }
+}
+
+@keyframes profile-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+/* ---------- "Events hier" in the profile (js/steckbrief.js, added 2026-10-13) ---------- */
+
+.profile-events {
+  margin: 0 0 var(--space-2);
+  padding: 0;
+  list-style: none;
+}
+
+.profile-events li {
+  padding: var(--space-1) 0;
+}
+
+.profile-events__when {
+  display: block;
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+}
+
+/* "Anzeige": paid entry, always written out (see css/events.css). */
+.profile-events__ad {
+  padding: 0 var(--space-1);
+  color: var(--color-sand-ink);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  border: 0.0625rem solid var(--color-sand-line);
+  border-radius: var(--radius-block);
+}
+
+
+/* ---------- Printing ---------- */
+
+/* Buttons and the jump link do nothing on paper (.place__save: the "Merken" buttons,
+   .place__route: the links "Route" to Google Maps). */
+@media print {
+  .jump-link,
+  .place__save,
+  .place__route {
+    display: none;
+  }
+}

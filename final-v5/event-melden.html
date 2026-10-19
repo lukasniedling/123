@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<!--
+  event-melden.html - form "Event melden": organisers enter an event for the page events.html.
+  [V1 form with the browser's own checks, V2 saving]  Added 2026-10-13 (final-v3).
+
+  How it works: the browser checks the fields itself (required, minlength, maxlength, pattern, min for
+  the date); the event "submit" only fires when everything is correct. Then js/event-melden.js stores
+  the event in the browser (localStorage, key "quadrate-events-gemeldet") and says thank you. There is
+  no server (decision D-042): nothing is sent anywhere. js/events.js shows these reports on events.html
+  with the label "Deine Meldung – noch nicht geprüft"; in real use the team would check them first.
+  The tick "Als Anzeige hervorheben" only shows the idea of paid entries: nothing is paid here.
+  Page styles: css/formular.css (fields in fieldsets, as in the form "Ort vorschlagen" on quadrate.html) and css/events.css.
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Event melden – Quadrate</title>
+  <meta name="description" content="Ein Event in den Mannheimer Quadraten melden: Titel, Ort, Datum und Uhrzeit.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/formular.css">
+  <link rel="stylesheet" href="css/zeitregler.css">
+  <link rel="stylesheet" href="css/events.css">
+</head>
+<body>
+  <!-- Skip link: first element on the page, lets keyboard users jump over the navigation. -->
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="site-header">
+    <div class="site-header__inner container">
+      <a class="site-logo" href="index.html">
+        <img src="img/logo.svg" alt="Quadrate – zur Karte" width="200" height="33">
+      </a>
+
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <ul class="site-nav__list">
+          <li><a href="index.html">Karte</a></li>
+          <!-- events in the Quadrate (events.html, added 2026-10-13) -->
+          <li><a href="events.html" aria-current="page">Events</a></li>
+          <li><a href="quadrate.html">Orte</a></li>
+          <!-- saved places with or without an account (merkliste.html, added 2026-10-13) -->
+          <li><a href="merkliste.html">Merkliste</a></li>
+          <!-- "Ort vorschlagen" is part of the page "Orte" since 2026-10-14 -->
+          <!-- account page: log in, register, saved places (js/konto.js, localStorage) -->
+          <li class="site-nav__item--account"><a href="konto.html">Konto</a></li>
+          <!-- "Über uns" back in the menu on 2026-10-14 (final-v5), on the far right next to "Konto" -->
+          <li><a href="ueber-uns.html">Über uns</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhalt" class="container">
+    <div class="page-intro page-intro--band band-events">
+      <h1>Event melden</h1>
+      <p class="lead">Du planst ein Konzert, einen Markt oder eine Lesung in den Quadraten? Trag es hier ein. Wir prüfen die Meldung und stellen sie dann auf die Seite <a href="events.html">Events</a>.</p>
+    </div>
+
+    <div class="notice notice--info event-form__notice">
+      <p class="notice__title">Studienprojekt</p>
+      <p>Die Website hat keinen Server. Deine Meldung wird nur in diesem Browser gespeichert und erscheint bei dir auf der Seite Events als „noch nicht geprüft“. Bitte keine echten privaten Daten eintragen.</p>
+    </div>
+
+    <form class="form event-form" id="event-formular" action="#" accept-charset="utf-8">
+      <fieldset class="fieldset fieldset--fields">
+        <legend>Das Event</legend>
+
+        <div class="field">
+          <label class="field__label" for="titel">Titel <span class="field__required">(Pflichtfeld)</span></label>
+          <input id="titel" name="titel" type="text" required minlength="3" maxlength="80" autocomplete="off" placeholder="zum Beispiel Jazz am Paradeplatz">
+          <p class="field__error">Bitte gib einen Titel mit mindestens 3 Zeichen ein.</p>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="art">Art <span class="field__required">(Pflichtfeld)</span></label>
+          <select id="art" name="art" required>
+            <option value="">Bitte wählen</option>
+            <option value="musik">Musik</option>
+            <option value="kultur">Kultur</option>
+            <option value="markt">Markt</option>
+            <option value="party">Party und Quiz</option>
+            <option value="familie">Familie</option>
+            <option value="essen">Essen und Trinken</option>
+            <option value="shoppen">Shoppen</option>
+          </select>
+          <p class="field__error">Bitte wähle, was für ein Event es ist.</p>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="text">Kurze Beschreibung <span class="field__required">(Pflichtfeld)</span></label>
+          <p class="field__hint" id="text-hinweis">Ein oder zwei Sätze, höchstens 200 Zeichen.</p>
+          <textarea id="text" name="text" required minlength="10" maxlength="200" rows="3" aria-describedby="text-hinweis"></textarea>
+          <p class="field__error">Bitte beschreib das Event in mindestens 10 Zeichen.</p>
+        </div>
+      </fieldset>
+
+      <fieldset class="fieldset fieldset--fields">
+        <legend>Wann und wo</legend>
+
+        <div class="field">
+          <label class="field__label" for="datum">Datum <span class="field__required">(Pflichtfeld)</span></label>
+          <!-- js/event-melden.js sets min to today, so the browser does not accept a past date -->
+          <input id="datum" name="datum" type="date" required>
+          <p class="field__error">Bitte wähle ein Datum ab heute.</p>
+        </div>
+
+        <!-- repeating events (added 2026-10-13): "jede Woche" repeats the event on the weekday of the date;
+             the last day is optional and only shown for weekly events (js/event-melden.js) -->
+        <fieldset class="field event-form__repeat">
+          <legend class="field__label">Wiederholung</legend>
+          <label class="event-form__check"><input type="radio" name="wiederholung" value="einmal" checked> <span>nur an diesem Tag</span></label>
+          <label class="event-form__check"><input type="radio" name="wiederholung" value="woche"> <span>jede Woche am selben Wochentag</span></label>
+        </fieldset>
+
+        <div class="field" id="bis-feld" hidden>
+          <label class="field__label" for="bis">Letzter Termin <span class="field__required">(freiwillig)</span></label>
+          <p class="field__hint" id="bis-hinweis">Leer lassen, wenn das Event ohne Ende jede Woche stattfindet.</p>
+          <input id="bis" name="bis" type="date" aria-describedby="bis-hinweis">
+          <p class="field__error">Der letzte Termin darf nicht vor dem Datum liegen.</p>
+        </div>
+
+        <!-- Beginn and Ende with the time slider of the map: 0 to 24 Uhr in steps of 30 minutes
+             (js/zeitregler.js, since 2026-10-13); a slider always has a value, so nothing can be missing. -->
+        <div class="event-form__times">
+          <div class="field time-field">
+            <div class="filter-group__head">
+              <label class="field__label" for="beginn">Beginn</label>
+              <output class="time-readout" id="beginn-anzeige" for="beginn" aria-hidden="true">19:00 <span>Uhr</span></output>
+            </div>
+            <div class="time-stepper">
+              <button class="button button--secondary time-step" type="button" id="beginn-zurueck" aria-label="Beginn 30 Minuten früher" aria-controls="beginn">
+                <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="time-stepper__track">
+                <input class="range" type="range" id="beginn" name="beginn" min="0" max="1440" step="30" value="1140">
+                <div class="range-scale" aria-hidden="true"><span>0</span><span>6</span><span>12</span><span>18</span><span>24</span></div>
+              </div>
+              <button class="button button--secondary time-step" type="button" id="beginn-vor" aria-label="Beginn 30 Minuten später" aria-controls="beginn">
+                <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="field time-field">
+            <div class="filter-group__head">
+              <label class="field__label" for="ende">Ende</label>
+              <output class="time-readout" id="ende-anzeige" for="ende" aria-hidden="true">22:00 <span>Uhr</span></output>
+            </div>
+            <div class="time-stepper">
+              <button class="button button--secondary time-step" type="button" id="ende-zurueck" aria-label="Ende 30 Minuten früher" aria-controls="ende">
+                <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="time-stepper__track">
+                <input class="range" type="range" id="ende" name="ende" min="0" max="1440" step="30" value="1320" aria-describedby="ende-hinweis">
+                <div class="range-scale" aria-hidden="true"><span>0</span><span>6</span><span>12</span><span>18</span><span>24</span></div>
+              </div>
+              <button class="button button--secondary time-step" type="button" id="ende-vor" aria-label="Ende 30 Minuten später" aria-controls="ende">
+                <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+            <p class="field__hint" id="ende-hinweis">Früher als der Beginn heißt: nach Mitternacht.</p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="quadrat">Quadrat <span class="field__required">(Pflichtfeld)</span></label>
+          <p class="field__hint" id="quadrat-hinweis">Das Kürzel steht auf der Karte, zum Beispiel O1 für den Paradeplatz.</p>
+          <!-- js/event-melden.js adds one option per Quadrat (A1 ... U6) -->
+          <select id="quadrat" name="quadrat" required aria-describedby="quadrat-hinweis">
+            <option value="">Bitte wählen</option>
+          </select>
+          <p class="field__error">Bitte wähle das Quadrat.</p>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="ort">Ort im Quadrat <span class="field__required">(Pflichtfeld)</span></label>
+          <input id="ort" name="ort" type="text" required minlength="3" maxlength="80" autocomplete="off" placeholder="zum Beispiel Paradeplatz, am Brunnen">
+          <p class="field__error">Bitte sag, wo genau es stattfindet.</p>
+        </div>
+      </fieldset>
+
+      <fieldset class="fieldset fieldset--fields">
+        <legend>Über dich</legend>
+
+        <div class="field">
+          <label class="field__label" for="veranstalter">Veranstalter <span class="field__required">(Pflichtfeld)</span></label>
+          <input id="veranstalter" name="veranstalter" type="text" required minlength="2" maxlength="80" autocomplete="organization">
+          <p class="field__error">Bitte gib den Namen des Veranstalters ein.</p>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="email">E-Mail <span class="field__required">(Pflichtfeld)</span></label>
+          <p class="field__hint" id="email-hinweis">Nur für Rückfragen von uns. Sie erscheint nicht auf der Seite.</p>
+          <input id="email" name="email" type="email" required maxlength="254" autocomplete="email"
+                 pattern="[^@\s]+@[^@\s]+\.[^@\s]+" title="Zum Beispiel anna@beispiel.de" aria-describedby="email-hinweis">
+          <p class="field__error">Bitte gib eine vollständige E-Mail-Adresse ein, zum Beispiel anna@beispiel.de.</p>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="link">Webseite des Events <span class="field__required">(freiwillig)</span></label>
+          <input id="link" name="link" type="url" maxlength="200" placeholder="https://…">
+          <p class="field__error">Bitte gib eine vollständige Adresse ein, die mit https:// beginnt.</p>
+        </div>
+
+        <label class="event-form__check" for="anzeige">
+          <input id="anzeige" name="anzeige" type="checkbox">
+          <span>Als <strong>Anzeige</strong> oben auf der Seite Events hervorheben (kostenpflichtig; im Studienprojekt nur als Idee)</span>
+        </label>
+
+        <label class="event-form__check" for="einwilligung">
+          <input id="einwilligung" name="einwilligung" type="checkbox" required>
+          <span>Ich bin einverstanden, dass meine Angaben in diesem Browser gespeichert werden (siehe <a href="datenschutz.html#speicher">Datenschutz</a>). <span class="field__required">(Pflichtfeld)</span></span>
+        </label>
+      </fieldset>
+
+      <!-- js/event-melden.js puts the thank-you note here -->
+      <div id="event-ergebnis" role="status"></div>
+
+      <div class="button-row">
+        <button class="button" type="submit">Event melden</button>
+        <a class="button button--secondary" href="events.html">Zurück zu den Events</a>
+      </div>
+    </form>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner container">
+      <p>Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL</p>
+      <nav class="site-footer__links" aria-label="Weitere Seiten">
+        <ul>
+          <li><a href="ueber-uns.html">Über uns</a></li>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </nav>
+      <p>Studienprojekt <span aria-hidden="true">·</span> DHBW Mannheim <span aria-hidden="true">·</span> Webprogrammierung 2026</p>
+    </div>
+  </footer>
+
+  <!-- names of the Quadrate for the list, the dates of the events (isoDate), then this page -->
+  <script src="js/data/quadrate.js"></script>
+  <script src="js/data/events.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/oeffnungszeiten.js"></script>
+  <script src="js/zeitregler.js"></script>
+  <script src="js/event-melden.js"></script>
+  <!-- account and saved places: the number next to "Merkliste" in the menu (js/merkliste.js, 2026-10-13) -->
+  <script src="js/konto.js"></script>
+  <script src="js/merkliste.js"></script>
+  <!-- profile picture of the account in the menu (js/avatar.js, 2026-10-14) -->
+  <script src="js/avatar.js"></script>
+  <!-- history and preferences of the account (js/verlauf.js, 2026-10-14) -->
+  <script src="js/verlauf.js"></script>
+</body>
+</html>

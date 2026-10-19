@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<!--
+  events.html - events in the Quadrate, with highlighted paid entries ("Anzeige").  [V2] Added 2026-10-13.
+
+  The idea: there is no public event feed we may use, so the team enters events by hand
+  (js/data/events.js), and organisers can pay to be highlighted. Highlighted entries are always
+  labelled "Anzeige" (German law: advertising must be recognisable as such).
+  ALL ENTRIES ARE MADE-UP EXAMPLES for the presentation; the notice on the page says so.
+
+  How it works: js/events.js (window.Events) works out on which days an event takes place;
+  js/events-seite.js fills this page:
+    #events-hervorgehoben  the paid entries in the chosen period ("Anzeige")
+    #events-liste          all entries, grouped by day, with "läuft gerade" for running ones
+  The lists "Zeitraum" and "Art" filter both. Without JavaScript the <noscript> notice shows.
+  Page styles: css/events.css.
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Events – Quadrate</title>
+  <meta name="description" content="Veranstaltungen in den Mannheimer Quadraten: Musik, Märkte, Kultur und mehr, mit Ort auf der Karte und Route.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- round arrow buttons of the month view (.time-step, added 2026-10-13) -->
+  <link rel="stylesheet" href="css/zeitregler.css">
+  <link rel="stylesheet" href="css/events.css">
+</head>
+<body>
+  <!-- Skip link: first element on the page, lets keyboard users jump over the navigation. -->
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="site-header">
+    <div class="site-header__inner container">
+      <a class="site-logo" href="index.html">
+        <img src="img/logo.svg" alt="Quadrate – zur Karte" width="200" height="33">
+      </a>
+
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <ul class="site-nav__list">
+          <li><a href="index.html">Karte</a></li>
+          <!-- events in the Quadrate (events.html, added 2026-10-13) -->
+          <li><a href="events.html" aria-current="page">Events</a></li>
+          <li><a href="quadrate.html">Orte</a></li>
+          <!-- saved places with or without an account (merkliste.html, added 2026-10-13) -->
+          <li><a href="merkliste.html">Merkliste</a></li>
+          <!-- "Ort vorschlagen" is part of the page "Orte" since 2026-10-14 -->
+          <!-- account page: log in, register, saved places (js/konto.js, localStorage) -->
+          <li class="site-nav__item--account"><a href="konto.html">Konto</a></li>
+          <!-- "Über uns" back in the menu on 2026-10-14 (final-v5), on the far right next to "Konto" -->
+          <li><a href="ueber-uns.html">Über uns</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhalt" class="container">
+    <div class="page-intro page-intro--band band-events">
+      <h1>Events in den Quadraten</h1>
+      <p class="lead">Konzerte, Märkte, Kultur und mehr: was in den nächsten Tagen in der Innenstadt los ist, mit Ort auf der Karte und Route.</p>
+    </div>
+
+    <!-- The entries are made up: say so clearly, so nobody takes them for real dates. -->
+    <div class="notice notice--warning events-notice">
+      <p class="notice__title">Beispiel-Einträge</p>
+      <p>Alle Events auf dieser Seite sind erfundene Beispiele für unsere Vorführung, keine echten Termine. Dazu kommen Events, die du selbst über <a href="event-melden.html">Event melden</a> eingetragen hast.</p>
+    </div>
+
+    <noscript>
+      <div class="notice notice--warning">
+        <p class="notice__title">JavaScript nötig</p>
+        <p>Die Termine rechnet die Seite mit JavaScript aus.</p>
+      </div>
+    </noscript>
+
+    <!-- [V2] shown by js/events-seite.js -->
+    <div class="events-tools" id="events-werkzeuge" hidden>
+      <!-- view (added 2026-10-13): the list of the next days or a calendar of a whole month -->
+      <fieldset class="filter-group segmented events-tools__view">
+        <legend class="field__label">Ansicht</legend>
+        <div class="segmented__options">
+          <input class="segmented__input visually-hidden" type="radio" name="events-ansicht" id="ansicht-liste" value="liste" checked>
+          <label class="segmented__option" for="ansicht-liste">Liste</label>
+          <input class="segmented__input visually-hidden" type="radio" name="events-ansicht" id="ansicht-monat" value="monat">
+          <label class="segmented__option" for="ansicht-monat">Monat</label>
+        </div>
+      </fieldset>
+      <div class="field events-tools__field events-tools__search">
+        <label class="field__label" for="events-suche">Suchen</label>
+        <input id="events-suche" type="search" autocomplete="off" placeholder="zum Beispiel Jazz, Markt oder G1">
+      </div>
+      <div class="field events-tools__field" id="events-zeitraum-feld">
+        <label class="field__label" for="events-zeitraum">Zeitraum</label>
+        <select id="events-zeitraum">
+          <option value="1">Heute</option>
+          <option value="7" selected>Nächste 7 Tage</option>
+          <option value="30">Nächste 30 Tage</option>
+        </select>
+      </div>
+      <div class="field events-tools__field">
+        <label class="field__label" for="events-art">Art</label>
+        <select id="events-art">
+          <option value="">Alle</option>
+          <option value="musik">Musik</option>
+          <option value="kultur">Kultur</option>
+          <option value="markt">Markt</option>
+          <option value="party">Party und Quiz</option>
+          <option value="familie">Familie</option>
+          <option value="essen">Essen und Trinken</option>
+          <option value="shoppen">Shoppen</option>
+        </select>
+      </div>
+      <p class="events-tools__status" id="events-status" role="status"></p>
+    </div>
+
+    <section class="events-highlight" id="events-hervorgehoben-bereich" aria-labelledby="events-hervorgehoben-titel" hidden>
+      <h2 class="events-section-title" id="events-hervorgehoben-titel">Hervorgehoben</h2>
+      <ul class="events-cards" id="events-hervorgehoben"></ul>
+    </section>
+
+    <section id="events-listenansicht" aria-labelledby="events-liste-titel">
+      <h2 class="events-section-title" id="events-liste-titel">Alle Termine</h2>
+      <!-- filled by js/events-seite.js: one block per day -->
+      <div id="events-liste"></div>
+    </section>
+
+    <!-- [V2] month view (added 2026-10-13): a calendar of one month, filled by js/events-seite.js. Every day
+         is a button with coloured dots (one per event, colour of its kind); a click shows the day below. -->
+    <section class="events-month" id="events-monatsansicht" aria-labelledby="events-monat-titel" hidden>
+      <div class="events-month__head">
+        <button class="button button--secondary time-step" type="button" id="events-monat-zurueck" aria-label="Vorheriger Monat">
+          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <h2 class="events-section-title events-month__title" id="events-monat-titel" aria-live="polite">Monat</h2>
+        <button class="button button--secondary time-step" type="button" id="events-monat-vor" aria-label="Nächster Monat">
+          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <table class="events-month__grid">
+        <caption class="visually-hidden">Kalender: Tage mit Events. Wähle einen Tag, um seine Events zu sehen.</caption>
+        <thead>
+          <tr><th scope="col" abbr="Montag">Mo</th><th scope="col" abbr="Dienstag">Di</th><th scope="col" abbr="Mittwoch">Mi</th><th scope="col" abbr="Donnerstag">Do</th><th scope="col" abbr="Freitag">Fr</th><th scope="col" abbr="Samstag">Sa</th><th scope="col" abbr="Sonntag">So</th></tr>
+        </thead>
+        <tbody id="events-monat-tage"></tbody>
+      </table>
+      <!-- the events of the chosen day -->
+      <div id="events-monat-liste"></div>
+    </section>
+
+    <aside class="panel events-organiser" aria-labelledby="events-veranstalter-titel">
+      <h2 id="events-veranstalter-titel">Für Veranstalter</h2>
+      <p>Du planst ein Event in den Quadraten? Melde es uns, wir tragen es ein. Der normale Eintrag ist kostenlos. Gegen Bezahlung erscheint es zusätzlich oben unter „Hervorgehoben“, deutlich als <strong>Anzeige</strong> gekennzeichnet.</p>
+      <p><a class="button" href="event-melden.html">Event melden</a></p>
+      <p>Kontakt: siehe <a href="impressum.html">Impressum</a>. (Studienprojekt: Bezahlte Einträge sind hier nur als Idee gezeigt.)</p>
+    </aside>
+
+    <p class="events-source">Orte der Events: Quadrate wie auf der <a href="index.html">Karte</a>. Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL.</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner container">
+      <p>Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL</p>
+      <nav class="site-footer__links" aria-label="Weitere Seiten">
+        <ul>
+          <li><a href="ueber-uns.html">Über uns</a></li>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </nav>
+      <p>Studienprojekt <span aria-hidden="true">·</span> DHBW Mannheim <span aria-hidden="true">·</span> Webprogrammierung 2026</p>
+    </div>
+  </footer>
+
+  <!-- events, names of the Quadrate, route links, the dates of the events, then this page -->
+  <script src="js/data/events.js"></script>
+  <script src="js/data/quadrate.js"></script>
+  <script src="js/steckbrief.js"></script>
+  <script src="js/events.js"></script>
+  <!-- account and saved places (Merken, number in the menu; js/merkliste.js, 2026-10-13) -->
+  <script src="js/konto.js"></script>
+  <script src="js/merkliste.js"></script>
+  <!-- profile picture of the account in the menu (js/avatar.js, 2026-10-14) -->
+  <script src="js/avatar.js"></script>
+  <!-- history and preferences of the account (js/verlauf.js, 2026-10-14) -->
+  <script src="js/verlauf.js"></script>
+  <script src="js/events-seite.js"></script>
+</body>
+</html>

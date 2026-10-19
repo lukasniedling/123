@@ -1,0 +1,2140 @@
+@charset "utf-8";
+/*
+ * style.css - shared design system of the website "Quadrate".
+ * Plain CSS. Parts that are only used once JavaScript runs are marked [V2] in the
+ * section headings below.
+ *
+ * How it fits in: every page links this file first. It holds the design tokens
+ * (colours, type, spacing), the page frame (header, navigation, footer) and all
+ * shared components. Map-specific styles live in css/karte.css.
+ *
+ * Look (final version, decision D-035): inspired by Apple's websites and the Human
+ * Interface Guidelines (.claude/skills/apple-design in the development folder):
+ * the system font of the device, a light grey page with white cards, generous
+ * white space, rounded corners, soft shadows, pill-shaped buttons and a
+ * translucent header. Our own logo and the category colours stay.
+ *
+ * Contents
+ *  1. Fonts (the system font of the device, no font files)
+ *  2. Design tokens (custom properties)
+ *  3. Base elements
+ *  4. Utilities
+ *  5. Page frame: skip link, header, navigation, main, footer
+ *  6. Text pages: page intro, prose, embeds
+ *  7. Index page layout: filter bar, map frame, profile position   [V1 frame, V2 interactive]
+ *  8. Buttons
+ *  9. Category chips                                              [V2]
+ * 10. Range slider and time readout                               [V2]
+ * 11. Select and weekday segmented control                        [V1 look, V2 use]
+ * 12. Forms and validation states                                 [V1, V2 messages]
+ * 13. Tables                                                      [V1, V2 sorting]
+ * 14. Block codes and tiles
+ * 15. Panels and the profile ("Steckbrief")                      [V2]
+ * 16. Status badges                                               [V2]
+ * 17. Legend and swatches
+ * 18. Photos with credit
+ * 19. Notices
+ * 20. Reduced motion and print
+ * 21. Additions of version 3 (final-v3, 2026-10-13): menu count, tags, "In meiner Nähe"
+ * 22. Colours and pictures (final-v3, 2026-10-14): coloured page bands, category icons, stripes
+ */
+
+
+/* =========================================================================
+   1. Fonts
+   The final version uses the system font of the device: San Francisco on Apple
+   devices, Segoe UI on Windows, Roboto on Android. Nothing is downloaded. Apple's
+   font files themselves may not be embedded in a website (licence), but naming
+   the system font in font-family is allowed: the browser uses the font that is
+   already installed. The stacks are defined as tokens in section 2.
+   ========================================================================= */
+
+
+/* =========================================================================
+   2. Design tokens
+   All colours, sizes and timings are defined once here and used everywhere
+   through var(--name). Change a value here and the whole site follows.
+   Contrast ratios (WCAG) are noted for text colours on their usual background.
+   ========================================================================= */
+
+:root {
+  /* --- Page colours (light, neutral greys like Apple's websites) --- */
+  --color-ground: #f5f5f7;       /* page background */
+  --color-paper: #ffffff;        /* cards, panels and form fields lie on it */
+  --color-roof: #1d1d1f;         /* dark: primary buttons, block codes, selected segments */
+  --color-wall: #424245;         /* hover of dark elements */
+  --color-ring: #d2d2d7;         /* quiet dividers and borders */
+  --color-plaza: #e8e8ed;        /* light fills: table header, hover, segmented track */
+  --color-sand: #f2e6cc;         /* the two axes of the map; kept for "current" markers */
+  --color-sand-line: #d9c69b;
+  --color-sand-text: #8a6d3b;
+  --color-sand-ink: #6e5427;
+
+  /* --- Text --- */
+  --color-text: #1d1d1f;         /* 16.8:1 on white, 15.4:1 on the page grey */
+  --color-text-muted: #6e6e73;   /* 5.1:1 on white, 4.7:1 on the page grey */
+  --color-text-on-dark: #ffffff;
+  --color-link: #0066cc;         /* links in running text: 5.6:1 on white */
+
+  /* --- Lines and focus --- */
+  --color-control-line: #86868b; /* borders of form controls: 3.6:1 on white (WCAG 1.4.11) */
+  --color-focus: #0071e3;        /* focus ring (Apple's blue) */
+  --focus-ring: 0 0 0 0.25rem rgba(0, 113, 227, 0.35);
+  --color-selected: #f2c230;     /* selected block on the map: yellow edges, lit from below */
+  --color-selected-soft: #fbeec0;/* background of a selected or targeted row */
+
+  /* --- Feedback --- */
+  --color-error: #c4002b;        /* 6.2:1 on white */
+  --color-error-bg: #fff0f2;
+  --color-success: #1e7a34;      /* 5.4:1 on white */
+  --color-success-bg: #e9f7ec;
+  --color-info: #0058b0;         /* 6.95:1 on white */
+  --color-info-bg: #eaf3fd;
+  --color-warning: #7a5200;
+  --color-warning-bg: #fdf3dc;
+
+  /* --- Opening status --- */
+  --color-open: #1e6b2e;
+  --color-open-bg: #e3f4e6;
+  --color-open-dot: #2f9e47;
+  --color-closed: #55555a;
+  --color-closed-bg: #ececf0;
+
+  /* --- Categories (same values as window.KATEGORIEN in js/filter.js) ---
+     Level 1..4 = stufen[0..3]: 1 open place, 2-3, 4-6, 7 and more. */
+  --essen-1: #F3C2B5;   --essen-2: #EA8B70;   --essen-3: #D23F27;   --essen-4: #A32F1C;
+  --trinken-1: #F4DDA6; --trinken-2: #E9B955; --trinken-3: #D0901A; --trinken-4: #9A6710;
+  --kultur-1: #D3CCF3;  --kultur-2: #A597E6;  --kultur-3: #6B5BD2;  --kultur-4: #4A3BA3;
+  --shoppen-1: #BDE6DF; --shoppen-2: #6CC7B7; --shoppen-3: #25A792; --shoppen-4: #156E60;
+
+  /* --- Type: the system font (San Francisco on Apple devices) --- */
+  --font-text: -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-code: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --font-block: var(--font-text);
+  --text-xs: 0.75rem;
+  --text-s: 0.875rem;
+  --text-m: 1.0625rem;           /* 17 px, the body size of Apple's guidelines */
+  --text-l: 1.1875rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 3rem;
+  --leading-text: 1.47;
+  --leading-tight: 1.1;
+  --measure: 68ch;               /* longest comfortable line for running text */
+
+  /* --- Space (multiples of 4 px) --- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2.5rem;
+  --space-7: 4rem;
+
+  /* --- Shapes and depth --- */
+  --radius-block: 0.625rem;      /* controls, small elements: 10 px */
+  --radius-panel: 1.125rem;      /* cards and panels: 18 px */
+  --radius-pill: 62rem;          /* pill-shaped buttons and chips */
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.06);
+  --shadow-raised: 0 1px 3px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+  --wall: 0;                     /* the pivot drew a "wall" edge under pressable things; the final version has none */
+  --target: 2.75rem;             /* minimum touch target (44 px) */
+  --range-thumb: 1.5rem;         /* round thumb of the time slider */
+  --header-height: 3.25rem;
+
+  /* --- Layout widths --- */
+  --width-page: 72rem;
+  --width-wide: 90rem;           /* index page: the map gets more room */
+  --gutter: 1rem;                /* side padding; 16 px on phones */
+
+  /* --- Motion --- */
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --duration-press: 150ms;
+  --duration-grow: 450ms;        /* grow animation of Karte.waehlen(): css/karte.css reads it */
+}
+
+/* Wider side padding on larger screens. */
+@media (min-width: 48rem) {
+  :root {
+    --gutter: 1.5rem;
+  }
+}
+@media (min-width: 80rem) {
+  :root {
+    --gutter: 2rem;
+  }
+}
+
+
+/* =========================================================================
+   3. Base elements
+   ========================================================================= */
+
+/* Padding and border are included in width/height, which makes sizes predictable. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;                  /* respect the user's browser font size */
+  -webkit-text-size-adjust: 100%;   /* stop iOS from enlarging text in landscape (Safari only knows the prefixed name) */
+  scroll-padding-top: calc(var(--header-height) + var(--space-4));   /* anchors stop below the sticky header */
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;                    /* keeps the footer at the bottom on short pages */
+  flex-direction: column;
+  background: var(--color-ground);
+  color: var(--color-text);
+  font-family: var(--font-text);
+  font-size: var(--text-m);
+  line-height: var(--leading-text);
+  -webkit-font-smoothing: antialiased;   /* thinner, crisper text on macOS, as on Apple's sites */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 var(--space-3);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.015em;
+  text-wrap: balance;               /* avoids a single word on the last line (ignored by old browsers) */
+}
+
+/* h1 shrinks smoothly on narrow screens; the rem parts keep it zoomable. */
+h1 {
+  font-size: clamp(2rem, 1.4rem + 2.2vw, var(--text-3xl));
+  letter-spacing: -0.025em;
+}
+
+h2 {
+  font-size: var(--text-2xl);
+}
+
+h3 {
+  font-size: var(--text-l);
+}
+
+h4,
+h5,
+h6 {
+  font-size: var(--text-m);
+}
+
+p,
+ul,
+ol,
+dl,
+figure,
+table,
+fieldset {
+  margin: 0 0 var(--space-4);
+}
+
+ul,
+ol {
+  padding-left: 1.25rem;
+}
+
+/* Links in Apple's link blue with a light underline (the underline keeps links recognisable without colour,
+   WCAG 1.4.1); it gets darker and thicker on hover. */
+a {
+  color: var(--color-link);
+  text-decoration-line: underline;
+  text-decoration-color: rgba(0, 102, 204, 0.35);
+  text-decoration-thickness: 0.0625rem;
+  text-underline-offset: 0.2em;
+}
+
+/* Link states (lecture 4), in the order link, visited, focus, hover, active: each later rule wins over an
+   earlier one of the same weight. Visited links keep the same blue. :where() gives this rule the weight of a plain
+   "a", so classes such as .button or .skip-link still decide the colour of their links. */
+a:where(:link, :visited) {
+  color: var(--color-link);
+}
+
+a:focus {
+  text-decoration-thickness: 0.1875rem;
+}
+
+a:hover {
+  text-decoration-thickness: 0.1875rem;
+}
+
+a:hover {
+  text-decoration-color: currentColor;
+}
+
+a:active {
+  text-decoration-color: currentColor;
+}
+
+img,
+svg,
+video,
+iframe {
+  max-width: 100%;
+}
+
+img,
+video {
+  display: block;
+  height: auto;
+}
+
+/* Bold and italic (lecture 4): <strong> and <em> mark importance and stress, <b> and <i> only the look. */
+strong,
+b {
+  font-weight: 700;
+}
+
+em,
+i {
+  font-style: italic;
+}
+
+code,
+kbd,
+samp {
+  font-family: var(--font-code);
+  font-size: 0.9em;
+}
+
+abbr[title] {
+  text-decoration: underline dotted;
+  cursor: help;
+}
+
+hr {
+  height: 0;
+  margin: var(--space-6) 0;
+  border: 0;
+  border-top: 0.0625rem solid var(--color-ring);
+}
+
+::selection {
+  background: var(--color-selected-soft);
+  color: var(--color-text);
+}
+
+/* One visible focus ring for every focusable element, shown for keyboard use
+   (:focus-visible), not after mouse clicks: Apple's blue. */
+:focus-visible {
+  outline: 0.1875rem solid var(--color-focus);
+  outline-offset: 0.125rem;
+}
+
+/* Elements that are only focusable from script (tabindex="-1", e.g. the profile
+   panel after a selection) do not need a ring around the whole panel. */
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
+
+/* =========================================================================
+   4. Utilities
+   ========================================================================= */
+
+/* Elements with the attribute hidden stay hidden, even if a rule of this site gives them
+   "display: flex" or "grid" (that would beat the browser's own rule for [hidden]). The pages
+   use hidden for parts that need JavaScript [V2]; the scripts remove it. */
+[hidden] {
+  display: none !important;
+}
+
+/* Hidden on screen but read by screen readers. */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Centred content column with side padding. */
+.container {
+  width: 100%;
+  max-width: calc(var(--width-page) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.container--wide {
+  max-width: calc(var(--width-wide) + 2 * var(--gutter));
+}
+
+
+/* =========================================================================
+   5. Page frame [V1]
+   ========================================================================= */
+
+/* --- Skip link: first focusable element, jumps over the navigation --- */
+.skip-link {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 100;
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-roof);
+  color: var(--color-text-on-dark);
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: var(--radius-pill);
+  transform: translateY(-200%);     /* parked above the window until it gets focus */
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* --- Header --- */
+/* Translucent header that stays at the top while the page scrolls ("glass", like Apple's website): the page
+   shows through, blurred. Browsers without backdrop-filter get an almost opaque background instead. */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(245, 245, 247, 0.72);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 0.0625rem solid rgba(0, 0, 0, 0.08);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-header {
+    background: rgba(245, 245, 247, 0.96);
+  }
+}
+
+.site-header__inner {
+  display: flex;
+  flex-wrap: wrap;                  /* on phones the navigation moves below the logo */
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-1) var(--space-5);
+  min-height: var(--header-height);
+  padding-block: var(--space-1);
+}
+
+.site-logo {
+  display: inline-flex;
+  flex-shrink: 0;
+  padding: var(--space-1) 0;
+  border-radius: var(--radius-block);
+}
+
+.site-logo img {
+  width: auto;
+  height: 1.75rem;
+}
+
+/* --- Main navigation --- */
+.site-nav__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-nav__list li {
+  margin: 0;
+}
+
+.site-nav a {
+  display: flex;
+  align-items: center;
+  min-height: var(--target);
+  padding: 0 var(--space-3);
+  color: var(--color-text);
+  font-size: var(--text-s);
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: var(--radius-pill);
+  transition: background-color var(--duration-press) ease;
+}
+
+.site-nav a:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* Current page: a light grey pill and bold text. The colour is not the only cue: aria-current also tells
+   screen readers. */
+.site-nav a[aria-current="page"] {
+  background: var(--color-plaza);
+  font-weight: 650;
+}
+
+/* The account link ("Konto") is set apart with an outline. */
+.site-nav__item--account a {
+  border: 0.0625rem solid var(--color-ring);
+}
+
+@media (min-width: 48rem) {
+  .site-nav__item--account {
+    margin-left: var(--space-3);
+  }
+}
+
+/* --- Main area: grows so that the footer sits at the bottom --- */
+main {
+  flex: 1 0 auto;
+  padding-block: var(--space-6) var(--space-7);
+}
+
+/* --- Footer --- */
+.site-footer {
+  border-top: 0.0625rem solid var(--color-ring);
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+.site-footer__inner {
+  display: grid;
+  gap: var(--space-2) var(--space-5);
+  padding-block: var(--space-5) var(--space-6);
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+.site-footer a,
+.site-footer a:link,
+.site-footer a:visited {
+  color: var(--color-text);
+  text-decoration-color: var(--color-ring);
+}
+
+.site-footer__links ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer__links li {
+  margin: 0;
+}
+
+/* Footer links get a comfortable click height without looking like buttons. */
+.site-footer__links a {
+  display: inline-block;
+  padding-block: var(--space-2);
+}
+
+/* Two columns from tablet width: sources on the left, legal links on the right. */
+@media (min-width: 48rem) {
+  .site-footer__inner {
+    grid-template-columns: 1fr auto;
+    align-items: start;
+  }
+
+  .site-footer__links {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  .site-footer__links a {
+    padding-block: 0;
+  }
+}
+
+
+/* =========================================================================
+   6. Text pages [V1]
+   ========================================================================= */
+
+/* Heading and introduction at the top of a page. */
+.page-intro {
+  max-width: var(--measure);
+  margin-bottom: var(--space-6);
+}
+
+.page-intro > :last-child {
+  margin-bottom: 0;
+}
+
+.lead {
+  color: var(--color-text-muted);
+  font-size: var(--text-l);
+}
+
+/* Running text (Über uns, Impressum, Datenschutz): limited line length. */
+.prose {
+  max-width: var(--measure);
+}
+
+.prose h2 {
+  margin-top: var(--space-6);
+}
+
+.prose h3 {
+  margin-top: var(--space-5);
+}
+
+.prose > :first-child {
+  margin-top: 0;
+}
+
+.prose li + li {
+  margin-top: var(--space-1);
+}
+
+/* Responsive frame for iframes and videos (OSM map on quadrate.html,
+   video on ueber-uns.html). aspect-ratio keeps the shape on every width. */
+.embed {
+  aspect-ratio: 16 / 9;
+  margin: 0 0 var(--space-4);
+  overflow: hidden;
+  background: var(--color-plaza);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-card);
+}
+
+.embed--map {
+  aspect-ratio: 4 / 3;
+}
+
+.embed iframe,
+.embed video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+
+/* =========================================================================
+   7. Index page layout [V1 frame, V2 interactive]
+   Order on every screen size: filter bar, map, profile panel below the map.
+   Markup: <main class="map-layout container container--wide" id="inhalt">
+             <section class="filter-bar"> ... </section>
+             <div class="map-frame"> <div id="karte"></div> <div class="map-footer"> ... </div> </div>
+             <section class="profile" id="steckbrief"> ... </section>
+           </main>
+   ========================================================================= */
+
+.map-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);   /* one column; minmax(0, ...) lets wide content shrink instead of overflowing */
+  gap: var(--space-4);
+  align-content: start;             /* main may be taller than its content (short pages): do not stretch the rows */
+  padding-top: var(--space-5);
+}
+
+/* Children keep their DOM order (intro, filter bar, map, profile); their own
+   bottom margins are removed because the grid gap does the spacing. */
+.map-layout > * {
+  margin-bottom: 0;
+}
+
+.map-layout > .profile {
+  margin-top: var(--space-2);
+}
+
+/* --- Filter bar [V2]: weekday, time and category side by side, wrapping on small screens --- */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-4) var(--space-6);
+  padding: var(--space-5);
+  background: var(--color-paper);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-card);
+}
+
+/* One group of controls (a fieldset). Fieldsets have browser borders and a
+   min-width that would stop them from shrinking; both are reset here. */
+.filter-group {
+  flex: 0 1 auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.filter-group--time {
+  flex: 1 1 18rem;                  /* the slider takes the remaining width */
+}
+
+/* Label above each group ("Wochentag", "Uhrzeit", "Kategorie"). */
+.filter-label {
+  display: block;
+  margin-bottom: var(--space-2);
+  padding: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+  font-weight: 600;
+}
+
+/* Label row with the readout on the right (used in the time group). */
+.filter-group__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.filter-group__head .filter-label {
+  margin-bottom: 0;
+}
+
+/* --- Map frame: the map and its legend strip (like the title block of a plan) --- */
+.map-frame {
+  overflow: hidden;
+  background: var(--color-paper);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-card);
+}
+
+/* The map container. The map module (js/karte.js + css/karte.css) fills it;
+   these are only the shared defaults. 3 / 2 matches the approved renders. */
+#karte {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  background: var(--color-ground);
+}
+
+/* [V1] Static map image instead of the interactive map:
+   <div id="karte" class="map-fallback"><img src="img/karte-statisch.png" alt="..."></div>
+   On phones the image keeps a minimum width and the box scrolls sideways, so the
+   block codes stay readable. The height then follows the image, not 3 / 2.
+   [V2] The map module removes the class when it builds the interactive map. */
+#karte.map-fallback {
+  aspect-ratio: auto;
+  overflow-x: auto;
+}
+
+.map-fallback img {
+  width: 100%;
+  min-width: 48rem;                 /* the codes stay readable on phones; the box scrolls sideways */
+}
+
+/* Legend strip under the map: legend on the left, data source on the right. */
+.map-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-6);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-paper);
+  border-top: 0.0625rem solid var(--color-plaza);
+  font-size: var(--text-s);
+}
+
+.map-footer__meta {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 64rem) {
+  .map-footer__meta {
+    text-align: right;
+  }
+}
+
+
+/* =========================================================================
+   8. Buttons [V1]
+   A button looks like a block from the map: charcoal roof, lighter wall below.
+   Hover lifts it a little, pressing pushes it flat onto the ground.
+   Use <button class="button"> for actions and <a class="button"> for links.
+   ========================================================================= */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--target);
+  margin-bottom: var(--wall);       /* room for the wall edge, so it does not touch the next line */
+  padding: var(--space-2) var(--space-5);
+  background: var(--color-roof);
+  color: var(--color-text-on-dark);
+  font: inherit;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  border: 0;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background-color var(--duration-press) ease, transform var(--duration-press) var(--ease-out);
+}
+
+/* a.button: the general link colours (a:link, a:visited) must not turn the white text blue. */
+a.button:link,
+a.button:visited {
+  color: var(--color-text-on-dark);
+}
+
+.button:hover {
+  background: var(--color-wall);
+}
+
+/* Pressed: the pill shrinks a little, like a button on the iPhone. */
+.button:active {
+  transform: scale(0.97);
+}
+
+/* Secondary: a light pill for less important actions ("Jetzt", "Abbrechen"). */
+.button--secondary,
+a.button--secondary:link,
+a.button--secondary:visited {
+  background: var(--color-paper);
+  color: var(--color-text);
+  box-shadow: inset 0 0 0 0.0625rem var(--color-ring);
+}
+
+.button--secondary:hover {
+  background: var(--color-plaza);
+}
+
+.button--small {
+  min-height: 2rem;
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-s);
+}
+
+/* Disabled: flat and grey, no wall, no movement. */
+.button:disabled,
+.button[aria-disabled="true"] {
+  background: var(--color-ring);
+  color: var(--color-text-muted);
+  box-shadow: none;
+  transform: none;
+  cursor: not-allowed;
+}
+
+/* A row of buttons. */
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+
+/* =========================================================================
+   9. Category chips [V2]
+   Four chips (Essen, Trinken, Kultur, Shoppen), built from radio buttons whose
+   labels look like chips (index.html, quadrate.html). The category class
+   (cat-essen ...) provides the colours through custom properties, which the
+   chip, swatches and place lists read.
+     <input class="chip-input visually-hidden" type="radio" name="kategorie" id="kat-essen" value="essen">
+     <label class="chip cat-essen" for="kat-essen"><span class="chip__swatch"></span>Essen</label>
+   ========================================================================= */
+
+.cat-essen {
+  --cat-1: var(--essen-1);
+  --cat-2: var(--essen-2);
+  --cat-3: var(--essen-3);
+  --cat-4: var(--essen-4);
+}
+
+.cat-trinken {
+  --cat-1: var(--trinken-1);
+  --cat-2: var(--trinken-2);
+  --cat-3: var(--trinken-3);
+  --cat-4: var(--trinken-4);
+}
+
+.cat-kultur {
+  --cat-1: var(--kultur-1);
+  --cat-2: var(--kultur-2);
+  --cat-3: var(--kultur-3);
+  --cat-4: var(--kultur-4);
+}
+
+.cat-shoppen {
+  --cat-1: var(--shoppen-1);
+  --cat-2: var(--shoppen-2);
+  --cat-3: var(--shoppen-3);
+  --cat-4: var(--shoppen-4);
+}
+
+.chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chip-group li {
+  margin: 0;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--target);
+  padding: var(--space-2) var(--space-4) var(--space-2) var(--space-3);
+  background: var(--color-paper);
+  color: var(--color-text);
+  font: inherit;
+  font-weight: 600;
+  border: 0.0625rem solid var(--color-ring);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+
+.chip:hover {
+  background: var(--color-plaza);
+}
+
+/* The small square in front of the name: hollow when off, filled when on.
+   So the state is visible from the shape, not only from colour. */
+.chip__swatch {
+  flex-shrink: 0;
+  width: 0.875rem;
+  height: 0.875rem;
+  border: 0.125rem solid var(--cat-4, var(--color-roof));
+  border-radius: 50%;
+}
+
+/* Selected chip: light category background, strong category border, filled square.
+   The border becomes 2 px, so the padding shrinks by 1 px to keep the size. */
+.chip-input:checked + .chip {
+  padding: calc(var(--space-2) - 0.0625rem) calc(var(--space-4) - 0.0625rem) calc(var(--space-2) - 0.0625rem) calc(var(--space-3) - 0.0625rem);
+  background: var(--cat-1, var(--color-sand));
+  border: 0.125rem solid var(--cat-4, var(--color-roof));
+}
+
+.chip-input:checked + .chip .chip__swatch {
+  background: var(--cat-3, var(--color-roof));
+}
+
+/* The radio itself is hidden, so its label shows the keyboard focus. */
+.chip-input:focus-visible + .chip {
+  outline: 0.1875rem solid var(--color-focus);
+  outline-offset: 0.1875rem;
+}
+
+
+/* =========================================================================
+   10. Range slider and time readout [V2]
+   <input class="range" type="range" min="0" max="1440" step="30">
+   The track is a sand strip with hour ticks; the thumb is a small square block.
+   Browsers need separate rules for WebKit/Blink (Chrome, Safari, Edge) and
+   Firefox. They must stay separate rules: a browser drops a whole rule if it
+   does not understand one of its selectors.
+   ========================================================================= */
+
+.range {
+  --thumb: var(--range-thumb);
+  --track: 0.375rem;
+  /* ticks every hour, drawn only between the two thumb centres so they match the values */
+  --ticks: repeating-linear-gradient(to right, var(--color-ring) 0 0.0625rem, transparent 0.0625rem calc(100% / 24));
+  --tick-end: linear-gradient(var(--color-ring), var(--color-ring)) calc(100% - var(--thumb) / 2) 0 / 0.0625rem 100% no-repeat;
+  display: block;
+  width: 100%;
+  height: var(--target);
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  appearance: none;                 /* no prefix needed any more (Safari since 15.4) */
+}
+
+/* The track and the thumb are pseudo-elements with browser-specific names: ::-webkit-... for
+   Chrome, Safari and Edge, ::-moz-... for Firefox. They have no standard name yet. */
+.range::-webkit-slider-runnable-track {
+  height: var(--track);
+  background:
+    var(--ticks) calc(var(--thumb) / 2) 0 / calc(100% - var(--thumb)) 100% no-repeat,
+    var(--tick-end),
+    var(--color-plaza);
+  border-radius: var(--radius-pill);
+}
+
+.range::-moz-range-track {
+  height: var(--track);
+  background:
+    var(--ticks) calc(var(--thumb) / 2) 0 / calc(100% - var(--thumb)) 100% no-repeat,
+    var(--tick-end),
+    var(--color-plaza);
+  border-radius: var(--radius-pill);
+}
+
+/* Thumb: margin-top centres it on the track in WebKit (Firefox does this itself). */
+.range::-webkit-slider-thumb {
+  width: var(--thumb);
+  height: var(--thumb);
+  margin-top: calc((var(--track) - var(--thumb)) / 2);
+  background: var(--color-paper);
+  border: 0.0625rem solid rgba(0, 0, 0, 0.04);
+  border-radius: 50%;
+  box-shadow: var(--shadow-raised);
+  appearance: none;
+}
+
+.range::-moz-range-thumb {
+  width: var(--thumb);
+  height: var(--thumb);
+  background: var(--color-paper);
+  border: 0.0625rem solid rgba(0, 0, 0, 0.04);
+  border-radius: 50%;
+  box-shadow: var(--shadow-raised);
+}
+
+.range:focus-visible {
+  outline-offset: 0;
+}
+
+/* Hour labels under the slider: exactly five spans (0, 6, 12, 18, 24).
+   The side margins equal half a thumb, so each label sits under its value. */
+.range-scale {
+  position: relative;
+  height: 1.25rem;
+  margin: 0 calc(var(--range-thumb) / 2);
+  color: var(--color-text-muted);
+  font-family: var(--font-code);
+  font-size: var(--text-xs);
+}
+
+.range-scale > span {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+.range-scale > span:nth-child(1) { left: 0; }
+.range-scale > span:nth-child(2) { left: 25%; }
+.range-scale > span:nth-child(3) { left: 50%; }
+.range-scale > span:nth-child(4) { left: 75%; }
+.range-scale > span:nth-child(5) { left: 100%; }
+
+/* The chosen time, e.g. <output class="time-readout">14:30 <span>Uhr</span></output>. */
+.time-readout {
+  font-family: var(--font-code);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.time-readout span {
+  color: var(--color-text-muted);
+  font-family: var(--font-text);
+  font-size: var(--text-s);
+  font-weight: 400;
+}
+
+
+/* =========================================================================
+   11. Select and weekday segmented control [V1 look, V2 use]
+   ========================================================================= */
+
+/* Shared look of text inputs, selects and text areas. :not() leaves out
+   checkboxes, radios, range sliders and buttons, which look different. */
+input:not([type="checkbox"], [type="radio"], [type="range"], [type="submit"], [type="button"], [type="reset"], [type="hidden"]),
+select,
+textarea {
+  display: block;
+  width: 100%;
+  min-height: var(--target);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-paper);
+  color: var(--color-text);
+  font: inherit;
+  border: 0.0625rem solid var(--color-control-line);
+  border-radius: var(--radius-block);
+  transition: border-color var(--duration-press) ease, box-shadow var(--duration-press) ease;
+}
+
+textarea {
+  min-height: 8rem;
+  resize: vertical;
+}
+
+/* Fields with focus: blue edge and a soft blue ring around it, as in Apple's forms. */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: none;
+  border-color: var(--color-focus);
+  box-shadow: var(--focus-ring);
+}
+
+::placeholder {
+  color: var(--color-text-muted);
+  opacity: 1;                       /* Firefox would make it lighter and too faint */
+}
+
+/* Select: the browser arrow is replaced by an inline SVG chevron, so it looks
+   the same everywhere. The SVG is a data URL (no extra file, no request). */
+select {
+  padding-right: 2.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%232b2d31' stroke-width='1.8'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.875rem center;
+  background-size: 0.75rem;
+  cursor: pointer;
+  appearance: none;
+}
+
+/* --- Weekday segmented control: seven radios in one row ---
+   <fieldset class="filter-group segmented">
+     <legend class="filter-label">Wochentag</legend>
+     <div class="segmented__options">
+       <input class="segmented__input visually-hidden" type="radio" name="tag" id="tag-0" value="0" checked>
+       <label class="segmented__option" for="tag-0"><span aria-hidden="true">Mo</span><span class="visually-hidden">Montag</span></label>
+       ...
+   The arrow keys move between the radios, as with every radio group. */
+/* Apple-style segmented control: a light grey track, the chosen day is a white pill with a soft shadow. */
+.segmented__options {
+  display: flex;
+  max-width: 26rem;                 /* seven days at most about 58 px wide each */
+  padding: 0.125rem;
+  background: var(--color-plaza);
+  border-radius: var(--radius-block);
+}
+
+.segmented__option {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;                     /* flex: 1 1 0 shares the width; at 320 px each day is still about 36 px wide */
+  min-height: calc(var(--target) - 0.25rem);
+  padding: 0 var(--space-2);
+  font-size: var(--text-s);
+  font-weight: 600;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color var(--duration-press) ease;
+}
+
+.segmented__option:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* Chosen day: a white pill with a soft shadow. */
+.segmented__input:checked + .segmented__option {
+  background: var(--color-paper);
+  color: var(--color-text);
+  box-shadow: var(--shadow-raised);
+}
+
+.segmented__input:focus-visible + .segmented__option {
+  position: relative;               /* keeps the ring above the neighbours */
+  outline: 0.1875rem solid var(--color-focus);
+  outline-offset: 0.125rem;
+}
+
+
+/* =========================================================================
+   12. Forms and validation states [V1; V2 adds friendly messages]
+   <form class="form">
+     <div class="field">
+       <label class="field__label" for="email">E-Mail <span class="field__required">(Pflichtfeld)</span></label>
+       <p class="field__hint" id="email-hint">...</p>
+       <input id="email" type="email" required aria-describedby="email-hint email-error">
+       <p class="field__error" id="email-error">Bitte gib eine gültige E-Mail-Adresse ein.</p>
+     </div>
+   Error state: V1 uses the browser check (:user-invalid, only after the user
+   has typed or tried to send). V2 (js/formular.js) adds class "field--error"
+   and aria-invalid="true" to the input.
+   ========================================================================= */
+
+.form {
+  display: grid;
+  gap: var(--space-5);
+  max-width: 40rem;
+}
+
+.field {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.field__label {
+  font-weight: 600;
+}
+
+.field__required {
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+  font-weight: 400;
+}
+
+.field__hint {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+}
+
+/* Error message: hidden until the field is invalid. The small square with "!"
+   repeats the block shape; the text says what is wrong and how to fix it. */
+.field__error {
+  display: none;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  color: var(--color-error);
+  font-size: var(--text-s);
+  font-weight: 600;
+}
+
+.field__error::before {
+  content: "!";
+  flex-shrink: 0;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: 0.0625rem;
+  background: var(--color-error);
+  color: #ffffff;
+  font-size: var(--text-xs);
+  line-height: 1.125rem;
+  text-align: center;
+  border-radius: 0.125rem;
+}
+
+/* Error state set by JavaScript (js/formular.js). */
+.field--error .field__error {
+  display: flex;
+}
+
+.field--error input,
+.field--error select,
+.field--error textarea,
+input[aria-invalid="true"],
+select[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+  background-color: var(--color-error-bg);
+  border-color: var(--color-error);
+  box-shadow: inset 0.25rem 0 0 var(--color-error);   /* thick left edge: visible without colour vision too */
+}
+
+/* Error state from the browser's own check (V1, no JavaScript). Written as
+   separate rules: an older browser that does not know :user-invalid or :has()
+   ignores only these rules, not the ones above. */
+input:user-invalid,
+select:user-invalid,
+textarea:user-invalid {
+  background-color: var(--color-error-bg);
+  border-color: var(--color-error);
+  box-shadow: inset 0.25rem 0 0 var(--color-error);
+}
+
+.field:has(:user-invalid) .field__error {
+  display: flex;
+}
+
+/* Valid state: green edge and a check mark inside the field (after input only). */
+.field--valid input,
+.field--valid textarea {
+  border-color: var(--color-success);
+  padding-right: 2.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3.2 3L13 4.5' fill='none' stroke='%232f6b2a' stroke-width='2.2'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+}
+
+input:not([type="checkbox"], [type="radio"], [type="range"]):user-valid {
+  border-color: var(--color-success);
+}
+
+/* Group of related fields with a caption. */
+.fieldset {
+  display: grid;
+  gap: 0;
+  min-width: 0;
+  margin: 0;
+  padding: var(--space-5);
+  background: var(--color-paper);
+  border: 0;
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-card);
+}
+
+/* The caption sits inside the card as its heading: float takes the legend out of the border line of the
+   fieldset (browsers draw it across the top border otherwise), clear puts the next element below it. */
+.fieldset legend {
+  float: left;
+  width: 100%;
+  margin-bottom: var(--space-3);
+  padding: 0;
+  font-size: var(--text-l);
+  font-weight: 700;
+}
+
+.fieldset legend + * {
+  clear: both;
+}
+
+
+/* =========================================================================
+   13. Tables [V1; sorting V2]
+   <div class="table-wrap table-wrap--tall" role="region" aria-labelledby="cap" tabindex="0">
+     <table class="data-table"><caption id="cap">...</caption> ...
+   The wrapper scrolls sideways on phones; "--tall" also limits the height,
+   so the column headings stay visible while scrolling through 146 rows.
+   ========================================================================= */
+
+.table-wrap {
+  max-width: 100%;
+  margin: 0 0 var(--space-5);
+  overflow-x: auto;
+  background: var(--color-paper);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-card);
+}
+
+.table-wrap--tall {
+  max-height: 75vh;
+  overflow-y: auto;
+}
+
+.table-wrap:focus-visible {
+  outline-offset: 0.125rem;
+}
+
+.data-table {
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  font-size: var(--text-s);
+  font-variant-numeric: tabular-nums;   /* digits of equal width */
+}
+
+/* Rows reached by an anchor stop below the sticky header, not under it. */
+.data-table tr {
+  scroll-margin-top: 3rem;
+}
+
+.data-table caption {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-m);
+  font-weight: 700;
+  text-align: left;
+}
+
+.data-table th,
+.data-table td {
+  padding: var(--space-2) var(--space-4);
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 0.0625rem solid var(--color-plaza);
+}
+
+/* Header row stays on top inside the scrolling wrapper. */
+.data-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--color-ground);
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+  font-weight: 600;
+  white-space: nowrap;
+  /* A shadow instead of a border: with border-collapse the border would not
+     move along with the sticky header. */
+  border-bottom: 0;
+  box-shadow: inset 0 -0.0625rem 0 var(--color-ring);
+}
+
+.data-table tbody tr:hover {
+  background: rgba(0, 0, 0, 0.025);
+}
+
+.data-table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+/* Numbers: right-aligned in the code font, so the digits line up. */
+.data-table .num {
+  font-family: var(--font-code);
+  text-align: right;
+}
+
+/* A zero is shown lighter, so the eye finds the non-empty cells. */
+.data-table .num--zero {
+  color: var(--color-text-muted);
+}
+
+/* Row reached by an anchor link (quadrate.html#q-G1): lit like the selected block. */
+.data-table tr:target {
+  background: var(--color-selected-soft);
+}
+
+/* The yellow edge sits on the first cell, because not every browser draws
+   shadows on table rows. */
+.data-table tr:target > :first-child {
+  box-shadow: inset 0.25rem 0 0 var(--color-selected);
+}
+
+/* [V2] Sortable column: the heading text sits in a button. aria-sort on the
+   <th> ("ascending" / "descending") tells screen readers and draws the arrow.
+   <th aria-sort="ascending"><button class="sort-button" type="button">Quadrat</button></th> */
+.sort-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: 2rem;
+  margin: 0;
+  padding: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  border: 0;
+  cursor: pointer;
+}
+
+.num .sort-button {
+  justify-content: flex-end;
+}
+
+/* The arrows are small inline SVGs: both grey = unsorted, one dark = sorted. */
+.sort-button::after {
+  content: "";
+  flex-shrink: 0;
+  width: 0.625rem;
+  height: 0.875rem;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 14'%3E%3Cpath d='M5 1l4 5H1z' fill='%2394918a'/%3E%3Cpath d='M5 13L1 8h8z' fill='%2394918a'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+[aria-sort="ascending"] .sort-button::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 14'%3E%3Cpath d='M5 1l4 5H1z' fill='%232b2d31'/%3E%3Cpath d='M5 13L1 8h8z' fill='%23c5c0b5'/%3E%3C/svg%3E");
+}
+
+[aria-sort="descending"] .sort-button::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 14'%3E%3Cpath d='M5 1l4 5H1z' fill='%23c5c0b5'/%3E%3Cpath d='M5 13L1 8h8z' fill='%232b2d31'/%3E%3C/svg%3E");
+}
+
+.sort-button:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+
+/* =========================================================================
+   14. Block codes and tiles [V1]
+   Block codes ("G1", "M3a") always appear as small charcoal blocks with a
+   white code, exactly like the labels on the map.
+   ========================================================================= */
+
+/* Inline code in text or table: <a class="block-code" href="index.html#G1">G1</a> */
+.block-code {
+  display: inline-block;
+  min-width: 2.25em;
+  margin-bottom: 0.125em;
+  padding: 0.05em 0.4em;
+  background: var(--color-roof);
+  color: var(--color-text-on-dark);
+  font-family: var(--font-block);
+  font-size: 0.875em;
+  font-weight: 700;
+  line-height: 1.45;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: 0.375rem;
+}
+
+a.block-code:link,
+a.block-code:visited {
+  color: var(--color-text-on-dark);
+}
+
+a.block-code:hover {
+  background: var(--color-text);
+  text-decoration: underline;
+  text-decoration-color: var(--color-selected);
+  text-decoration-thickness: 0.125rem;
+}
+
+/* Large tile at the head of the profile: <span class="block-tile">G1</span> */
+.block-tile {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-bottom: 0.375rem;
+  background: var(--color-roof);
+  color: var(--color-text-on-dark);
+  font-family: var(--font-block);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  border-radius: 0.875rem;
+}
+
+/* Selected: the same yellow as on the map, a glow "from below" under the wall. */
+.block-tile--selected {
+  box-shadow: 0 0 0 0.1875rem var(--color-selected), 0 0.5rem 1.25rem rgba(242, 194, 48, 0.55);
+}
+
+/* Empty profile: a hollow tile with a dash. */
+.block-tile--empty {
+  background: transparent;
+  color: var(--color-text-muted);
+  border: 0.125rem dashed var(--color-control-line);
+  box-shadow: none;
+}
+
+
+/* =========================================================================
+   15. Panels and the profile ("Steckbrief") [V2: filled by js/steckbrief.js]
+   ========================================================================= */
+
+/* A sheet on the ground: light paper, thin border, no drop shadow. */
+.panel {
+  padding: var(--space-5);
+  background: var(--color-paper);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-card);
+}
+
+.panel > :last-child {
+  margin-bottom: 0;
+}
+
+/* --- Profile panel below the map ---
+   <section class="profile" id="steckbrief" aria-labelledby="steckbrief-titel" tabindex="-1">
+     <header class="profile__head"> tile, title, meta, close button </header>
+     <div class="profile__body"> <div class="profile__about"> ... </div> <div class="profile__places"> ... </div> </div>
+   </section> */
+.profile {
+  padding: var(--space-6);
+  background: var(--color-paper);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-card);
+}
+
+.profile__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-4);
+  border-bottom: 0.0625rem solid var(--color-ring);
+}
+
+.profile__heading {
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+
+.profile__title {
+  margin: 0;
+  font-size: var(--text-2xl);
+}
+
+.profile__meta {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-muted);
+}
+
+.profile__close {
+  margin-left: auto;
+}
+
+.profile__body {
+  display: grid;
+  gap: var(--space-5) var(--space-6);
+}
+
+/* Two columns from 56rem: description and photo left, open places right. */
+@media (min-width: 56rem) {
+  .profile__body {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+}
+
+.profile__about > :last-child,
+.profile__places > :last-child {
+  margin-bottom: 0;
+}
+
+/* In one column the photo would become very large; keep it at a readable size. */
+.profile__about .photo {
+  max-width: 30rem;
+}
+
+.profile__source {
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+}
+
+/* Heading above the list of places, e.g. "Orte und Öffnungszeiten am Mittwoch, 19:30 Uhr". */
+.profile__places-title {
+  margin-bottom: var(--space-4);
+  font-size: var(--text-l);
+}
+
+/* Empty state before a block is chosen. */
+.profile--empty {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  background: transparent;
+  border: 0.0625rem dashed var(--color-control-line);
+  box-shadow: none;
+}
+
+.profile--empty p {
+  margin: 0;
+  max-width: var(--measure);
+}
+
+/* --- Places of one category ---
+   <section class="place-group cat-essen"> <h4 class="place-group__title"><span class="swatch swatch--l3"></span> Essen <span class="place-group__count">2 von 3 geöffnet</span></h4>
+     <ul class="place-list"> <li class="place"> ... </li> </ul> </section> */
+.place-group {
+  margin: 0 0 var(--space-5);
+}
+
+.place-group__title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  font-size: var(--text-m);
+}
+
+.place-group__count {
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+  font-weight: 400;
+}
+
+.place-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 0.0625rem solid var(--color-ring);
+}
+
+.place-list li {
+  margin: 0;
+}
+
+/* One place: name and type on the left, hours and status on the right.
+   On phones the right part moves under the name. */
+.place {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-1) var(--space-4);
+  padding: var(--space-3) 0;
+  border-bottom: 0.0625rem solid var(--color-ring);
+}
+
+@media (min-width: 30rem) {
+  .place {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+  }
+}
+
+.place__name {
+  display: block;
+  font-weight: 600;
+}
+
+.place__type {
+  display: block;
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+}
+
+.place__status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+@media (min-width: 30rem) {
+  .place__status {
+    justify-content: flex-end;
+  }
+}
+
+.place__hours {
+  font-family: var(--font-code);
+  font-size: var(--text-s);
+}
+
+
+/* =========================================================================
+   16. Status badges [V2]
+   <span class="badge badge--open">geöffnet</span>
+   The text always says the state; the dot shape adds a second cue:
+   filled = open, ring = closed, dashed ring = unknown.
+   ========================================================================= */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.125rem 0.625rem 0.125rem 0.5rem;
+  font-size: var(--text-s);
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+  border-radius: var(--radius-pill);
+}
+
+.badge::before {
+  content: "";
+  flex-shrink: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+}
+
+.badge--open {
+  background: var(--color-open-bg);
+  color: var(--color-open);
+}
+
+.badge--open::before {
+  background: var(--color-open-dot);
+}
+
+.badge--closed {
+  background: var(--color-closed-bg);
+  color: var(--color-closed);
+}
+
+.badge--closed::before {
+  border: 0.125rem solid var(--color-closed);
+}
+
+.badge--unknown {
+  background: transparent;
+  color: var(--color-text-muted);
+  box-shadow: inset 0 0 0 0.0625rem var(--color-control-line);
+}
+
+.badge--unknown::before {
+  border: 0.125rem dotted var(--color-text-muted);
+}
+
+
+/* =========================================================================
+   17. Legend and swatches [V1]
+   <div class="legend cat-essen">
+     <p class="legend__title">Geöffnete Orte je Quadrat</p>
+     <ul class="legend__items">
+       <li><span class="swatch swatch--none"></span> keiner</li>
+       <li><span class="swatch swatch--l1"></span> 1</li> ... l2 = 2-3, l3 = 4-6, l4 = 7+
+   ========================================================================= */
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+}
+
+.legend__title {
+  margin: 0;
+  font-weight: 600;
+}
+
+.legend__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.legend__items li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-family: var(--font-code);
+  font-size: var(--text-s);
+}
+
+/* A swatch is a tiny block: roof colour on top, a darker edge below, so even
+   the light levels stand out from the ground. */
+.swatch {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+  background: var(--swatch, var(--color-roof));
+  border-radius: 0.125rem;
+  box-shadow: inset 0 -0.1875rem 0 rgba(0, 0, 0, 0.22), inset 0 0 0 0.0625rem rgba(0, 0, 0, 0.18);
+  vertical-align: -0.125rem;
+}
+
+.swatch--none { --swatch: #ffffff; }       /* like a Quadrat without places on the map by day: white */
+.swatch--l1 { --swatch: var(--cat-1); }
+.swatch--l2 { --swatch: var(--cat-2); }
+.swatch--l3 { --swatch: var(--cat-3); }
+.swatch--l4 { --swatch: var(--cat-4); }
+
+/* Symbol for blocks with saved places: a white pin with a dark rim. */
+.swatch--pin {
+  width: 0.875rem;
+  height: 0.875rem;
+  background: #ffffff;
+  border: 0.1875rem solid var(--color-text);
+  border-radius: 50% 50% 50% 0;
+  box-shadow: none;
+  transform: rotate(-45deg);        /* the pointed corner faces down */
+}
+
+
+/* =========================================================================
+   18. Photos with credit [V1]
+   <figure class="photo">
+     <img src="img/fotos/marktplatz.jpg" alt="..." width="800" height="533">
+     <figcaption>
+       <span class="photo__caption">Marktplatz mit Marktplatzbrunnen</span>
+       <span class="photo__credit">Foto: <a href="...">Name</a>, <a href="...">CC BY-SA 4.0</a>, via Wikimedia Commons</span>
+   ========================================================================= */
+
+.photo {
+  margin: 0 0 var(--space-4);
+}
+
+.photo img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;                /* crops to 3:2 instead of stretching */
+  background: var(--color-plaza);   /* visible while the photo loads */
+  border-radius: var(--radius-block);
+}
+
+.photo figcaption {
+  display: grid;
+  gap: 0.125rem;
+  margin-top: var(--space-2);
+}
+
+.photo__caption {
+  font-size: var(--text-s);
+  font-weight: 600;
+}
+
+.photo__credit {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+.photo__credit a {
+  color: inherit;
+}
+
+
+/* =========================================================================
+   19. Notices [V1]
+   <div class="notice notice--info" role="status">
+     <p class="notice__title">Daten vom 28.09.2026</p>
+     <p>...</p>
+   </div>
+   Use role="alert" only for errors that appear after an action.
+   ========================================================================= */
+
+.notice {
+  --notice-color: var(--color-info);
+  --notice-bg: var(--color-info-bg);
+  margin: 0 0 var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: var(--notice-bg);
+  color: var(--color-text);
+  border: 0;
+  border-radius: var(--radius-block);
+}
+
+.notice > :last-child {
+  margin-bottom: 0;
+}
+
+.notice p {
+  margin-bottom: var(--space-2);
+}
+
+/* Title with a small square in the notice colour. */
+.notice__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--notice-color);
+  font-weight: 700;
+}
+
+.notice__title::before {
+  content: "";
+  flex-shrink: 0;
+  width: 0.625rem;
+  height: 0.625rem;
+  background: var(--notice-color);
+  border-radius: 50%;
+}
+
+.notice--info {
+  --notice-color: var(--color-info);
+  --notice-bg: var(--color-info-bg);
+}
+
+.notice--warning {
+  --notice-color: var(--color-warning);
+  --notice-bg: var(--color-warning-bg);
+}
+
+.notice--error {
+  --notice-color: var(--color-error);
+  --notice-bg: var(--color-error-bg);
+}
+
+.notice--success {
+  --notice-color: var(--color-success);
+  --notice-bg: var(--color-success-bg);
+}
+
+
+/* =========================================================================
+   20. Reduced motion and print
+   ========================================================================= */
+
+/* People who asked their system for less motion get no movement at all:
+   buttons do not shrink, and map animations finish at once (css/karte.css
+   reads --duration-grow). */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-press: 0ms;
+    --duration-grow: 0ms;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .button:hover,
+  .button:active {
+    transform: none;
+  }
+}
+
+/* Printing: no navigation or filter, black text, link targets are written out. */
+@media print {
+  .skip-link,
+  .site-nav,
+  .filter-bar,
+  .profile__close {
+    display: none;
+  }
+
+  body {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  .table-wrap--tall {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .prose a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: var(--text-xs);
+  }
+}
+
+
+/* =========================================================================
+   21. Additions of version 3 (final-v3, 2026-10-13)
+   Shared by all pages, so they live here; everything above is as in final-v2.
+   ========================================================================= */
+
+/* Number of saved entries next to "Merkliste" in the menu (js/merkliste.js): a small round badge. */
+.nav-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  margin-left: 0.375rem;
+  padding: 0 0.375rem;
+  background: var(--color-roof);
+  color: var(--color-text-on-dark);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  line-height: 1;
+  border-radius: var(--radius-pill);
+}
+
+/* .nav-count sets display: inline-flex, which would beat the attribute hidden. */
+.nav-count[hidden] {
+  display: none;
+}
+
+/* Tags of a place from OpenStreetMap ("vegan", "draußen sitzen", "Pizza"; js/merkmale.js): small grey
+   pills in one row under the type, in the profile and in the place search. */
+.place__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin: var(--space-1) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.place__tag {
+  padding: 0 0.5rem;
+  background: var(--color-plaza);
+  color: var(--color-text);
+  font-size: var(--text-xs);
+  line-height: 1.6;
+  border-radius: var(--radius-pill);
+}
+
+/* Link "Webseite" (js/merkmale.js) next to the link "Route" of the profile. */
+.place__route + .place__web {
+  margin-left: var(--space-4);
+}
+
+/* Button "In meiner Nähe" (js/standort.js) and its message line, on the map and in the place search. */
+.near-status {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+}
+
+.near-status:empty {
+  display: none;
+}
+
+/* Distance of a hit to the visitor ("350 m"), next to its hours. */
+.place__distance {
+  font-family: var(--font-code);
+  font-size: var(--text-s);
+  font-weight: 600;
+}
+
+
+/* =========================================================================
+   22. Colours and pictures (final-v3, 2026-10-14)
+   Our own drawings in img/bilder/ and img/icons/ (SVG, no licence needed).
+   They are only decoration: background images in CSS, or <span> with aria-hidden.
+   ========================================================================= */
+
+/* --- Coloured band at the top of a page: <div class="page-intro page-intro--band band-events">.
+   Every page has its own two colours and its own drawing on the right. --- */
+.page-intro--band {
+  max-width: none;
+  padding: var(--space-5) 9rem var(--space-5) var(--space-5);
+  background-color: var(--band-from);
+  background-image: var(--band-image), linear-gradient(120deg, var(--band-from), var(--band-to));
+  background-repeat: no-repeat;
+  background-position: right var(--space-5) center, 0 0;
+  background-size: 6.5rem auto, auto;
+  border-radius: var(--radius-panel);
+}
+
+/* The grey of .lead is too pale on the coloured band: a darker grey (7:1 on the light colours). */
+.page-intro--band .lead {
+  max-width: var(--measure);
+  color: #4a4a4f;
+}
+
+/* Phones: a smaller drawing in the top right corner, the text keeps most of the width. */
+@media (max-width: 40rem) {
+  .page-intro--band {
+    padding: var(--space-4) 5rem var(--space-4) var(--space-4);
+    background-position: right var(--space-3) top var(--space-4), 0 0;
+    background-size: 3.75rem auto, auto;
+  }
+}
+
+.band-events     { --band-from: #FCE4EC; --band-to: #EDE7F6; --band-image: url("../img/bilder/events.svg"); }
+.band-orte       { --band-from: #E0F2F1; --band-to: #E8F5E9; --band-image: url("../img/bilder/orte.svg"); }
+.band-merkliste  { --band-from: #FBEEC0; --band-to: #F2E6CC; --band-image: url("../img/bilder/merkliste.svg"); }
+.band-konto      { --band-from: #EAF3FD; --band-to: #E8EAF6; --band-image: url("../img/bilder/konto.svg"); }
+.band-vorschlagen { --band-from: #E8F5E9; --band-to: #F1F8E9; --band-image: url("../img/bilder/vorschlagen.svg"); }
+.band-ueber      { --band-from: #FFF1DE; --band-to: #FCE4EC; --band-image: url("../img/bilder/ueber-uns.svg"); }
+.band-offen      { --band-from: #FFF1DE; --band-to: #FDF3DC; --band-image: url("../img/bilder/offen.svg"); }
+
+/* --- Category icons: <span class="cat-icon cat-icon--essen" aria-hidden="true"></span> --- */
+.cat-icon {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 1.125rem;
+  height: 1.125rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  vertical-align: -0.1875rem;
+}
+
+.cat-icon--essen   { background-image: url("../img/icons/essen.svg"); }
+.cat-icon--trinken { background-image: url("../img/icons/trinken.svg"); }
+.cat-icon--kultur  { background-image: url("../img/icons/kultur.svg"); }
+.cat-icon--shoppen { background-image: url("../img/icons/shoppen.svg"); }
+
+/* --- A place with a stripe in the colour of its category (class place--cat and cat-essen ...),
+   in "Gerade offen", the place search and the Merkliste. --- */
+.place--cat {
+  padding-left: var(--space-3);
+  border-left: 0.25rem solid var(--cat-3, var(--color-ring));
+}
+
+@media print {
+  .page-intro--band {
+    padding: 0;
+    background: none;
+  }
+}
+
+/* Profile picture in the menu, in front of "Konto" (js/avatar.js, 2026-10-14): a small circle. */
+.nav-avatar {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: -0.25rem 0.375rem -0.25rem -0.25rem;
+  vertical-align: middle;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* The tag of "Was dir wichtig ist" (konto.html, js/merkmale.js, 2026-10-14): sand colour, bold, with a star. */
+.place__tag--wish {
+  background: var(--color-sand);
+  color: var(--color-sand-ink);
+  font-weight: 700;
+}
+
+.place__tag--wish::before {
+  content: "★ ";
+}

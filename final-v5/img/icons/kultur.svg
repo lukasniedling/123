@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <!-- Quadrate icon "Kultur": a museum with columns, in the colour of the category (token kultur-4 of css/style.css). Drawn for this website (final-v3, 2026-10-14). [V1] -->
+  <g fill="none" stroke="#4A3BA3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9l9-5 9 5z"/>
+    <path d="M5 9v9M9.5 9v9M14.5 9v9M19 9v9M3 20h18"/>
+  </g>
+</svg>

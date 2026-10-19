@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- Quadrate illustration "Merkliste": a list on paper with a pin. Drawn for this website (final-v3, 2026-10-14). [V1] -->
+  <rect x="16" y="18" width="64" height="86" rx="8" fill="#ffffff"/>
+  <g fill="#d9c69b"><rect x="28" y="36" width="40" height="6" rx="3"/><rect x="28" y="54" width="34" height="6" rx="3"/><rect x="28" y="72" width="40" height="6" rx="3"/><rect x="28" y="90" width="24" height="6" rx="3"/></g>
+  <path d="M90 22c-12 0-21 9-21 21 0 16 21 38 21 38s21-22 21-38c0-12-9-21-21-21z" fill="#D23F27"/>
+  <circle cx="90" cy="43" r="8" fill="#ffffff"/>
+  <ellipse cx="90" cy="86" rx="10" ry="3" fill="#1d1d1f" fill-opacity="0.2"/>
+</svg>

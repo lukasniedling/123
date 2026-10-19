@@ -1,0 +1,251 @@
+@charset "utf-8";
+/*
+ * gerade-offen.css - the part "Gerade offen" under the map on index.html (js/gerade-offen.js).  [V2]
+ * Added 2026-10-13 as css/jetzt.css for the page jetzt.html; since 2026-10-14 the part is under the map.
+ *
+ * How it fits in: index.html links this file after css/style.css and css/index.css. Colours, sizes and
+ * components (panel, place list, badge) come from css/style.css; this file arranges the part: the head
+ * with title and status line, "Überrasch mich", and the lists in a grid.
+ */
+
+/* The whole part: clearly apart from the map above it ("mit etwas Abstand"). */
+.now {
+  margin-top: var(--space-7);
+  padding-top: var(--space-5);
+  border-top: 0.0625rem solid var(--color-ring);
+}
+
+/* Large screens: index.css splits the page into two columns (filter left, map right, from 72rem).
+   "Gerade offen" spans both columns in a row of its own below them, so it has the whole width. */
+@media (min-width: 72rem) {
+  .map-layout > .now {
+    grid-column: 1 / -1;
+    grid-row: 4;
+  }
+}
+
+.now__head {
+  margin-bottom: var(--space-4);
+}
+
+.now__title {
+  margin: 0 0 var(--space-1);
+  font-size: var(--text-xl);
+}
+
+.now__note {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+/* "Essen: 58 von 300 Orten ... haben gerade geöffnet." */
+.now-tools__status {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+}
+
+/* The four panels: one column, two columns from 64rem. */
+.now-grid {
+  display: grid;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+@media (min-width: 64rem) {
+  .now-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.now-section__title {
+  margin: 0 0 var(--space-1);
+  font-size: var(--text-xl);
+}
+
+.now-section__hint {
+  margin-bottom: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+}
+
+/* The last place of a list needs no line below it: the panel edge closes the list. */
+.now-section .place:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.now-place__details a {
+  white-space: nowrap;
+}
+
+/* A list without entries: one quiet sentence instead. */
+.now-empty {
+  padding: var(--space-3) 0;
+  color: var(--color-text-muted);
+  list-style: none;
+}
+
+/* ---------- "Überrasch mich" (added 2026-10-13) ---------- */
+
+/* A wide card with a warm sand background: the playful part of the page. Intro and button on the left,
+   the suggestion on the right; one below the other on phones. */
+.surprise {
+  display: grid;
+  gap: var(--space-4) var(--space-5);
+  align-items: center;
+  margin-bottom: var(--space-5);
+  padding: var(--space-5);
+  background: linear-gradient(135deg, var(--color-sand) 0%, var(--color-paper) 70%);
+  border: 0.0625rem solid var(--color-sand-line);
+  border-radius: var(--radius-panel);
+}
+
+.surprise[hidden] {
+  display: none;
+}
+
+@media (min-width: 48rem) {
+  .surprise {
+    grid-template-columns: minmax(0, 18rem) minmax(0, 1fr);
+  }
+}
+
+.surprise__title {
+  margin: 0 0 var(--space-1);
+  font-size: var(--text-xl);
+}
+
+.surprise__hint {
+  margin-bottom: var(--space-3);
+  color: var(--color-sand-ink);
+  font-size: var(--text-s);
+}
+
+.surprise__intro .button {
+  margin-bottom: 0;
+}
+
+/* The suggestion: a white card with a thick edge in the colour of its category (class cat-essen ...). */
+.surprise__card {
+  padding: var(--space-4);
+  background: var(--color-paper);
+  border-radius: var(--radius-block);
+  box-shadow: inset 0.3125rem 0 0 var(--cat-3), 0 0.25rem 1rem rgba(0, 0, 0, 0.08);
+  animation: surprise-in 300ms var(--ease-out);
+}
+
+.surprise__card p {
+  margin: 0;
+}
+
+.surprise__kind {
+  color: var(--cat-4);
+  font-size: var(--text-s);
+  font-weight: 600;
+}
+
+.surprise__name {
+  margin: var(--space-1) 0;
+  font-size: var(--text-xl);
+}
+
+.surprise__until {
+  font-weight: 600;
+}
+
+/* two classes, so it wins over ".surprise__card p { margin: 0 }" */
+.surprise__card .surprise__links {
+  margin-top: var(--space-1);
+  font-size: var(--text-s);
+}
+
+.surprise__buttons {
+  margin-top: var(--space-3);
+}
+
+.surprise__buttons .button {
+  margin-bottom: 0;
+}
+
+/* "Merken" pressed: sand colour and a tick, as in the profile on the map (css/index.css). */
+.surprise__save[aria-pressed="true"] {
+  background: var(--color-sand);
+}
+
+.surprise__save[aria-pressed="true"]::before {
+  content: "✓ ";
+}
+
+.surprise__empty {
+  margin: 0;
+  color: var(--color-sand-ink);
+}
+
+/* Each new suggestion slides in a little; not for visitors who asked their system for less motion. */
+@keyframes surprise-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .surprise__card {
+    animation: none;
+  }
+}
+
+/* --- "Events heute": time, title and place one below the other (added 2026-10-13) --- */
+
+.now-events {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 0.0625rem solid var(--color-ring);
+}
+
+.now-events__item {
+  display: grid;
+  gap: 0.125rem;
+  padding: var(--space-2) 0;
+  border-bottom: 0.0625rem solid var(--color-ring);
+}
+
+.now-events__item:last-child {
+  border-bottom: 0;
+}
+
+.now-events__title {
+  font-weight: 600;
+}
+
+.now-events__place {
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+}
+
+/* "Alle 35 anzeigen" / "Weniger anzeigen" under a list (js/gerade-offen.js, added 2026-10-13). */
+.now-more {
+  margin-top: var(--space-3);
+}
+
+/* .button sets a display of its own, which would beat the attribute hidden: hide it explicitly. */
+.now-more[hidden] {
+  display: none;
+}
+
+/* "Zu dieser Zeit hat leider nichts geöffnet": a moon over sleeping blocks (img/bilder/mond.svg, 2026-10-14). */
+.empty-moon::before {
+  content: "";
+  display: block;
+  width: 6rem;
+  height: 4.5rem;
+  margin-bottom: var(--space-2);
+  background: url("../img/bilder/mond.svg") no-repeat center / contain;
+}

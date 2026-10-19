@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- Quadrate illustration "Orte": four blocks of the Quadrate and a magnifying glass. Drawn for this website (final-v3, 2026-10-14). [V1] -->
+  <rect x="44" y="12" width="10" height="92" fill="#f2e6cc"/>
+  <rect x="8" y="50" width="92" height="10" fill="#f2e6cc"/>
+  <rect x="8" y="12" width="34" height="36" rx="4" fill="#62666e"/><rect x="8" y="12" width="34" height="27" rx="4" fill="#3a3d43"/>
+  <rect x="56" y="12" width="34" height="36" rx="4" fill="#25A792"/><rect x="56" y="12" width="34" height="27" rx="4" fill="#156E60"/>
+  <rect x="8" y="62" width="34" height="36" rx="4" fill="#D23F27"/><rect x="8" y="62" width="34" height="27" rx="4" fill="#A32F1C"/>
+  <rect x="56" y="62" width="34" height="36" rx="4" fill="#62666e"/><rect x="56" y="62" width="34" height="27" rx="4" fill="#3a3d43"/>
+  <circle cx="80" cy="78" r="20" fill="#ffffff" fill-opacity="0.75" stroke="#1d1d1f" stroke-width="7"/>
+  <path d="M94 92l16 16" stroke="#1d1d1f" stroke-width="10" stroke-linecap="round"/>
+</svg>

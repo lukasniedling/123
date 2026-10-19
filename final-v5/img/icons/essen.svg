@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <!-- Quadrate icon "Essen": fork and knife, in the colour of the category (token essen-4 of css/style.css). Drawn for this website (final-v3, 2026-10-14). [V1] -->
+  <g fill="none" stroke="#A32F1C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 3v7a2 2 0 0 0 4 0V3M8 3v18"/>
+    <path d="M17 21V3c-2.5 1.5-3.5 4-3.5 7.5 0 2 1.5 3 3.5 3"/>
+  </g>
+</svg>

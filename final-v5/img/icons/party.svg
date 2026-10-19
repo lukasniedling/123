@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <!-- Quadrate icon for the event kind "Party und Quiz": a glass and a star. Drawn for this website (final-v3, 2026-10-14). [V1] -->
+  <g fill="none" stroke="#303F9F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 5h10l-5 7zM9 12v7M6 20h6"/>
+  </g>
+  <path d="M18 3l1 2.2 2.4.3-1.8 1.6.5 2.4-2.1-1.2-2.1 1.2.5-2.4-1.8-1.6 2.4-.3z" fill="#303F9F"/>
+</svg>

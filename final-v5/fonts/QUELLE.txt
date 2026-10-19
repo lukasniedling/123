@@ -1,0 +1,11 @@
+Fonts in this folder - what is left in the final version
+
+The final version shows all text in the system font of the device (css/style.css,
+section 1, decision D-035); it loads no font files. The pivot used the self-hosted
+fonts Archivo and IBM Plex Mono (Fontsource 5.3.0, downloaded on 2026-09-28); their
+files were removed here on 2026-10-07.
+
+What stays: OFL-Archivo.txt. The wordmark in img/logo.svg is Archivo Bold (width
+axis 112 of the variable font @fontsource-variable/archivo 5.3.0) converted to
+outlines. The SIL Open Font License 1.1 allows this; the logo contains no font file.
+Author: The Archivo Project Authors (https://github.com/Omnibus-Type/Archivo)

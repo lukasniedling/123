@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<!--
+  datenschutz.html - privacy notice ("Datenschutzerklärung") of the website "Quadrate".  [V1]
+
+  Purpose: tells visitors which personal data the site processes, why, where
+  and for how long, and which rights they have (Art. 13 GDPR / DSGVO).
+  This is a SAMPLE written for a student project. The team must check it
+  against the finished site before it goes online. Since 2026-09-29 there are no
+  placeholders left (deletion: "spätestens nach Abschluss des Studienprojekts").
+  Controller and contact data are the same as in impressum.html.
+  How it fits in: a static text page; styles come from css/style.css and css/info.css
+  (table of contents, address blocks). No JavaScript.
+  The site has no server (decision D-042): accounts, saved places and suggestions stay in
+  the visitor's browser (localStorage). Keep in sync with: js/konto.js and js/formular.js
+  (what is stored, storage keys), quadrate.html (OSM iframe in "Ort vorschlagen"), ueber-uns.html (video).
+  Facts checked on 2026-09-29: DDG / TDDDG on gesetze-im-internet.de, LfDI BW
+  contact page, OSMF privacy policy (edited 2026-01-25) and contact page, Google
+  privacy policy (effective 2026-04-02) and its frameworks page, EU Commission
+  page on adequacy decisions (UK renewed December 2025). The OSM embed page and a
+  map tile set no cookie in a test on 2026-09-29.
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Datenschutz – Quadrate</title>
+  <meta name="description" content="Datenschutzerklärung von Quadrate: welche Daten die Website verarbeitet, wofür und wie lange, und welche Rechte du hast.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/info.css">
+</head>
+<body>
+  <!-- Skip link: first element on the page, lets keyboard users jump over the navigation. -->
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="site-header">
+    <div class="site-header__inner container">
+      <a class="site-logo" href="index.html">
+        <img src="img/logo.svg" alt="Quadrate – zur Karte" width="200" height="33">
+      </a>
+
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <ul class="site-nav__list">
+          <li><a href="index.html">Karte</a></li>
+          <!-- events in the Quadrate (events.html, added 2026-10-13) -->
+          <li><a href="events.html">Events</a></li>
+          <li><a href="quadrate.html">Orte</a></li>
+          <!-- saved places with or without an account (merkliste.html, added 2026-10-13) -->
+          <li><a href="merkliste.html">Merkliste</a></li>
+          <!-- "Ort vorschlagen" is part of the page "Orte" since 2026-10-14 -->
+          <!-- account page: log in, register, saved places (js/konto.js, localStorage) -->
+          <li class="site-nav__item--account"><a href="konto.html">Konto</a></li>
+          <!-- "Über uns" back in the menu on 2026-10-14 (final-v5), on the far right next to "Konto" -->
+          <li><a href="ueber-uns.html">Über uns</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhalt" class="container">
+    <div class="page-intro">
+      <h1>Datenschutzerklärung</h1>
+      <p class="lead">Quadrate kommt mit sehr wenigen Daten aus. Hier steht, welche es sind, wofür wir sie brauchen und welche Rechte du hast.</p>
+    </div>
+
+    <!-- Team: delete this notice after the text has been checked (all placeholders are filled since 2026-09-29). -->
+    <div class="notice notice--warning info-notice" role="status">
+      <p class="notice__title">Muster, noch zu prüfen</p>
+      <p>Diese Datenschutzerklärung ist ein Entwurf für unser Studienprojekt. Das Team prüft sie, bevor die Website irgendwann öffentlich erreichbar sein sollte.</p>
+    </div>
+
+    <!-- Table of contents: every entry links to the id of a heading below. -->
+    <nav class="info-toc" aria-labelledby="toc-titel">
+      <h2 class="info-toc__title" id="toc-titel">Inhalt</h2>
+      <ol>
+        <li><a href="#verantwortliche">Verantwortliche</a></li>
+        <li><a href="#kurz">Das Wichtigste in Kürze</a></li>
+        <li><a href="#aufruf">Aufruf der Website</a></li>
+        <li><a href="#browser">Was in deinem Browser passiert</a></li>
+        <li><a href="#speicher">Konto, gemerkte Orte und Vorschläge</a></li>
+        <li><a href="#standort">Standort („In meiner Nähe“)</a></li>
+        <li><a href="#openstreetmap">OpenStreetMap-Karte</a></li>
+        <li><a href="#video">Video</a></li>
+        <li><a href="#schriften">Schriften, Fotos und Links</a></li>
+        <li><a href="#rechte">Deine Rechte</a></li>
+        <li><a href="#beschwerde">Beschwerde bei der Aufsichtsbehörde</a></li>
+        <li><a href="#aenderungen">Änderungen</a></li>
+      </ol>
+    </nav>
+
+    <div class="prose">
+      <!-- ============================== Controller ============================== -->
+      <h2 id="verantwortliche">Verantwortliche</h2>
+      <p>Verantwortlich für die Datenverarbeitung auf dieser Website im Sinne der Datenschutz-Grundverordnung (DSGVO) sind die fünf Mitglieder der Projektgruppe:</p>
+      <!-- One name line per team member, the same as in impressum.html. Postal address
+           c/o DHBW Mannheim (source in impressum.html). E-mail and telephone are the same
+           fictitious placeholders as in impressum.html: never write to or call them. -->
+      <address class="legal-address">
+        <p>Projektgruppe „Quadrate“<br>
+          Matti Katila<br>
+          Nikita Ermotschenko<br>
+          Niko Eibach<br>
+          Anes Sahbegovic<br>
+          Lukas Niedling</p>
+        <p>c/o Duale Hochschule Baden-Württemberg Mannheim<br>
+          Coblitzallee 1-9<br>
+          68163 Mannheim</p>
+        <p>E-Mail: <a href="mailto:info@quadrate.com">info@quadrate.com</a><br>
+          Telefon: +49 178 67123467</p>
+      </address>
+      <p>Quadrate ist ein nicht-kommerzielles Studienprojekt an der DHBW Mannheim. Weitere Angaben stehen im <a href="impressum.html">Impressum</a>.</p>
+
+      <!-- ============================== Summary ============================== -->
+      <h2 id="kurz">Das Wichtigste in Kürze</h2>
+      <ul>
+        <li>Keine Werbung, keine Statistik- oder Tracking-Dienste, keine Social-Media-Knöpfe.</li>
+        <li>Fotos, Kartendaten und das Video liegen bei der Website. Beim Aufruf der Seiten entsteht keine Verbindung zu Google Fonts oder anderen fremden Diensten.</li>
+        <li>Einzige Ausnahme: die eingebettete OpenStreetMap-Karte bei <a href="quadrate.html#vorschlagen">Ort vorschlagen</a> auf der Seite Orte.</li>
+        <li>Keine Cookies. Konto, gemerkte Orte und Vorschläge speichert die Website nur in deinem Browser (Local Storage); nichts davon erreicht uns.</li>
+      </ul>
+
+      <!-- ============================== Opening the website ============================== -->
+      <h2 id="aufruf">Aufruf der Website</h2>
+      <!-- Decisions D-022 and D-042: the site is not published and has no server. If it is ever
+           published, describe the hosting company (name, address, log files) here. -->
+      <p>Die Website ist nicht öffentlich im Internet erreichbar. Wir öffnen sie nur als Dateien auf unseren eigenen Rechnern, zum Beispiel in der Präsentation. Es gibt keinen Server von uns, also auch keine Protokolldateien (Server-Logs).</p>
+
+      <!-- ============================== In the browser ============================== -->
+      <h2 id="browser">Was in deinem Browser passiert</h2>
+      <!-- [V2] begin: map, filter and profile need JavaScript (the two paragraphs below).
+           V1 instead: <p>In dieser Version laufen auf unseren Seiten keine eigenen Skripte (JavaScript). Ausnahme ist nur die eingebettete Karte von OpenStreetMap, siehe unten.</p> -->
+      <p>Die Karte, die Filter und der Steckbrief laufen mit JavaScript direkt in deinem Browser. Die Daten dafür, also Orte, Umrisse der Quadrate, Texte und Fotos, liegen als Dateien bei der Website und werden mit der Seite geladen.</p>
+      <p>Welchen Tag, welche Uhrzeit und welche Kategorie du wählst und welches Quadrat du anklickst, wird nicht an uns übertragen und nicht gespeichert. Ein Link wie <code>index.html#G1</code> enthält das Quadrat als Anker; diesen Teil der Adresse schickt der Browser nicht an den Server.</p>
+      <!-- [V2] end -->
+
+      <!-- ============================== Local storage ============================== -->
+      <!-- js/konto.js and js/formular.js; keep the keys and fields in sync with them. -->
+      <h2 id="speicher">Konto, gemerkte Orte und Vorschläge</h2>
+      <p>Cookies setzen wir nicht. Wenn du ein Konto anlegst, Orte merkst oder das Formular <a href="quadrate.html#vorschlagen">Ort vorschlagen</a> auf der Seite Orte abschickst, speichert die Website das im <strong>Local Storage</strong> deines Browsers, also nur auf deinem Gerät:</p>
+      <ul>
+        <li><code>quadrate-konten</code>: E-Mail-Adresse, Passwort, Zeitpunkt der Registrierung, ob die Adresse bestätigt ist (mit dem Bestätigungscode, bis sie bestätigt ist) und die gemerkten Orte,</li>
+        <li><code>quadrate-angemeldet</code>: welche E-Mail-Adresse gerade angemeldet ist,</li>
+        <li><code>quadrate-vorschlaege</code>: die Angaben aus dem Formular (Name, E-Mail, Ort, Quadrat, Kategorie, Nachricht, Zeitpunkt).</li>
+        <li><code>quadrate-events-gemeldet</code>: Events, die du über <a href="event-melden.html">Event melden</a> einträgst (Titel, Art, Ort, Quadrat, Datum, Uhrzeit, Beschreibung, Veranstalter, E-Mail, Link und ob eine Hervorhebung gewünscht ist).</li>
+        <li><code>quadrate-avatare</code>: das Profilbild, das du auf der Seite <a href="konto.html">Konto</a> wählst, verkleinert auf 160 × 160 Pixel, zusammen mit der E-Mail-Adresse des Kontos. Das Bild verlässt deinen Browser nicht.</li>
+        <li><code>quadrate-verlauf</code>: nur mit Konto, welche Quadrate du zuletzt auf der Karte geöffnet hast und wann du Orte oder Events gemerkt oder entfernt hast (für „Zuletzt angesehen“ und „Verlauf deiner Merkliste“ auf der Seite Konto),</li>
+        <li><code>quadrate-vorlieben</code>: nur mit Konto, deine Lieblingskategorie und was dir wichtig ist (zum Beispiel „vegan“); Karte und Ortssuche starten damit.</li>
+        <li><code>quadrate-tagesplaene</code>: nur mit Konto, die Tagespläne, die du auf der Merkliste mit „Im Konto speichern“ ablegst (Titel, Text des Plans, Tag, Startzeit, Zeit pro Ort).</li>
+      </ul>
+      <!-- js/merkliste.js: saving places without an account (since 2026-10-13). -->
+      <p>Merkst du dir Orte, ohne angemeldet zu sein, speichert die Website nur die Kennungen dieser Orte im <strong>Session Storage</strong> deines Browsers (<code>quadrate-merkliste</code>). Der Browser löscht sie, sobald du den Tab schließt. Meldest du dich an, kommen die Orte in dein Konto.</p>
+      <!-- js/treffen.js: "Treffen planen" on merkliste.html (since 2026-10-13). -->
+      <p>Mit „Treffen planen“ auf der <a href="merkliste.html">Merkliste</a> stellst du eine Einladung zusammen. Die Website speichert und verschickt sie nicht: „Einladung per E-Mail“ öffnet nur dein eigenes E-Mail-Programm mit dem fertigen Text (Link mit <code>mailto:</code>), und du entscheidest dort selbst, ob und an wen du sie schickst. „Text kopieren“ legt den Text in deine Zwischenablage.</p>
+      <p>Nichts davon wird an uns oder an andere geschickt. Auch die Bestätigungs-E-Mail wird nicht wirklich verschickt: Die Seite zeigt sie nur in einem simulierten Postfach an. <strong>Das Passwort wird ohne Verschlüsselung gespeichert</strong>: Bitte nutze kein Passwort, das du auch anderswo verwendest.</p>
+      <p>Löschen kannst du alles selbst: auf der Seite <a href="konto.html">Konto</a> mit „Konto löschen“, oder ganz über die Einstellungen deines Browsers (Websitedaten löschen).</p>
+
+      <!-- ============================== Location ============================== -->
+      <!-- js/standort.js: button "In meiner Nähe" on the map and on "Orte" (since 2026-10-13). -->
+      <h2 id="standort">Standort („In meiner Nähe“)</h2>
+      <p>Auf der <a href="index.html">Karte</a> und auf der Seite <a href="quadrate.html">Orte</a> gibt es den Knopf „In meiner Nähe“. Erst wenn du ihn drückst, fragt dein Browser, ob die Website deinen Standort erfahren darf. Ohne deine Erlaubnis passiert nichts.</p>
+      <p>Erlaubst du es, bestimmt dein Browser die Position (je nach Gerät über GPS, WLAN oder Mobilfunk; dafür kann der Browser selbst einen Ortungsdienst seines Herstellers fragen). Die Website rechnet damit nur in deinem Browser aus, welche Orte am nächsten liegen. Die Position wird <strong>nicht gespeichert und nicht an uns oder andere geschickt</strong>; nach dem Schließen der Seite ist sie weg. Die Erlaubnis kannst du in den Einstellungen deines Browsers jederzeit zurücknehmen.</p>
+      <p>Die Lage der Orte und Merkmale wie „vegan“ oder „draußen sitzen“ stammen aus OpenStreetMap und liegen als Datei bei der Website. Dafür entsteht keine Verbindung zu OpenStreetMap.</p>
+
+      <!-- ============================== OpenStreetMap iframe ============================== -->
+      <h2 id="openstreetmap">OpenStreetMap-Karte auf „Ort vorschlagen“</h2>
+      <p>Im Abschnitt <a href="quadrate.html#vorschlagen">Ort vorschlagen</a> der Seite Orte ist eine Karte von OpenStreetMap eingebettet (iframe). Sobald die Karte auf dieser Seite angezeigt wird, lädt dein Browser sie direkt von den Servern der OpenStreetMap Foundation. Dabei erhält die OpenStreetMap Foundation technisch notwendige Angaben: deine IP-Adresse, Datum und Uhrzeit, den gewünschten Kartenausschnitt, die Adresse unserer Website sowie Angaben zu deinem Browser. Die Kartenkacheln kommen über ein weltweites Netz von Zwischenspeicher-Servern (Content Delivery Network).</p>
+      <p>Anbieter ist die OpenStreetMap Foundation, St John's Innovation Centre, Cowley Road, Cambridge, CB4 0WS, Vereinigtes Königreich. Nach ihrer Datenschutzerklärung speichert sie personenbezogene Daten im Vereinigten Königreich und in den Niederlanden. Für das Vereinigte Königreich hat die EU-Kommission festgestellt, dass dort ein angemessenes Datenschutzniveau besteht (Angemessenheitsbeschluss nach Art. 45 DSGVO, verlängert im Dezember 2025).</p>
+      <p>Mehr dazu in der <a href="https://osmfoundation.org/wiki/Privacy_Policy">Datenschutzerklärung der OpenStreetMap Foundation</a> (englisch).</p>
+      <p>Rechtsgrundlage ist unser berechtigtes Interesse, dir die Lage der Quadrate auf einer echten Stadtkarte zu zeigen (Art. 6 Abs. 1 lit. f DSGVO).</p>
+      <p>Alle anderen Karten und Ortsdaten dieser Website, auch die Karte auf der Startseite, liegen bei der Website. Dafür entsteht keine Verbindung zu OpenStreetMap.</p>
+
+      <!-- ============================== Video ============================== -->
+      <h2 id="video">Video</h2>
+      <p>Das Video auf der Seite <a href="ueber-uns.html#video">Über uns</a> liegt als Datei bei der Website. Beim Abspielen entsteht keine Verbindung zu fremden Diensten.</p>
+      <!-- Team: only if ueber-uns.html links to a video on YouTube instead (see the comment there;
+           a YouTube iframe is not planned, because it would need prior consent under § 25 Abs. 1
+           TDDDG), add this sentence: -->
+      <!-- <p>Der Link „Video auf YouTube ansehen“ ist ein einfacher Link: Erst wenn du ihn anklickst, verlässt du unsere Website; danach gilt die <a href="https://policies.google.com/privacy?hl=de">Datenschutzerklärung von Google</a>.</p> -->
+
+      <!-- ============================== Fonts, photos, links ============================== -->
+      <h2 id="schriften">Schriften, Fotos und Links</h2>
+      <p>Die Website lädt keine Schriften aus dem Internet und nutzt keine Google Fonts: Der Text erscheint in der Systemschrift, die auf deinem Gerät schon installiert ist. Dafür entsteht keine Verbindung zu einem anderen Anbieter.</p>
+      <p>Die Fotos stammen von Wikimedia Commons, liegen aber ebenfalls bei der Website. Beim Anzeigen entsteht keine Verbindung zu Wikimedia.</p>
+      <p>Links zu fremden Websites, zum Beispiel zu OpenStreetMap, Wikipedia oder den Lizenztexten von Creative Commons, sind einfache Links. Erst wenn du einen davon anklickst, verlässt du unsere Website; dann gilt die Datenschutzerklärung des jeweiligen Anbieters.</p>
+      <!-- js/steckbrief.js (routeMarkup): link "Route" next to every place in the profile panel. -->
+      <p>Im Steckbrief steht bei jedem Ort ein Link „Route“. Auch das ist ein einfacher Link: Erst wenn du ihn anklickst, öffnet sich Google Maps in einem neuen Tab, mit dem Namen und der Adresse des Ortes als Ziel. Ab dann gilt die <a href="https://policies.google.com/privacy?hl=de">Datenschutzerklärung von Google</a>. Dasselbe gilt für „Route in dieser Reihenfolge“ beim Tagesplaner auf der Merkliste.</p>
+      <!-- js/merkmale.js (websiteMarkup): link "Webseite" of a place, from OpenStreetMap (since 2026-10-13). -->
+      <p>Kennt OpenStreetMap die Webseite eines Ortes, steht daneben ein Link „Webseite“. Er führt zur Seite des Ortes selbst; erst beim Anklicken verlässt du unsere Website.</p>
+
+      <!-- ============================== Rights ============================== -->
+      <h2 id="rechte">Deine Rechte</h2>
+      <p>Du hast gegenüber uns folgende Rechte bei den Daten, die dich betreffen:</p>
+      <ul>
+        <li><strong>Auskunft</strong> darüber, ob und welche Daten wir über dich verarbeiten (Art. 15 DSGVO),</li>
+        <li><strong>Berichtigung</strong> falscher Daten (Art. 16 DSGVO),</li>
+        <li><strong>Löschung</strong> deiner Daten (Art. 17 DSGVO),</li>
+        <li><strong>Einschränkung</strong> der Verarbeitung (Art. 18 DSGVO),</li>
+        <li><strong>Datenübertragbarkeit</strong>: deine Daten in einem gängigen, maschinenlesbaren Format zu erhalten (Art. 20 DSGVO),</li>
+        <li><strong>Widerspruch</strong> gegen die Verarbeitung (Art. 21 DSGVO, siehe unten),</li>
+        <li><strong>Widerruf</strong> einer Einwilligung mit Wirkung für die Zukunft (Art. 7 Abs. 3 DSGVO).</li>
+      </ul>
+      <p>Berichtigen oder löschen wir Daten oder schränken wir ihre Verarbeitung ein, teilen wir das allen mit, denen wir die Daten offengelegt haben (Art. 19 DSGVO). Da wir keine Daten weitergeben, betrifft das in der Regel niemanden.</p>
+      <p><strong>Widerspruchsrecht:</strong> Wenn wir Daten auf Grund unseres berechtigten Interesses verarbeiten (Art. 6 Abs. 1 lit. f DSGVO), kannst du dieser Verarbeitung jederzeit widersprechen, wenn sich dafür Gründe aus deiner besonderen Situation ergeben (Art. 21 Abs. 1 DSGVO). Wir verarbeiten die Daten dann nicht mehr, es sei denn, wir können zwingende schutzwürdige Gründe nachweisen, die deine Interessen überwiegen.</p>
+      <p>Um ein Recht zu nutzen, schreib uns einfach eine E-Mail an <a href="mailto:info@quadrate.com">info@quadrate.com</a>.</p>
+
+      <!-- ============================== Supervisory authority ============================== -->
+      <h2 id="beschwerde">Beschwerde bei der Aufsichtsbehörde</h2>
+      <p>Wenn du meinst, dass wir deine Daten nicht richtig verarbeiten, kannst du dich bei einer Datenschutz-Aufsichtsbehörde beschweren (Art. 77 DSGVO), besonders in dem EU-Land, in dem du wohnst oder arbeitest. Die Aufsichtsbehörde in Baden-Württemberg ist:</p>
+      <address class="legal-address">
+        <p>Der Landesbeauftragte für den Datenschutz und die Informationsfreiheit Baden-Württemberg (LfDI BW)<br>
+          Heilbronner Straße 35<br>
+          70191 Stuttgart</p>
+        <p>Postanschrift: Postfach 10 29 32, 70025 Stuttgart<br>
+          Telefon: 0711 615541-0<br>
+          E-Mail: poststelle@lfdi.bwl.de<br>
+          Website: <a href="https://www.baden-wuerttemberg.datenschutz.de/">www.baden-wuerttemberg.datenschutz.de</a></p>
+      </address>
+      <p>Eine Beschwerde geht auch online über das <a href="https://www.baden-wuerttemberg.datenschutz.de/beschwerde/">Beschwerdeformular des LfDI BW</a>.</p>
+
+      <!-- ============================== Changes ============================== -->
+      <h2 id="aenderungen">Änderungen</h2>
+      <p>Wenn sich die Website ändert, zum Beispiel wenn wir ein Video einbinden oder neue Funktionen hinzukommen, passen wir diese Datenschutzerklärung an.</p>
+
+      <p class="legal-date">Stand: 13. Oktober 2026</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner container">
+      <p>Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL</p>
+      <nav class="site-footer__links" aria-label="Weitere Seiten">
+        <ul>
+          <li><a href="ueber-uns.html">Über uns</a></li>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html" aria-current="page">Datenschutz</a></li>
+        </ul>
+      </nav>
+      <p>Studienprojekt <span aria-hidden="true">·</span> DHBW Mannheim <span aria-hidden="true">·</span> Webprogrammierung 2026</p>
+    </div>
+  </footer>
+  <!-- account and saved places: the number next to "Merkliste" in the menu (js/merkliste.js, 2026-10-13) -->
+  <script src="js/konto.js"></script>
+  <script src="js/merkliste.js"></script>
+  <!-- profile picture of the account in the menu (js/avatar.js, 2026-10-14) -->
+  <script src="js/avatar.js"></script>
+  <!-- history and preferences of the account (js/verlauf.js, 2026-10-14) -->
+  <script src="js/verlauf.js"></script>
+</body>
+</html>

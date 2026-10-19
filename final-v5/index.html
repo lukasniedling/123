@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<!--
+  index.html - start page of the website "Quadrate": map of the Quadrate with filter, legend
+  and profile panel ("Steckbrief").                                          [V1 static, V2 interactive]
+
+  Layout (css/index.css): on large screens (from 72rem) intro and filter form a column on the left,
+  the map sits on the right and is sized so that it fits the height of the window; the profile
+  opens over the right part of the map. On smaller screens everything is stacked.
+
+  How it fits in:
+  - Head, header, navigation and footer are the same on every page.
+  - [V1] Without JavaScript the map box #karte shows the picture img/karte-statisch.png and a link
+    to the directory quadrate.html. All parts that need JavaScript carry the attribute hidden and
+    stay invisible; the <noscript> block explains why.
+  - [V2] js/karte.js replaces the picture with the interactive map. js/filter.js colours it by
+    weekday, time and category, js/steckbrief.js fills the profile panel, js/app.js connects
+    everything and reads the address: index.html#G1 opens the profile of G1.
+  - js/konto.js (accounts in localStorage): logged-in visitors can save places; their Quadrate
+    get a pin on the map. js/karte.js also sets the time-of-day mood (Karte.stimmung).
+  Page-specific styles: css/index.css.
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Karte – Quadrate</title>
+  <meta name="description" content="Karte der Mannheimer Quadrate: Wähle Wochentag, Uhrzeit und Kategorie und sieh, wo Restaurants, Cafés, Kulturorte und Geschäfte geöffnet haben.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- [V2] variant-specific map styles -->
+  <link rel="stylesheet" href="css/karte.css">
+  <link rel="stylesheet" href="css/index.css">
+  <!-- "Gerade offen" under the map (added 2026-10-14) -->
+  <link rel="stylesheet" href="css/gerade-offen.css">
+</head>
+<body>
+  <!-- Skip link: first element on the page, lets keyboard users jump over the navigation. -->
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="site-header">
+    <div class="site-header__inner container">
+      <a class="site-logo" href="index.html">
+        <img src="img/logo.svg" alt="Quadrate – zur Karte" width="200" height="33">
+      </a>
+
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <ul class="site-nav__list">
+          <li><a href="index.html" aria-current="page">Karte</a></li>
+          <!-- events in the Quadrate (events.html, added 2026-10-13) -->
+          <li><a href="events.html">Events</a></li>
+          <li><a href="quadrate.html">Orte</a></li>
+          <!-- saved places with or without an account (merkliste.html, added 2026-10-13) -->
+          <li><a href="merkliste.html">Merkliste</a></li>
+          <!-- "Ort vorschlagen" is part of the page "Orte" since 2026-10-14 -->
+          <!-- account page: log in, register, saved places (js/konto.js, localStorage) -->
+          <li class="site-nav__item--account"><a href="konto.html">Konto</a></li>
+          <!-- "Über uns" back in the menu on 2026-10-14 (final-v5), on the far right next to "Konto" -->
+          <li><a href="ueber-uns.html">Über uns</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhalt" class="map-layout container container--wide">
+    <div class="page-intro">
+      <h1>Was hat in den Quadraten geöffnet?</h1>
+      <p class="lead">Die Mannheimer Innenstadt besteht aus 144 Quadraten, dazu kommen die Teilblöcke M3a und M4a.
+        <!-- [V2] instructions for the interactive map, shown by js/app.js -->
+        <span id="anleitung" hidden>Wähle Tag, Uhrzeit und Kategorie: Die Karte zeigt, wo dann etwas geöffnet hat. Ein Klick auf ein Quadrat öffnet seinen Steckbrief.</span></p>
+    </div>
+
+    <!-- [V2] filter bar and the list "Quadrat wählen"; hidden without JavaScript, js/app.js shows it.
+         The hidden headings (class visually-hidden) let screen-reader users jump to filter and map. -->
+    <section class="filter-bar" id="filter" aria-labelledby="filter-titel" hidden>
+      <h2 class="visually-hidden" id="filter-titel">Filter und Auswahl</h2>
+      <fieldset class="filter-group segmented">
+        <legend class="filter-label">Wochentag</legend>
+        <div class="segmented__options">
+          <input class="segmented__input visually-hidden" type="radio" name="tag" id="tag-0" value="0" checked>
+          <label class="segmented__option" for="tag-0"><span aria-hidden="true">Mo</span><span class="visually-hidden">Montag</span></label>
+          <input class="segmented__input visually-hidden" type="radio" name="tag" id="tag-1" value="1">
+          <label class="segmented__option" for="tag-1"><span aria-hidden="true">Di</span><span class="visually-hidden">Dienstag</span></label>
+          <input class="segmented__input visually-hidden" type="radio" name="tag" id="tag-2" value="2">
+          <label class="segmented__option" for="tag-2"><span aria-hidden="true">Mi</span><span class="visually-hidden">Mittwoch</span></label>
+          <input class="segmented__input visually-hidden" type="radio" name="tag" id="tag-3" value="3">
+          <label class="segmented__option" for="tag-3"><span aria-hidden="true">Do</span><span class="visually-hidden">Donnerstag</span></label>
+          <input class="segmented__input visually-hidden" type="radio" name="tag" id="tag-4" value="4">
+          <label class="segmented__option" for="tag-4"><span aria-hidden="true">Fr</span><span class="visually-hidden">Freitag</span></label>
+          <input class="segmented__input visually-hidden" type="radio" name="tag" id="tag-5" value="5">
+          <label class="segmented__option" for="tag-5"><span aria-hidden="true">Sa</span><span class="visually-hidden">Samstag</span></label>
+          <input class="segmented__input visually-hidden" type="radio" name="tag" id="tag-6" value="6">
+          <label class="segmented__option" for="tag-6"><span aria-hidden="true">So</span><span class="visually-hidden">Sonntag</span></label>
+        </div>
+      </fieldset>
+
+      <div class="filter-group filter-group--time">
+        <div class="filter-group__head">
+          <label class="filter-label" for="zeit">Uhrzeit</label>
+          <div class="time-now">
+            <!-- aria-hidden: screen readers get the time from the slider itself (aria-valuetext) -->
+            <output class="time-readout" id="zeit-anzeige" for="zeit" aria-hidden="true">12:00 <span>Uhr</span></output>
+            <!-- the visible word comes first in the name, the hidden part says what the button does -->
+            <button class="button button--secondary button--small" type="button" id="jetzt">Jetzt<span class="visually-hidden">: heutigen Tag und aktuelle Uhrzeit einstellen</span></button>
+            <!-- time lapse (js/filter.js, added 2026-10-13): runs the slider on to 24:00; a second click stops it.
+                 Both icons are in the button, css/index.css shows the one that fits aria-pressed. -->
+            <button class="button button--secondary button--small time-play" type="button" id="zeitraffer" aria-pressed="false" aria-controls="zeit">
+              <svg class="time-play__start" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true" focusable="false"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>
+              <svg class="time-play__stop" viewBox="0 0 16 16" width="12" height="12" aria-hidden="true" focusable="false"><path d="M3 3h10v10H3z" fill="currentColor"/></svg>
+              Zeitraffer<span class="visually-hidden">: den Tag im Schnelldurchlauf zeigen</span>
+            </button>
+          </div>
+        </div>
+        <!-- the slider between two arrow buttons: one click = one step (30 minutes), js/filter.js -->
+        <div class="time-stepper">
+          <button class="button button--secondary time-step" type="button" id="zeit-zurueck" aria-label="30 Minuten früher" aria-controls="zeit">
+            <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="time-stepper__track">
+            <input class="range" type="range" id="zeit" min="0" max="1440" step="15" value="720">
+            <div class="range-scale" aria-hidden="true"><span>0</span><span>6</span><span>12</span><span>18</span><span>24</span></div>
+          </div>
+          <button class="button button--secondary time-step" type="button" id="zeit-vor" aria-label="30 Minuten später" aria-controls="zeit">
+            <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <fieldset class="filter-group">
+        <legend class="filter-label">Kategorie</legend>
+        <ul class="chip-group">
+          <li><input class="chip-input visually-hidden" type="radio" name="kategorie" id="kat-essen" value="essen" checked><label class="chip cat-essen" for="kat-essen"><span class="chip__swatch"></span><span class="cat-icon cat-icon--essen" aria-hidden="true"></span>Essen</label></li>
+          <li><input class="chip-input visually-hidden" type="radio" name="kategorie" id="kat-trinken" value="trinken"><label class="chip cat-trinken" for="kat-trinken"><span class="chip__swatch"></span><span class="cat-icon cat-icon--trinken" aria-hidden="true"></span>Trinken</label></li>
+          <li><input class="chip-input visually-hidden" type="radio" name="kategorie" id="kat-kultur" value="kultur"><label class="chip cat-kultur" for="kat-kultur"><span class="chip__swatch"></span><span class="cat-icon cat-icon--kultur" aria-hidden="true"></span>Kultur</label></li>
+          <li><input class="chip-input visually-hidden" type="radio" name="kategorie" id="kat-shoppen" value="shoppen"><label class="chip cat-shoppen" for="kat-shoppen"><span class="chip__swatch"></span><span class="cat-icon cat-icon--shoppen" aria-hidden="true"></span>Shoppen</label></li>
+        </ul>
+      </fieldset>
+
+      <!-- Keyboard and phone alternative to clicking on the map; js/app.js adds the 146 codes. -->
+      <div class="filter-group filter-group--block">
+        <label class="filter-label" for="quadrat-wahl">Quadrat wählen</label>
+        <select id="quadrat-wahl">
+          <option value="">Bitte wählen</option>
+        </select>
+        <!-- Visible only with keyboard focus: jumps over the 146 blocks of the map to the profile. -->
+        <a class="jump-link" href="#steckbrief">Zum Steckbrief springen</a>
+        <!-- "In meiner Nähe" (js/standort.js, added 2026-10-13): opens the Quadrat nearest to the visitor;
+             js/app.js shows the button only if the browser can find the position -->
+        <button class="button button--secondary button--small near-button" type="button" id="naehe" hidden>In meiner Nähe</button>
+        <p class="near-status" id="naehe-status" role="status"></p>
+      </div>
+    </section>
+
+    <h2 class="visually-hidden" id="karte-titel">Karte und Legende</h2>
+    <div class="map-frame">
+      <!-- [V2] hint for phones (css/index.css shows it only below 48rem): the map scrolls sideways -->
+      <p class="map-hint" id="karten-tipp" hidden>Tipp: Wische über die Karte zur Seite oder wähle das Quadrat oben unter „Quadrat wählen“.</p>
+      <!-- Map and profile panel together: on large screens (from 72rem) the profile lies over the
+           right part of the map, on smaller screens it sits directly below the map (css/index.css). -->
+      <div class="map-area">
+        <!-- [V1] static picture of the map. [V2] js/app.js removes the class map-fallback and
+             js/karte.js replaces the content of #karte with the interactive map.
+             loading="lazy": with JavaScript the picture is replaced before it is needed, so it is
+             usually not downloaded at all; without JavaScript browsers load it normally.
+             alt describes the picture for people who cannot see it; title is the small tooltip
+             that appears when the mouse rests on the picture. -->
+        <div id="karte" class="map-fallback">
+          <img src="img/karte-statisch.png" alt="Karte der Mannheimer Innenstadt aus der Vogelperspektive: die Quadrate als weiße Blöcke mit ihren Kürzeln von A1 bis U6, dazwischen die Kurpfalzstraße und die Planken, unten das Schloss, rechts der Wasserturm." title="Karte der Quadrate (Standbild)" width="1600" height="1066" loading="lazy">
+        </div>
+
+        <!-- [V2] profile panel ("Steckbrief"), filled by js/steckbrief.js; tabindex="-1" lets the jump link focus it.
+             It stays invisible until a Quadrat is chosen (class profile--empty, css/index.css). -->
+        <section class="profile profile--empty" id="steckbrief" aria-label="Steckbrief" tabindex="-1" hidden></section>
+      </div>
+
+      <div class="map-footer">
+        <!-- [V2] legend and live summary, updated by js/filter.js -->
+        <div class="map-footer__legend" id="karten-legende" hidden>
+          <div class="legend cat-essen" id="legende">
+            <p class="legend__title" id="legende-titel">Essen: geöffnete Orte je Quadrat</p>
+            <ul class="legend__items">
+              <li><span class="swatch swatch--none"></span>keine</li>
+              <li><span class="swatch swatch--l1"></span>1</li>
+              <li><span class="swatch swatch--l2"></span>2–3</li>
+              <li><span class="swatch swatch--l3"></span>4–6</li>
+              <li><span class="swatch swatch--l4"></span>7+</li>
+              <!-- shown by js/steckbrief.js when places are saved (js/merkliste.js) -->
+              <li id="legende-pin" hidden><span class="swatch swatch--pin"></span>gemerkte Orte (eine Nadel je Ort, in der Farbe seiner Kategorie)</li>
+            </ul>
+          </div>
+          <p class="map-summary" id="zusammenfassung" aria-live="polite" aria-atomic="true"></p>
+          <!-- shown by js/filter.js when the page starts at 12:00 because hardly anything is open now -->
+          <p class="map-summary__note" id="zeit-hinweis" hidden>Gerade hat kaum etwas geöffnet. Mit dem Regler siehst du andere Uhrzeiten, „Jetzt“ springt zurück.</p>
+          <p class="map-summary__note">Orte ohne bekannte Öffnungszeiten zählen nicht mit.</p>
+        </div>
+        <p class="map-footer__meta">Orte und Öffnungszeiten: OpenStreetMap, Stand 28.09.2026, ohne Gewähr.<br>Orte suchen und einen fehlenden Ort vorschlagen: <a href="quadrate.html">Orte</a></p>
+      </div>
+    </div>
+
+    <!-- [V2] "Gerade offen" under the map (added 2026-10-14; before, it was a page of its own, jetzt.html):
+         js/gerade-offen.js fills it with the day, time and category of the map filter above, so it has no
+         controls of its own. Hidden without JavaScript. -->
+    <section class="now" id="gerade-offen" aria-labelledby="gerade-offen-titel" hidden>
+      <div class="now__head page-intro--band band-offen">
+        <h2 class="now__title" id="gerade-offen-titel">Gerade offen</h2>
+        <p class="now-tools__status" id="jetzt-status" role="status"></p>
+        <p class="now__note">Berechnet aus Öffnungszeiten, nicht aus Besucherzahlen. Tag, Uhrzeit und Kategorie stellst du oben bei der Karte ein.</p>
+      </div>
+
+      <!-- "Überrasch mich": a random place that is open at the chosen moment (and of the chosen category) -->
+      <section class="surprise" id="ueberrasch" aria-labelledby="ueberrasch-titel">
+        <div class="surprise__intro">
+          <h3 class="surprise__title" id="ueberrasch-titel">Überrasch mich</h3>
+          <p class="surprise__hint">Ein zufälliger Ort, der zur gewählten Zeit geöffnet hat.</p>
+          <button class="button" type="button" id="ueberrasch-knopf">Überrasch mich</button>
+        </div>
+        <div class="surprise__result" id="ueberrasch-ergebnis" aria-live="polite"></div>
+      </section>
+
+      <div class="now-grid">
+        <!-- events of the chosen day from js/data/events.js; hidden if there are none -->
+        <section class="panel now-section" id="jetzt-events-bereich" aria-labelledby="jetzt-events-titel" hidden>
+          <h3 class="now-section__title" id="jetzt-events-titel">Events heute</h3>
+          <p class="now-section__hint">Was noch läuft oder beginnt (Beispiel-Einträge). Alle Termine: <a href="events.html">Events</a>.</p>
+          <ul class="now-events" id="jetzt-events"></ul>
+        </section>
+
+        <section class="panel now-section" aria-labelledby="jetzt-schliesst-titel">
+          <h3 class="now-section__title" id="jetzt-schliesst-titel">Schließt bald</h3>
+          <p class="now-section__hint">Hat noch offen, schließt aber in der nächsten Stunde.</p>
+          <ul class="place-list" id="jetzt-schliesst"></ul>
+        </section>
+
+        <section class="panel now-section" aria-labelledby="jetzt-oeffnet-titel">
+          <h3 class="now-section__title" id="jetzt-oeffnet-titel">Öffnet gleich</h3>
+          <p class="now-section__hint">Hat noch zu, öffnet aber in der nächsten Stunde.</p>
+          <ul class="place-list" id="jetzt-oeffnet"></ul>
+        </section>
+
+        <section class="panel now-section" aria-labelledby="jetzt-lange-titel">
+          <h3 class="now-section__title" id="jetzt-lange-titel">Lange offen</h3>
+          <p class="now-section__hint">Hat offen und bleibt bis 23 Uhr oder länger offen.</p>
+          <ul class="place-list" id="jetzt-lange"></ul>
+        </section>
+      </div>
+    </section>
+
+    <!-- [V2] message for browsers with JavaScript switched off -->
+    <noscript>
+      <div class="notice notice--warning">
+        <p class="notice__title">Karte ohne JavaScript</p>
+        <p>Ohne JavaScript zeigt die Startseite ein festes Bild der Karte. Filter, Farben und Steckbrief brauchen JavaScript. Einen fehlenden Ort kannst du auf der Seite <a href="quadrate.html#vorschlagen">Orte</a> vorschlagen.</p>
+      </div>
+    </noscript>
+
+    <!-- [V2] short messages for screen readers ("Quadrat G1 gewählt"), written by js/app.js -->
+    <p class="visually-hidden" id="ansage" aria-live="polite"></p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner container">
+      <p>Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL</p>
+      <nav class="site-footer__links" aria-label="Weitere Seiten">
+        <ul>
+          <li><a href="ueber-uns.html">Über uns</a></li>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </nav>
+      <p>Studienprojekt <span aria-hidden="true">·</span> DHBW Mannheim <span aria-hidden="true">·</span> Webprogrammierung 2026</p>
+    </div>
+  </footer>
+
+  <!-- [V2] data: places, info texts, photos -->
+  <script src="js/data/orte.js"></script>
+  <!-- tags and positions of the places (js/merkmale.js, js/standort.js; added 2026-10-13) -->
+  <script src="js/data/merkmale.js"></script>
+  <script src="js/merkmale.js"></script>
+  <script src="js/standort.js"></script>
+  <script src="js/data/quadrate.js"></script>
+  <script src="js/data/fotos.js"></script>
+  <!-- [V2] map geometry and map module (interface window.Karte) -->
+  <script src="js/data/karte-daten.js"></script>
+  <script src="js/karte.js"></script>
+  <!-- [V2] opening hours, filter, accounts and saved places (localStorage), profile panel -->
+  <script src="js/oeffnungszeiten.js"></script>
+  <script src="js/filter.js"></script>
+  <script src="js/konto.js"></script>
+  <script src="js/merkliste.js"></script>
+  <!-- profile picture of the account in the menu (js/avatar.js, 2026-10-14) -->
+  <script src="js/avatar.js"></script>
+  <!-- history and preferences of the account (js/verlauf.js, 2026-10-14) -->
+  <script src="js/verlauf.js"></script>
+  <!-- [V2] events for "Events hier" in the profile (2026-10-13) -->
+  <script src="js/data/events.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/steckbrief.js"></script>
+  <!-- "Gerade offen" under the map (added 2026-10-14); before app.js, which calls GeradeOffen.refresh() -->
+  <script src="js/gerade-offen.js"></script>
+  <!-- [V2] wiring of this page, must come last -->
+  <script src="js/app.js"></script>
+</body>
+</html>

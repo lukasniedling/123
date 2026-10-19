@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<!--
+  merkliste.html - the saved places ("Merkliste"), with or without an account.  [V2] Added 2026-10-13.
+
+  How it works: js/merkliste.js (window.Merkliste) knows where the places are saved: in the account
+  (js/konto.js, localStorage) when someone is logged in, otherwise only for this tab (sessionStorage).
+  js/merkliste-seite.js draws this page:
+    - a notice: kept in the account, or only until the tab is closed
+    - the buttons "Als PDF speichern oder drucken" (the browser's print dialog, window.print()) and
+      "Route zu allen Orten" (one Google Maps link with the places as stops)
+    - one panel per Quadrat with its saved places: today's hours and state, the hours of the whole
+      week, links to the map and to Google Maps, and the button "Entfernen"
+  Everything in #merkliste-inhalt is filled by the script; without JavaScript the <noscript> notice shows.
+  Printing: css/merkliste.css hides navigation and buttons, so the list fits on paper or in a PDF.
+  Page styles: css/merkliste.css.
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Merkliste – Quadrate</title>
+  <meta name="description" content="Deine gemerkten Orte in den Mannheimer Quadraten: Öffnungszeiten, Route und als PDF zum Mitnehmen.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/zeitregler.css">
+  <link rel="stylesheet" href="css/merkliste.css">
+</head>
+<body>
+  <!-- Skip link: first element on the page, lets keyboard users jump over the navigation. -->
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="site-header">
+    <div class="site-header__inner container">
+      <a class="site-logo" href="index.html">
+        <img src="img/logo.svg" alt="Quadrate – zur Karte" width="200" height="33">
+      </a>
+
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <ul class="site-nav__list">
+          <li><a href="index.html">Karte</a></li>
+          <!-- events in the Quadrate (events.html, added 2026-10-13) -->
+          <li><a href="events.html">Events</a></li>
+          <li><a href="quadrate.html">Orte</a></li>
+          <!-- saved places with or without an account (merkliste.html, added 2026-10-13) -->
+          <li><a href="merkliste.html" aria-current="page">Merkliste</a></li>
+          <!-- "Ort vorschlagen" is part of the page "Orte" since 2026-10-14 -->
+          <!-- account page: log in, register, saved places (js/konto.js, localStorage) -->
+          <li class="site-nav__item--account"><a href="konto.html">Konto</a></li>
+          <!-- "Über uns" back in the menu on 2026-10-14 (final-v5), on the far right next to "Konto" -->
+          <li><a href="ueber-uns.html">Über uns</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhalt" class="container">
+    <div class="page-intro page-intro--band band-merkliste">
+      <h1>Merkliste</h1>
+      <p class="lead">Alle Orte, die du dir im Steckbrief gemerkt hast: mit Öffnungszeiten, Route und als PDF zum Mitnehmen.</p>
+      <!-- only on paper / in the PDF (css/merkliste.css), filled by js/merkliste-seite.js -->
+      <p class="print-only" id="merkliste-stand"></p>
+    </div>
+
+    <noscript>
+      <div class="notice notice--warning">
+        <p class="notice__title">JavaScript nötig</p>
+        <p>Die Merkliste speichert die Website mit JavaScript in deinem Browser.</p>
+      </div>
+    </noscript>
+
+    <!-- filled by js/merkliste-seite.js: notice, buttons and the places, or the empty state -->
+    <div id="merkliste-inhalt"></div>
+
+    <!-- "Tag planen" and "Treffen planen" one below the other, each over the whole width and with a colour of its
+         own (css/merkliste.css, part 5; side by side until 2026-10-14, that looked cramped) -->
+    <div class="merkliste-planning">
+
+    <!-- [V2] "Tag planen" (added 2026-10-13): js/tagesplaner.js shows it when places or events are saved and
+         puts them into an order in which every place is still open when you get there (walking time between
+         them from the positions in js/data/merkmale.js). Uses the layout of "Treffen planen" (class meeting). -->
+    <section class="panel meeting dayplan" id="tagesplan" aria-labelledby="tagesplan-titel" hidden>
+      <h2 class="meeting__title" id="tagesplan-titel">
+        <!-- a small drawing: a clock (decoration only, so aria-hidden) -->
+        <span class="meeting__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" focusable="false"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        Tag planen
+      </h2>
+      <p class="meeting__intro">Wähle Tag und Startzeit. Der Planer bringt deine gemerkten Orte und Events in eine Reihenfolge, in der alles noch geöffnet hat, wenn du ankommst. Wer früh schließt, kommt zuerst dran. Den Plan kannst du einzeln als PDF speichern oder per E-Mail schicken.</p>
+      <form class="form meeting__form" id="tagesplan-formular" action="#">
+        <div class="meeting__row">
+          <div class="field">
+            <label class="field__label" for="tagesplan-datum">Tag</label>
+            <input id="tagesplan-datum" name="datum" type="date" required>
+          </div>
+          <!-- time slider as on the map: 0 to 24 Uhr in steps of 30 minutes (js/zeitregler.js) -->
+          <div class="field time-field">
+            <div class="filter-group__head">
+              <label class="field__label" for="tagesplan-zeit">Start</label>
+              <output class="time-readout" id="tagesplan-zeit-anzeige" for="tagesplan-zeit" aria-hidden="true">18:00 <span>Uhr</span></output>
+            </div>
+            <div class="time-stepper">
+              <button class="button button--secondary time-step" type="button" id="tagesplan-zeit-zurueck" aria-label="Start 30 Minuten früher" aria-controls="tagesplan-zeit">
+                <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="time-stepper__track">
+                <input class="range" type="range" id="tagesplan-zeit" name="zeit" min="0" max="1440" step="30" value="1080">
+                <div class="range-scale" aria-hidden="true"><span>0</span><span>6</span><span>12</span><span>18</span><span>24</span></div>
+              </div>
+              <button class="button button--secondary time-step" type="button" id="tagesplan-zeit-vor" aria-label="Start 30 Minuten später" aria-controls="tagesplan-zeit">
+                <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="field dayplan__stay">
+          <label class="field__label" for="tagesplan-dauer">Zeit pro Ort</label>
+          <select id="tagesplan-dauer" name="dauer">
+            <option value="30">30 Minuten</option>
+            <option value="45">45 Minuten</option>
+            <option value="60" selected>1 Stunde</option>
+            <option value="90">1,5 Stunden</option>
+            <option value="120">2 Stunden</option>
+          </select>
+        </div>
+      </form>
+      <!-- the plan, filled by js/tagesplaner.js -->
+      <div class="dayplan__plan" id="tagesplan-plan" aria-live="polite"></div>
+      <!-- the plan on its own (changed 2026-10-14): a PDF with only the plan, or the plan as text in an
+           e-mail (mailto:, the visitor's own e-mail program) or in the clipboard; js/tagesplaner.js -->
+      <div class="button-row meeting__buttons dayplan__buttons" id="tagesplan-knoepfe">
+        <button class="button" type="button" id="tagesplan-pdf">Plan als PDF</button>
+        <a class="button button--secondary" id="tagesplan-mail" href="mailto:">Plan per E-Mail</a>
+        <button class="button button--secondary" type="button" id="tagesplan-kopieren">Text kopieren</button>
+        <!-- only with an account: keeps the plan on the page Konto (js/verlauf.js, 2026-10-14) -->
+        <button class="button button--secondary" type="button" id="tagesplan-speichern" hidden>Im Konto speichern</button>
+      </div>
+      <p class="meeting__note" id="tagesplan-hinweis" role="status"></p>
+    </section>
+
+    <!-- [V2] "Treffen planen" (added 2026-10-13): js/treffen.js shows it when places are saved, fills the
+         list "Treffpunkt" and builds the invitation (preview, e-mail via mailto:, copy). Nothing is sent by
+         the website: the visitor's own e-mail program opens with the text. -->
+    <section class="panel meeting meeting--treffen" id="treffen" aria-labelledby="treffen-titel" hidden>
+      <h2 class="meeting__title" id="treffen-titel">
+        <!-- a small drawing: two people (decoration only) -->
+        <span class="meeting__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" focusable="false"><circle cx="8.5" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="16.5" cy="9" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5M14.5 14.2c.6-.2 1.3-.2 2-.2 2.6 0 4.5 1.8 4.5 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+        Treffen planen
+      </h2>
+      <p class="meeting__intro">Wähle Tag, Uhrzeit und Treffpunkt. Die Einladung sagt, ob der Treffpunkt dann geöffnet hat, und enthält eine Route mit Google Maps.</p>
+      <form class="form meeting__form" id="treffen-formular" action="#">
+        <div class="meeting__row">
+          <div class="field">
+            <label class="field__label" for="treffen-datum">Tag</label>
+            <input id="treffen-datum" name="datum" type="date" required>
+          </div>
+          <!-- time slider as on the map: 0 to 24 Uhr in steps of 30 minutes (js/zeitregler.js) -->
+          <div class="field time-field">
+            <div class="filter-group__head">
+              <label class="field__label" for="treffen-zeit">Uhrzeit</label>
+              <output class="time-readout" id="treffen-zeit-anzeige" for="treffen-zeit" aria-hidden="true">19:00 <span>Uhr</span></output>
+            </div>
+            <div class="time-stepper">
+              <button class="button button--secondary time-step" type="button" id="treffen-zeit-zurueck" aria-label="30 Minuten früher" aria-controls="treffen-zeit">
+                <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="time-stepper__track">
+                <input class="range" type="range" id="treffen-zeit" name="zeit" min="0" max="1440" step="30" value="1140">
+                <div class="range-scale" aria-hidden="true"><span>0</span><span>6</span><span>12</span><span>18</span><span>24</span></div>
+              </div>
+              <button class="button button--secondary time-step" type="button" id="treffen-zeit-vor" aria-label="30 Minuten später" aria-controls="treffen-zeit">
+                <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field__label" for="treffen-ort">Treffpunkt</label>
+          <!-- js/treffen.js adds one option per saved place -->
+          <select id="treffen-ort" name="ort">
+            <option value="">Anderer Treffpunkt (unten eintragen)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field__label" for="treffen-anderer">Anderer Treffpunkt <span class="field__required">(freiwillig)</span></label>
+          <input id="treffen-anderer" name="anderer" type="text" maxlength="80" placeholder="zum Beispiel Wasserturm">
+        </div>
+        <div class="field">
+          <label class="field__label" for="treffen-an">E-Mail an <span class="field__required">(freiwillig)</span></label>
+          <p class="field__hint" id="treffen-an-hinweis">Mehrere Adressen mit Komma trennen. Leer lassen, wenn du sie im Mailprogramm einträgst.</p>
+          <input id="treffen-an" name="an" type="email" multiple maxlength="300" autocomplete="off" aria-describedby="treffen-an-hinweis">
+        </div>
+        <div class="field">
+          <label class="field__label" for="treffen-nachricht">Nachricht <span class="field__required">(freiwillig)</span></label>
+          <textarea id="treffen-nachricht" name="nachricht" rows="2" maxlength="300" placeholder="zum Beispiel Wer kommt mit?"></textarea>
+        </div>
+
+        <!-- the result: preview, note and buttons; on wide screens next to the fields (css/merkliste.css) -->
+        <div class="meeting__result">
+          <h3 class="meeting__preview-title">So sieht die Einladung aus</h3>
+          <pre class="meeting__preview" id="treffen-vorschau"></pre>
+          <p class="meeting__note" id="treffen-hinweis" role="status"></p>
+
+          <div class="button-row meeting__buttons">
+            <button class="button" type="submit">Einladung per E-Mail</button>
+            <button class="button button--secondary" type="button" id="treffen-kopieren">Text kopieren</button>
+          </div>
+        </div>
+      </form>
+    </section>
+    </div>
+
+    <p class="merkliste-source">Orte und Öffnungszeiten: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL. Angaben ohne Gewähr, Feiertage sind nicht berücksichtigt.</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner container">
+      <p>Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL</p>
+      <nav class="site-footer__links" aria-label="Weitere Seiten">
+        <ul>
+          <li><a href="ueber-uns.html">Über uns</a></li>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </nav>
+      <p>Studienprojekt <span aria-hidden="true">·</span> DHBW Mannheim <span aria-hidden="true">·</span> Webprogrammierung 2026</p>
+    </div>
+  </footer>
+
+  <!-- data, opening hours, account and saved places, type names and route links, then this page -->
+  <script src="js/data/orte.js"></script>
+  <!-- tags and positions of the places: tags in the list, walking times of "Tag planen" (2026-10-13) -->
+  <script src="js/data/merkmale.js"></script>
+  <script src="js/merkmale.js"></script>
+  <script src="js/standort.js"></script>
+  <script src="js/data/quadrate.js"></script>
+  <script src="js/oeffnungszeiten.js"></script>
+  <script src="js/konto.js"></script>
+  <script src="js/merkliste.js"></script>
+  <!-- profile picture of the account in the menu (js/avatar.js, 2026-10-14) -->
+  <script src="js/avatar.js"></script>
+  <!-- history and preferences of the account (js/verlauf.js, 2026-10-14) -->
+  <script src="js/verlauf.js"></script>
+  <script src="js/steckbrief.js"></script>
+  <script src="js/zeitregler.js"></script>
+  <script src="js/treffen.js"></script>
+  <!-- saved events (2026-10-13): the events and their dates -->
+  <script src="js/data/events.js"></script>
+  <script src="js/events.js"></script>
+  <!-- "Tag planen" (added 2026-10-13); before merkliste-seite.js, which calls Tagesplaner.refresh() -->
+  <script src="js/tagesplaner.js"></script>
+  <script src="js/merkliste-seite.js"></script>
+</body>
+</html>

@@ -1,0 +1,462 @@
+@charset "utf-8";
+/*
+ * konto.css - page styles of konto.html: the forms "Anmelden" and "Konto anlegen", the simulated
+ * e-mail with the confirmation code, and the account ("Mein Konto", until 2026-10-14 "Meine Orte").
+ *
+ * How it fits in: konto.html links this file after css/style.css. All colours, sizes and
+ * components (panel, form, field, notice, place list, block-code, swatch, button) come from
+ * css/style.css; this file only arranges them for this page.
+ */
+
+
+/* =========================================================================
+   Not logged in: the two forms side by side (one below the other on phones)
+   ========================================================================= */
+
+.account-layout {
+  display: grid;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+@media (min-width: 56rem) {
+  .account-layout {
+    grid-template-columns: repeat(2, minmax(0, 28rem));
+  }
+}
+
+.account-panel__title {
+  margin-bottom: var(--space-5);
+  font-size: var(--text-xl);
+}
+
+/* Error message under a form; takes no room while it is empty. */
+.account-error {
+  margin: 0;
+  color: var(--color-error);
+  font-size: var(--text-s);
+  font-weight: 600;
+}
+
+.account-error:empty {
+  display: none;
+}
+
+
+/* =========================================================================
+   Not confirmed yet: the simulated e-mail with the code
+   ========================================================================= */
+
+/* Head of the e-mail: "Von", "An", "Betreff" in a narrow column, the values next to them. */
+.mail__head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-1) var(--space-4);
+  margin: 0 0 var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-ring);
+  font-size: var(--text-s);
+}
+
+.mail__head dt {
+  color: var(--color-text-muted);
+}
+
+.mail__head dd {
+  margin: 0;
+  overflow-wrap: anywhere;          /* long addresses wrap instead of widening the panel */
+}
+
+/* The code: large digits with gaps, easy to read and type. */
+.mail__code {
+  margin: var(--space-4) 0;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-plaza);
+  border-radius: var(--radius-block);
+  font-family: var(--font-code);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-align: center;
+}
+
+
+/* =========================================================================
+   Logged in: Mein Konto
+   ========================================================================= */
+
+/* "Abmelden" and "Konto löschen" at the end of the page. */
+.account-actions {
+  margin-top: var(--space-6);
+}
+
+
+/* =========================================================================
+   Profile picture (added 2026-10-14, final-v5)
+   ========================================================================= */
+
+.profile-picture {
+  position: relative;               /* the hidden file field (.visually-hidden, position: absolute) stays inside the box */
+  margin-bottom: var(--space-5);
+}
+
+.profile-picture__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4) var(--space-5);
+}
+
+/* The round picture, or the first letter of the e-mail address on the colour of the band of the page. */
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: #EAF3FD;
+  color: var(--color-info);
+  font-weight: 700;
+  border-radius: 50%;
+}
+
+.avatar--large {
+  width: 6rem;
+  height: 6rem;
+  font-size: 2.5rem;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;               /* fills the circle without being squeezed */
+}
+
+.avatar img:not([hidden]) + .avatar__letter {
+  display: none;
+}
+
+.profile-picture__tools .button-row {
+  margin-bottom: var(--space-2);
+}
+
+/* The hidden file field stands in the top left corner of the box, so it never sticks out on narrow screens. */
+.profile-picture input[type="file"] {
+  left: 0;
+  top: 0;
+}
+
+/* The file field is hidden visually; its label looks like a button. When the field has the keyboard focus,
+   the label shows the focus ring instead. */
+.profile-picture input[type="file"]:focus-visible + label {
+  outline: 0.1875rem solid var(--color-focus);
+  outline-offset: 0.125rem;
+}
+
+.profile-picture__message {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+}
+
+.profile-picture__message:empty {
+  display: none;
+}
+
+@media print {
+  .profile-picture {
+    display: none;
+  }
+}
+
+/* The profile picture big in the blue band of "Mein Konto", in place of the drawing (js/avatar.js, showInBand). */
+.page-intro--avatar {
+  position: relative;
+}
+
+.band-avatar {
+  position: absolute;
+  top: 50%;
+  right: var(--space-5);
+  width: 7rem;
+  height: 7rem;
+  object-fit: cover;
+  border: 0.25rem solid var(--color-paper);
+  border-radius: 50%;
+  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.15);
+  transform: translateY(-50%);
+}
+
+/* Phones: a little smaller, in the top right corner like the drawing. */
+@media (max-width: 40rem) {
+  .band-avatar {
+    top: var(--space-4);
+    right: var(--space-3);
+    width: 4rem;
+    height: 4rem;
+    border-width: 0.1875rem;
+    transform: none;
+  }
+}
+
+
+/* =========================================================================
+   Overview, history and preferences (js/konto-seite.js with js/verlauf.js, added 2026-10-14)
+   ========================================================================= */
+
+.account-overview,
+.account-preferences {
+  margin-bottom: var(--space-5);
+}
+
+/* Four boxes with a big number side by side; on phones two per row. */
+.stat-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.stat-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-ground);
+  border-radius: var(--radius-block);
+}
+
+.stat-tile__number {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.stat-tile__text,
+.stat-tile__link {
+  font-size: var(--text-s);
+}
+
+.stat-tile__text {
+  color: var(--color-text-muted);
+}
+
+/* One bar per category: name with icon, the bar in the colour of the category, the number. */
+.category-bars {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.category-bars__row {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr) 2rem;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-s);
+}
+
+.category-bars__track {
+  height: 0.75rem;
+  background: var(--color-plaza);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.category-bars__bar {
+  display: block;
+  height: 100%;
+  background: var(--cat-3);
+  border-radius: var(--radius-pill);
+  transition: width 0.6s ease;
+}
+
+.category-bars__count {
+  font-weight: 700;
+  text-align: right;
+}
+
+/* "Zuletzt angesehen" and "Verlauf deiner Merkliste" side by side from 48rem. */
+.account-history {
+  display: grid;
+  gap: var(--space-5);
+  margin-bottom: var(--space-5);
+}
+
+@media (min-width: 48rem) {
+  .account-history {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+}
+
+.seen-list,
+.timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.seen-list__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  border-bottom: 0.0625rem solid var(--color-ring);
+}
+
+.seen-list__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.seen-list__name {
+  font-size: var(--text-s);
+}
+
+.seen-list__time,
+.timeline__time,
+.account-empty {
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+}
+
+/* The history of the Merkliste as a time line: a line on the left, a green dot for "gemerkt", a grey ring for
+   "entfernt" (the word says it as well, so it does not depend on colour). */
+.timeline {
+  border-left: 0.1875rem solid var(--color-ring);
+  padding-left: var(--space-4);
+}
+
+/* "Alle anzeigen" and "Verlauf leeren" under the time line (2026-10-14) */
+.timeline__tools {
+  margin-top: var(--space-3);
+}
+
+.timeline__item {
+  position: relative;
+  display: grid;
+  gap: 0.125rem;
+  padding: var(--space-1) 0 var(--space-3);
+}
+
+.timeline__item::before {
+  content: "";
+  position: absolute;
+  top: 0.45rem;
+  left: calc(-1 * var(--space-4) - 0.4375rem);
+  width: 0.6875rem;
+  height: 0.6875rem;
+  border-radius: 50%;
+  background: var(--color-open-dot);
+  border: 0.125rem solid var(--color-paper);
+}
+
+.timeline__item--removed::before {
+  background: var(--color-paper);
+  border-color: var(--color-control-line);
+}
+
+.timeline__what {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-success);
+}
+
+.timeline__item--removed .timeline__what {
+  color: var(--color-text-muted);
+}
+
+.timeline__name {
+  font-weight: 600;
+}
+
+.account-preferences__feature {
+  max-width: 18rem;
+  margin-top: var(--space-4);
+}
+
+@media print {
+  .account-overview,
+  .account-history,
+  .account-preferences {
+    display: none;
+  }
+}
+
+/* "Deine Tagespläne" (js/konto-seite.js, showPlans, 2026-10-14): one row per plan, its text folded below. */
+.account-plans {
+  margin-bottom: var(--space-5);
+}
+
+.account-plans__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.account-plans__item {
+  padding: var(--space-3) 0;
+  border-bottom: 0.0625rem solid var(--color-ring);
+}
+
+.account-plans__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+}
+
+.account-plans__title {
+  display: block;
+  font-weight: 600;
+}
+
+.account-plans__time {
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+}
+
+.account-plans__buttons {
+  margin: 0;
+}
+
+.account-plans__buttons .button {
+  margin-bottom: 0;
+}
+
+.account-plans__details summary {
+  margin-top: var(--space-2);
+  color: var(--color-link);
+  font-size: var(--text-s);
+  cursor: pointer;
+}
+
+.account-plans__text {
+  margin: var(--space-2) 0 0;
+  padding: var(--space-3);
+  background: var(--color-ground);
+  border-radius: var(--radius-block);
+  font-family: inherit;
+  font-size: var(--text-s);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* "Abmelden" and "Konto löschen" at the very end, with some room above. */
+#konto-aktionen {
+  margin-top: var(--space-6);
+}
+
+@media print {
+  .account-plans {
+    display: none;
+  }
+}

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- Quadrate illustration "Konto": a person with a key. Drawn for this website (final-v3, 2026-10-14). [V1] -->
+  <circle cx="54" cy="42" r="20" fill="#0058b0"/>
+  <path d="M18 104c0-22 16-36 36-36s36 14 36 36z" fill="#0058b0"/>
+  <circle cx="54" cy="42" r="20" fill="#ffffff" fill-opacity="0.15"/>
+  <circle cx="92" cy="74" r="12" fill="none" stroke="#D0901A" stroke-width="6"/>
+  <path d="M92 86v22M92 98h8M92 106h6" stroke="#D0901A" stroke-width="6" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- Quadrate illustration "Ort vorschlagen": a map pin with a plus. Drawn for this website (final-v3, 2026-10-14). [V1] -->
+  <rect x="10" y="62" width="40" height="40" rx="5" fill="#62666e"/><rect x="10" y="62" width="40" height="30" rx="5" fill="#3a3d43"/>
+  <rect x="56" y="62" width="40" height="40" rx="5" fill="#62666e"/><rect x="56" y="62" width="40" height="30" rx="5" fill="#3a3d43"/>
+  <path d="M74 8c-15 0-26 11-26 26 0 20 26 46 26 46s26-26 26-46c0-15-11-26-26-26z" fill="#2E7D32"/>
+  <path d="M74 22v24M62 34h24" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
+</svg>

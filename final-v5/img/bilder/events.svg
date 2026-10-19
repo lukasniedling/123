@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- Quadrate illustration "Events": a calendar sheet with a music note. Drawn for this website (final-v3, 2026-10-14). [V1] -->
+  <rect x="14" y="22" width="72" height="78" rx="10" fill="#ffffff"/>
+  <rect x="14" y="22" width="72" height="22" rx="10" fill="#AD1457"/>
+  <rect x="14" y="34" width="72" height="10" fill="#AD1457"/>
+  <rect x="28" y="14" width="6" height="16" rx="3" fill="#3a3d43"/>
+  <rect x="66" y="14" width="6" height="16" rx="3" fill="#3a3d43"/>
+  <g fill="#F8BBD0">
+    <rect x="24" y="54" width="12" height="10" rx="2"/><rect x="44" y="54" width="12" height="10" rx="2"/><rect x="64" y="54" width="12" height="10" rx="2"/>
+    <rect x="24" y="72" width="12" height="10" rx="2"/><rect x="44" y="72" width="12" height="10" rx="2"/>
+  </g>
+  <rect x="64" y="72" width="12" height="10" rx="2" fill="#AD1457"/>
+  <g fill="#4A3BA3">
+    <path d="M92 40v38a9 7 0 1 1-4-5.8V50l-16 4v30a9 7 0 1 1-4-5.8V46z"/>
+  </g>
+</svg>

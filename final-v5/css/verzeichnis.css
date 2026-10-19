@@ -1,0 +1,231 @@
+@charset "utf-8";
+/*
+ * verzeichnis.css - styles of the page quadrate.html ("Orte").
+ * Version: [V1] intro and the section "Ein Ort fehlt?"; [V2] the place search (shown by js/ortssuche.js).
+ *
+ * How it fits in: quadrate.html links css/style.css first, then this file, then css/formular.css (the form
+ * "Ort vorschlagen"). Only what is special about this page is here.
+ * Until 2026-10-13 the page held the table of all Quadrate (jump list, sort buttons, fixed code column);
+ * the table and its styles were removed on 2026-10-14 (final-v5). The file keeps its name, so links stay.
+ *
+ * Contents
+ *  1. Intro text
+ *  2. Place search "Orte suchen"      [V2] (js/ortssuche.js, added 2026-10-13)
+ *  3. Section "Ein Ort fehlt?"         (form and map, moved here from vorschlagen.html on 2026-10-14)
+ *  4. Print
+ */
+
+
+/* =========================================================================
+   1. Intro text
+   ========================================================================= */
+
+.directory-intro {
+  margin-bottom: var(--space-5);
+}
+
+/* Page "Orte" (final-v3, 2026-10-13): "Ein Ort fehlt? [Ort vorschlagen]" under the lead, and the
+   heading of the table part "Alle Quadrate in Zahlen" below the place search. */
+.directory-suggest {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  color: var(--color-text-muted);
+}
+
+.directory-suggest .button {
+  margin-bottom: 0;
+}
+
+.directory-title {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-xl);
+}
+
+
+
+/* =========================================================================
+   2. Place search "Orte suchen" [V2] (added 2026-10-13)
+   <section class="place-search" id="ortssuche">, shown and filled by js/ortssuche.js.
+   The hits use the classes of the profile panel from style.css (place-list,
+   place, badge); here are only the card, the row of fields and the links.
+   ========================================================================= */
+
+/* A white card, so the search stands apart from the table of the Quadrate below. */
+.place-search {
+  margin-bottom: var(--space-6);
+  padding: var(--space-5);
+  background: var(--color-paper);
+  border: 0.0625rem solid var(--color-ring);
+  border-radius: var(--radius-panel);
+}
+
+.place-search__title {
+  margin-top: 0;
+}
+
+.place-search__intro {
+  color: var(--color-text-muted);
+}
+
+/* Text field, category and tick in one row; on narrow screens they wrap one below the other. */
+.place-search__fields {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-3) var(--space-5);
+}
+
+.place-search__text {
+  flex: 1 1 18rem;
+  max-width: 28rem;
+}
+
+.place-search__category {
+  flex: 0 1 12rem;
+}
+
+.place-search__block {
+  flex: 0 1 9rem;
+}
+
+/* The two ticks one below the other. */
+.place-search__checks {
+  display: flex;
+  flex-direction: column;
+}
+
+/* A tick and its words: each line at least 2.25rem high, so it is easy to hit. */
+.place-search__check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 2.25rem;
+  cursor: pointer;
+}
+
+.place-search__check input {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0;
+  accent-color: var(--color-roof);
+}
+
+/* "auch umliegende Quadrate" without a chosen Quadrat: greyed out and not clickable. */
+.place-search__check:has(input:disabled) {
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+.place-search__status {
+  margin: var(--space-4) 0 var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+}
+
+/* Links "Quadrat G1" and "Route" under the kind of a place. */
+.place-search__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  margin-top: var(--space-1);
+  font-size: var(--text-s);
+}
+
+/* "Merken" in a hit (js/ortssuche.js, added 2026-10-13): pressed = sand colour and a tick, as on the map. */
+.place-search__save {
+  margin-bottom: 0;
+}
+
+.place-search__save[aria-pressed="true"] {
+  background: var(--color-sand);
+}
+
+.place-search__save[aria-pressed="true"]::before {
+  content: "✓ ";
+}
+
+/* "In meiner Nähe" (js/standort.js, added 2026-10-13): the button with its message line below it. */
+.place-search__near {
+  flex: 0 1 14rem;
+}
+
+.place-search__near .button {
+  margin-bottom: 0;
+}
+
+/* Switched on: sand colour and a tick, like a saved place. */
+.place-search__near .button[aria-pressed="true"] {
+  background: var(--color-sand);
+}
+
+.place-search__near .button[aria-pressed="true"]::before {
+  content: "✓ ";
+}
+
+/* An empty list (before the first search) has no line on top. */
+.place-search__list:empty {
+  border-top: 0;
+}
+
+@media (max-width: 30rem) {
+  .place-search {
+    padding: var(--space-4);
+  }
+}
+
+
+/* =========================================================================
+   3. Section "Ein Ort fehlt?" (2026-10-14)
+   A white card like the place search; its head is a coloured band with the
+   drawing of the pin (class page-intro--band band-vorschlagen, css/style.css).
+   ========================================================================= */
+
+.suggest-section {
+  margin-top: var(--space-6);
+  padding: var(--space-5);
+  background: var(--color-paper);
+  border: 0.0625rem solid var(--color-ring);
+  border-radius: var(--radius-panel);
+  scroll-margin-top: 6rem;          /* the link "#vorschlagen" stops below the sticky header */
+}
+
+.suggest-section__head {
+  margin-bottom: var(--space-5);
+}
+
+.suggest-section__title {
+  margin-top: 0;
+  font-size: var(--text-xl);
+}
+
+.suggest-section__head p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 30rem) {
+  .suggest-section {
+    padding: var(--space-4);
+  }
+}
+
+/* Inside the card there is less room than on the old page: form and map stand side by side only from
+   80rem (css/formular.css would do it from 64rem); below that the map comes under the form. */
+@media (min-width: 64rem) and (max-width: 79.99rem) {
+  .suggest-section .suggest-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+
+/* =========================================================================
+   4. Print: the search and the form make no sense on paper.
+   ========================================================================= */
+
+@media print {
+  .place-search,
+  .suggest-section {
+    display: none;
+  }
+}

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="34" height="5.5" viewBox="0 0 34 5.5">
+<!-- Lit windows of the 3D map at night (css/karte.css, .map-wall::before), made by hand on 2026-10-12.
+     One tile: a row of six warm windows with irregular gaps, 3 px of wall above them. CSS repeats the tile
+     over the whole wall, so it becomes rows of windows. -->
+<rect x="3" y="3" width="2" height="2.5" fill="#ffecbe" fill-opacity="0.8"/>
+<rect x="9" y="3" width="2" height="2.5" fill="#fff0cd" fill-opacity="0.75"/>
+<rect x="12" y="3" width="2" height="2.5" fill="#ffdc96" fill-opacity="0.85"/>
+<rect x="19" y="3" width="2" height="2.5" fill="#ffe4a8" fill-opacity="0.9"/>
+<rect x="26" y="3" width="2" height="2.5" fill="#fff0cd" fill-opacity="0.75"/>
+<rect x="30" y="3" width="2" height="2.5" fill="#ffecbe" fill-opacity="0.8"/>
+</svg>

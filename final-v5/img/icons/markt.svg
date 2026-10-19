@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <!-- Quadrate icon for the event kind "Markt": a market stall with an awning. Drawn for this website (final-v3, 2026-10-14). [V1] -->
+  <g fill="none" stroke="#2E7D32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 9l2-5h14l2 5"/>
+    <path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/>
+    <path d="M5 12v8h14v-8M10 20v-4h4v4"/>
+  </g>
+</svg>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 90" width="120" height="90">
+  <!-- Quadrate illustration for an empty list: a pin above an empty block, waiting to be set. Drawn for this website (final-v3, 2026-10-14). [V1] -->
+  <rect x="30" y="52" width="60" height="30" rx="6" fill="none" stroke="#86868b" stroke-width="3" stroke-dasharray="7 6"/>
+  <path d="M60 6c-10 0-18 8-18 18 0 13 18 30 18 30s18-17 18-30c0-10-8-18-18-18z" fill="#f2e6cc" stroke="#d9c69b" stroke-width="3"/>
+  <circle cx="60" cy="24" r="6" fill="#ffffff"/>
+</svg>

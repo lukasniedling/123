@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- Quadrate illustration "Über uns": the water tower between blocks, at dusk. Drawn for this website (final-v3, 2026-10-14). [V1] -->
+  <circle cx="92" cy="28" r="12" fill="#E9B955"/>
+  <rect x="50" y="40" width="20" height="62" rx="3" fill="#c9a77a"/>
+  <path d="M46 40h28l-3-10H49z" fill="#2E7D32"/>
+  <path d="M60 14l10 16H50z" fill="#2E7D32"/>
+  <rect x="56" y="58" width="8" height="12" rx="4" fill="#3a3d43"/>
+  <rect x="8" y="76" width="34" height="28" rx="4" fill="#62666e"/><rect x="8" y="76" width="34" height="20" rx="4" fill="#3a3d43"/>
+  <rect x="78" y="76" width="34" height="28" rx="4" fill="#62666e"/><rect x="78" y="76" width="34" height="20" rx="4" fill="#3a3d43"/>
+  <rect x="4" y="104" width="112" height="6" rx="3" fill="#f2e6cc"/>
+</svg>
