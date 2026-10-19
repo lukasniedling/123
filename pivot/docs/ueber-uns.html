@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<!--
+  docs/ueber-uns.html - German explanation of ueber-uns.html (idea, team, logo, video) for the presentation.  [Doku]
+
+  How it fits in: one of the explanation pages in docs/ (overview: docs/index.html).
+  Line references (class "ref") are kept up to date by tools/export_docs_refs.py:
+  after a change of the code run  python3 tools/export_docs_refs.py  and then
+  zsh tools/sync_varianten.sh. The page is German, like all documents for the team.
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Über uns: Idee, Team, Logo, Video – Erklärung – Quadrate</title>
+  <meta name="description" content="Erklärung der Seite Über uns (Anker, Listen, Bilder, Logo, Video, Tabelle) für die Präsentation.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/info.css">
+  <style>
+    /* Helper styles for the explanation pages only (prefix doc-). */
+    .doc-table td:first-child,
+    .doc-table th:first-child {
+      min-width: 9rem;
+    }
+
+    .doc-table .ref {
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .doc-questions dt {
+      margin-top: var(--space-4);
+      font-weight: 700;
+    }
+
+    .doc-questions dd {
+      margin: var(--space-1) 0 0;
+    }
+
+    .doc-kicker {
+      margin: 0 0 var(--space-2);
+      color: var(--color-text-muted);
+      font-size: var(--text-s);
+      font-weight: 600;
+    }
+
+    .doc-nav ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2) var(--space-4);
+      padding: 0;
+      list-style: none;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="site-header">
+    <div class="site-header__inner container">
+      <a class="site-logo" href="../index.html">
+        <img src="../img/logo.svg" alt="Quadrate – zur Karte" width="200" height="33">
+      </a>
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <ul class="site-nav__list">
+          <li><a href="../index.html">Karte</a></li>
+          <li><a href="../quadrate.html">Quadrate</a></li>
+          <li><a href="../vorschlagen.html">Ort vorschlagen</a></li>
+          <li><a href="../ueber-uns.html">Über uns</a></li>
+          <!-- [V3] account link -->
+          <li class="site-nav__item--account"><a href="../login.php">Anmelden</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhalt" class="container">
+    <div class="page-intro">
+      <p class="doc-kicker">Erklärung für die Präsentation</p>
+      <h1>Über uns: Idee, Team, Logo, Video</h1>
+      <p class="lead">Wie die Textseite aufgebaut ist: Anker, Listen, Bilder mit Nachweis, das Logo und das Video.</p>
+    </div>
+
+    <nav class="doc-nav" aria-label="Alle Erklärungen">
+      <ul>
+        <li><a href="index.html">Überblick</a></li>
+        <li><a href="startseite.html">Startseite</a></li>
+        <li><a href="verzeichnis.html">Quadrate</a></li>
+        <li><a href="vorschlagen.html">Ort vorschlagen</a></li>
+        <li><a href="ueber-uns.html" aria-current="page">Über uns</a></li>
+        <li><a href="rechtliches.html">Impressum und Datenschutz</a></li>
+        <li><a href="php.html">Konto und PHP</a></li>
+      </ul>
+    </nav>
+
+    <section class="info-section" id="ueberblick" aria-labelledby="ueberblick-titel">
+      <h2 id="ueberblick-titel">Worum es geht</h2>
+      <div class="prose">
+        <p><code>ueber-uns.html</code> erklärt die Idee, die Bedienung der Karte, das Team, das Logo, zeigt ein Video und listet die Technik je Vorlesung. Die Seite braucht kein JavaScript. Stile: <code>css/style.css</code> und <code>css/info.css</code>.</p>
+        <p>Hier stehen zwei Pflichtelemente der Team-Übung 2: das Logo und ein eigenes Video im MP4-Format.</p>
+        <p><strong>Vorschlag für die Präsentation:</strong> Nikita Ermotschenko (Design und Kreativität), dazu das gemeinsame Design aus <code>css/style.css</code> mit dem <a href="styleguide.html">Styleguide</a>. Die ganze Aufteilung steht im <a href="index.html#team">Überblick</a>.</p>
+      </div>
+    </section>
+    <section class="info-section" id="begriffe" aria-labelledby="begriffe-titel">
+      <h2 id="begriffe-titel">Begriffe im Quelltext</h2>
+    <div class="table-wrap" role="region" aria-labelledby="begriffe-tabelle" tabindex="0">
+      <table class="data-table doc-table">
+        <caption id="begriffe-tabelle">Begriffe auf der Seite Über uns und wo sie stehen</caption>
+        <thead>
+          <tr><th scope="col">Begriff</th><th scope="col">Fundstelle</th><th scope="col">Was es tut</th><th scope="col">Vorlesung</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Inhaltsverzeichnis mit Ankern</th><td><code class="ref" data-find="ueber-uns.html|&lt;li&gt;&lt;a href=&quot;#idee&quot;&gt;Die Idee&lt;/a&gt;&lt;/li&gt;">ueber-uns.html:63</code><br><code class="ref" data-find="ueber-uns.html|&lt;section id=&quot;idee&quot;">ueber-uns.html:73</code></td><td>Jeder Eintrag springt zu einem Abschnitt mit passender id (<code>#idee</code>, <code>#team</code> …).</td><td>Vorlesung 3, „Hyperlinks zu einer Sektion“</td></tr>
+          <tr><th scope="row">Anker auf einer anderen Seite</th><td><code class="ref" data-find="ueber-uns.html|&lt;a href=&quot;quadrate.html#q-G1&quot;&gt;">ueber-uns.html:163</code><br><code class="ref" data-find="ueber-uns.html|&lt;a href=&quot;impressum.html#urheberrecht&quot;&gt;">ueber-uns.html:345</code></td><td>Link auf eine Stelle einer anderen Seite: Dateiname plus # plus id. quadrate.html#q-G1 springt zur Zeile G1 des Verzeichnisses.</td><td>Vorlesung 3, Team-Übung 2</td></tr>
+          <tr><th scope="row"><code>&lt;em&gt;</code> (betont, kursiv)</th><td><code class="ref" data-find="ueber-uns.html|&lt;em&gt;Kürzel&lt;/em&gt;">ueber-uns.html:77</code><br><code class="ref" data-find="css/style.css|font-style: italic;">css/style.css:387</code></td><td>em betont ein Wort; die CSS-Regel <code>em, i { font-style: italic; }</code> legt die Darstellung fest.</td><td>Vorlesung 2 (Inline-Elemente); Vorlesung 4, „Die Darstellung von strong, b, em und i definieren“</td></tr>
+          <tr><th scope="row">Unterstrichen</th><td><code class="ref" data-find="css/style.css|text-decoration-line: underline;">css/style.css:335</code></td><td>Unterstrichen sind bei uns nur Links (text-decoration im CSS). Das HTML-Element &lt;u&gt; hat in HTML5 eine eigene Bedeutung (Anmerkung, z. B. Rechtschreibfehler) und wird deshalb nicht benutzt.</td><td>Vorlesung 2, Team-Übung 1; Vorlesung 4, „Hyperlinks formatieren“</td></tr>
+          <tr><th scope="row"><code>figure</code>, <code>figcaption</code></th><td><code class="ref" data-find="ueber-uns.html|&lt;figure class=&quot;idea__map&quot;&gt;">ueber-uns.html:83</code><br><code class="ref" data-find="ueber-uns.html|&lt;span class=&quot;photo__credit&quot;&gt;Foto: Hubert Berberich">ueber-uns.html:103</code></td><td>Ein Bild mit Bildunterschrift. Unter jedem Foto stehen Urheber, Lizenz und Quelle (Pflicht bei Creative-Commons-Fotos); „Ausschnitt“ sagt, dass das Foto beschnitten ist.</td><td>Vorlesung 2, „Einbinden von Bildern“</td></tr>
+          <tr><th scope="row"><code>alt</code> und <code>title</code> bei Bildern</th><td><code class="ref" data-find="ueber-uns.html|title=&quot;Barockschloss Mannheim, Ehrenhof&quot;">ueber-uns.html:100</code></td><td>alt ersetzt das Bild für Menschen, die es nicht sehen (Screenreader, Bild lädt nicht). title ist nur der Tooltip beim Zeigen mit der Maus; er ersetzt alt nicht.</td><td>Vorlesung 2, „Einbinden von Bildern“ (Alternativ-Text, Tooltips)</td></tr>
+          <tr><th scope="row">Nummerierte Liste <code>ol</code></th><td><code class="ref" data-find="ueber-uns.html|&lt;ol class=&quot;steps&quot;&gt;">ueber-uns.html:136</code></td><td>Die vier Schritte „So funktioniert es“ in fester Reihenfolge; die Nummern zeichnet CSS als Blöcke.</td><td>Vorlesung 2, „Listen und Aufzählungen“</td></tr>
+          <tr><th scope="row">Definitionsliste <code>dl</code>, <code>dt</code>, <code>dd</code></th><td><code class="ref" data-find="ueber-uns.html|&lt;dl class=&quot;logo-parts&quot;&gt;">ueber-uns.html:235</code></td><td>Begriff und Erklärung: die drei Teile des Logos.</td><td>Vorlesung 2, „Listen und Aufzählungen“ (Definitionslisten)</td></tr>
+          <tr><th scope="row">Logo als SVG</th><td><code class="ref" data-find="ueber-uns.html|&lt;img class=&quot;logo-show__logo&quot; src=&quot;img/logo.svg&quot;">ueber-uns.html:228</code></td><td>Das Logo ist eine Vektorgrafik und bleibt in jeder Größe scharf. Das kleine Zeichen im Browser-Tab ist img/favicon.svg.</td><td>Vorlesung 3, Team-Übung 2 (Logo)</td></tr>
+          <tr><th scope="row"><code>video</code> mit <code>source</code></th><td><code class="ref" data-find="ueber-uns.html|&lt;video controls preload=&quot;none&quot;">ueber-uns.html:264</code><br><code class="ref" data-find="ueber-uns.html|&lt;source src=&quot;video/quadrate.mp4&quot; type=&quot;video/mp4&quot;&gt;">ueber-uns.html:265</code></td><td>Eigenes Video (Bildschirmaufnahme der Karte, H.264 im MP4-Format, 32 s, ohne Ton). controls zeigt die Bedienleiste, preload="none" lädt erst beim Abspielen, poster ist das Vorschaubild. Der Text darunter beschreibt, was man sieht.</td><td>Vorlesung 3, „Media“; Team-Übung 2</td></tr>
+          <tr><th scope="row">Tabelle mit Zeilenköpfen</th><td><code class="ref" data-find="ueber-uns.html|&lt;caption id=&quot;technik-tabelle&quot;&gt;Technik je Vorlesung&lt;/caption&gt;">ueber-uns.html:287</code></td><td>Die Technik-Tabelle: th scope="row" für die Sprache, td für die Liste dessen, was wir damit gebaut haben.</td><td>Vorlesung 3, „Tabellen“</td></tr>
+          <tr><th scope="row">Teamkarte mit Kürzel</th><td><code class="ref" data-find="ueber-uns.html|&lt;article class=&quot;panel team-card&quot; aria-labelledby=&quot;team-1&quot;&gt;">ueber-uns.html:185</code><br><code class="ref" data-find="css/style.css|.block-tile {">css/style.css:1553</code></td><td>Je Mitglied ein article mit Name (h3) und Rolle. Die Initialen stehen in derselben Kachel wie das Kürzel eines Quadrats im Steckbrief (Klasse block-tile); aria-hidden="true", weil der Name gleich daneben steht.</td><td>–</td></tr>
+          <tr><th scope="row">Grid für die Teamkarten</th><td><code class="ref" data-find="css/info.css|.team {">css/info.css:264</code></td><td>Die Karten der Teammitglieder stehen in einem Raster, auf schmalen Bildschirmen untereinander.</td><td>nicht in den Folien 1 bis 4</td></tr>
+        </tbody>
+      </table>
+    </div>
+    </section>
+    <section class="info-section" id="fragen" aria-labelledby="fragen-titel">
+      <h2 id="fragen-titel">Fragen, die kommen können</h2>
+    <dl class="doc-questions">
+      <dt>Was ist der Unterschied zwischen alt und title?</dt>
+      <dd>alt ist der Ersatztext, wenn man das Bild nicht sieht, und wird vorgelesen. title erscheint als Tooltip, wenn die Maus über dem Bild steht. Jedes Bild braucht alt; title ist freiwillig.</dd>
+      <dt>Warum MP4 und nicht ein YouTube-Video?</dt>
+      <dd>Die Datei liegt auf unserem Server: Beim Abspielen geht keine Verbindung zu Google. Ein eingebettetes YouTube-Video würde schon beim Laden der Seite Daten an Google senden und bräuchte vorher eine Einwilligung.</dd>
+      <dt>Was bedeutet preload="none"?</dt>
+      <dd>Der Browser lädt vom Video nichts, bevor jemand auf Abspielen drückt. Das spart Datenvolumen; stattdessen zeigt er das Bild aus poster.</dd>
+      <dt>Wie ist das Logo entstanden?</dt>
+      <dd>Als SVG-Datei: vier Blöcke wie auf der Karte, ein Sandkreuz für Kurpfalzstraße und Planken, der Schriftzug in Archivo Bold als Pfade. Die Farben kommen aus der Karte.</dd>
+    </dl>
+    </section>
+    <section class="info-section" id="versionen" aria-labelledby="versionen-titel">
+      <h2 id="versionen-titel">Versionen</h2>
+      <div class="prose">
+        <p>Die Seite ist reines HTML und CSS. Ihr Text beschreibt aber die fertige Website: Der Einleitungssatz, die Schritte 1 bis 4 und der Absatz darunter sind mit [V2] markiert und werden in V1 durch den Satz aus dem Kommentar ersetzt; der Schritt „Orte merken“ ist [V3] und fällt in V1 und V2 weg.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner container">
+      <p>Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL</p>
+      <nav class="site-footer__links" aria-label="Rechtliches">
+        <ul>
+          <li><a href="../impressum.html">Impressum</a></li>
+          <li><a href="../datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </nav>
+      <p>Studienprojekt <span aria-hidden="true">·</span> DHBW Mannheim <span aria-hidden="true">·</span> Webprogrammierung 2026</p>
+    </div>
+  </footer>
+</body>
+</html>

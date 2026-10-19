@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<!--
+  docs/startseite.html - German explanation of index.html (map, filter, profile) for the presentation.  [Doku]
+
+  How it fits in: one of the explanation pages in docs/ (overview: docs/index.html). Not linked
+  from the website navigation.
+  Line references (class "ref") are kept up to date by tools/export_docs_refs.py:
+  after a change of the code run  python3 tools/export_docs_refs.py  and then
+  zsh tools/sync_varianten.sh. The page is German, like all documents for the team.
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Startseite: Karte, Filter, Steckbrief – Erklärung – Quadrate</title>
+  <meta name="description" content="Erklärung der Startseite von Quadrate für die Präsentation: Begriffe im Quelltext mit Fundstellen und mögliche Fragen.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/info.css">
+  <style>
+    /* Helper styles for the explanation pages only (prefix doc-). */
+    .doc-table td:first-child,
+    .doc-table th:first-child {
+      min-width: 9rem;
+    }
+
+    .doc-table .ref {
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .doc-questions dt {
+      margin-top: var(--space-4);
+      font-weight: 700;
+    }
+
+    .doc-questions dd {
+      margin: var(--space-1) 0 0;
+    }
+
+    .doc-kicker {
+      margin: 0 0 var(--space-2);
+      color: var(--color-text-muted);
+      font-size: var(--text-s);
+      font-weight: 600;
+    }
+
+    .doc-nav ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2) var(--space-4);
+      padding: 0;
+      list-style: none;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="site-header">
+    <div class="site-header__inner container">
+      <a class="site-logo" href="../index.html">
+        <img src="../img/logo.svg" alt="Quadrate – zur Karte" width="200" height="33">
+      </a>
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <ul class="site-nav__list">
+          <li><a href="../index.html">Karte</a></li>
+          <li><a href="../quadrate.html">Quadrate</a></li>
+          <li><a href="../vorschlagen.html">Ort vorschlagen</a></li>
+          <li><a href="../ueber-uns.html">Über uns</a></li>
+          <!-- [V3] account link -->
+          <li class="site-nav__item--account"><a href="../login.php">Anmelden</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhalt" class="container">
+    <div class="page-intro">
+      <p class="doc-kicker">Erklärung für die Präsentation</p>
+      <h1>Startseite: Karte, Filter, Steckbrief</h1>
+      <p class="lead">Was die Startseite zeigt, welche Dateien daran beteiligt sind und welche Begriffe aus dem Quelltext man erklären können sollte.</p>
+    </div>
+
+    <nav class="doc-nav" aria-label="Alle Erklärungen">
+      <ul>
+        <li><a href="index.html">Überblick</a></li>
+        <li><a href="startseite.html" aria-current="page">Startseite</a></li>
+        <li><a href="verzeichnis.html">Quadrate</a></li>
+        <li><a href="vorschlagen.html">Ort vorschlagen</a></li>
+        <li><a href="ueber-uns.html">Über uns</a></li>
+        <li><a href="rechtliches.html">Impressum und Datenschutz</a></li>
+        <li><a href="php.html">Konto und PHP</a></li>
+      </ul>
+    </nav>
+
+    <section class="info-section" id="ueberblick" aria-labelledby="ueberblick-titel">
+      <h2 id="ueberblick-titel">Worum es geht</h2>
+      <div class="prose">
+        <p>Die Startseite <code>index.html</code> beantwortet eine Frage: Was hat in welchem Quadrat zu einer bestimmten Zeit geöffnet? Oben steht die Filterleiste (Wochentag, Uhrzeit, Kategorie, Liste „Quadrat wählen“), darunter die 3D-Karte mit Legende, darunter der Steckbrief des gewählten Quadrats.</p>
+        <p>Beteiligte Dateien: <code>index.html</code>; Stile in <code>css/style.css</code> (für alle Seiten), <code>css/index.css</code> (nur diese Seite) und <code>css/karte.css</code> (je Kartenvariante anders); Daten in <code>js/data/orte.js</code>, <code>js/data/quadrate.js</code>, <code>js/data/fotos.js</code> und <code>js/data/karte-daten.js</code>; Skripte <code>js/karte.js</code> (je Variante), <code>js/oeffnungszeiten.js</code>, <code>js/filter.js</code>, <code>js/steckbrief.js</code>, <code>js/app.js</code> und für V3 <code>js/merkliste.js</code>.</p>
+        <p>Ablauf beim Klick auf ein Quadrat: <code>js/karte.js</code> meldet den Code an <code>js/app.js</code> (onSelect), app.js schreibt ihn in die Adresse (<code>index.html#G1</code>), das Ereignis <code>hashchange</code> ruft <code>openBlock()</code> auf, und diese Funktion lässt das Gebäude wachsen (<code>Karte.waehlen</code>) und füllt den Steckbrief (<code>Steckbrief.show</code>).</p>
+        <p><strong>Vorschlag für die Präsentation:</strong> Niko Eibach (Programmierung): Filter, Steckbrief und die 3D-Karte. Die ganze Aufteilung steht im <a href="index.html#team">Überblick</a>.</p>
+      </div>
+    </section>
+    <section class="info-section" id="begriffe" aria-labelledby="begriffe-titel">
+      <h2 id="begriffe-titel">Begriffe im Quelltext</h2>
+    <div class="table-wrap" role="region" aria-labelledby="begriffe-tabelle" tabindex="0">
+      <table class="data-table doc-table">
+        <caption id="begriffe-tabelle">Begriffe auf der Startseite und wo sie stehen</caption>
+        <thead>
+          <tr><th scope="col">Begriff</th><th scope="col">Fundstelle</th><th scope="col">Was es tut</th><th scope="col">Vorlesung</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row"><code>&lt;!DOCTYPE html&gt;</code>, <code>lang</code>, <code>&lt;meta charset&gt;</code></th><td><code class="ref" data-find="index.html|&lt;!DOCTYPE html&gt;">index.html:1</code><br><code class="ref" data-find="index.html|&lt;html lang=&quot;de&quot;&gt;">index.html:19</code><br><code class="ref" data-find="index.html|&lt;meta charset=&quot;utf-8&quot;&gt;">index.html:21</code></td><td>Grundgerüst eines HTML5-Dokuments: Dokumenttyp, Sprache Deutsch (für Vorlesefunktionen und Silbentrennung) und die Zeichenkodierung UTF-8, damit Umlaute richtig erscheinen.</td><td>Vorlesung 2, „Inhalte eines HTML-Dokuments“</td></tr>
+          <tr><th scope="row"><code>&lt;link rel=&quot;stylesheet&quot;&gt;</code></th><td><code class="ref" data-find="index.html|&lt;link rel=&quot;stylesheet&quot; href=&quot;css/style.css&quot;&gt;">index.html:26</code></td><td>Bindet externe CSS-Dateien ein. Reihenfolge: erst das gemeinsame Design (style.css), dann die Karte, dann die Stile nur dieser Seite; spätere Regeln gewinnen bei gleichem Gewicht.</td><td>Vorlesung 4, „Auslagerung der CSS-Vorgaben in eine externe Datei“</td></tr>
+          <tr><th scope="row"><code>@charset</code></th><td><code class="ref" data-find="css/style.css|@charset &quot;utf-8&quot;;">css/style.css:1</code><br><code class="ref" data-find="css/index.css|@charset &quot;utf-8&quot;;">css/index.css:1</code></td><td>Erste Zeile jeder CSS-Datei: Die Datei ist in UTF-8 geschrieben (wichtig für Umlaute in Kommentaren und Inhalten wie „–“).</td><td>Vorlesung 4, „Auslagerung der CSS-Vorgaben …“</td></tr>
+          <tr><th scope="row">Anker (Sprungmarke)</th><td><code class="ref" data-find="index.html|&lt;a class=&quot;skip-link&quot; href=&quot;#inhalt&quot;&gt;">index.html:33</code><br><code class="ref" data-find="index.html|&lt;main id=&quot;inhalt&quot;">index.html:55</code></td><td>Der Link „Zum Inhalt springen“ hat <code>href=&quot;#inhalt&quot;</code>, das Ziel trägt <code>id=&quot;inhalt&quot;</code>. Tastaturnutzer springen so über die Navigation.</td><td>Vorlesung 2, Hyperlinks (Anchor); Vorlesung 3, „Hyperlinks zu einer Sektion“</td></tr>
+          <tr><th scope="row"><code>header</code>, <code>nav</code>, <code>main</code>, <code>section</code>, <code>footer</code></th><td><code class="ref" data-find="index.html|&lt;header class=&quot;site-header&quot;&gt;">index.html:35</code><br><code class="ref" data-find="index.html|&lt;nav class=&quot;site-nav&quot;">index.html:41</code><br><code class="ref" data-find="index.html|&lt;footer class=&quot;site-footer&quot;&gt;">index.html:177</code></td><td>Semantische Bereiche: Kopf mit Logo, Navigation, Hauptinhalt, Fußzeile. Sie sagen Browser, Suchmaschine und Screenreader, was welcher Teil ist.</td><td>Vorlesung 2, „Typische Inhalte einer Webseite“</td></tr>
+          <tr><th scope="row">Logo als Bild mit <code>alt</code></th><td><code class="ref" data-find="index.html|&lt;img src=&quot;img/logo.svg&quot;">index.html:38</code></td><td>Das Logo ist eine SVG-Datei und zugleich ein Link zur Startseite; der alt-Text sagt, wohin der Link führt.</td><td>Vorlesung 2, „Einbinden von Bildern“; Vorlesung 3, Team-Übung 2 (Logo)</td></tr>
+          <tr><th scope="row"><code>&lt;img&gt;</code> mit <code>width</code>, <code>height</code>, <code>alt</code>, <code>title</code></th><td><code class="ref" data-find="index.html|&lt;img src=&quot;img/karte-statisch.png&quot;">index.html:133</code></td><td>[V1] Ohne JavaScript zeigt die Seite dieses Bild der Karte. width und height reservieren den Platz, alt beschreibt das Bild für Menschen, die es nicht sehen, title ist der Tooltip. loading="lazy": wird nur geladen, wenn es gebraucht wird.</td><td>Vorlesung 2, „Einbinden von Bildern“ (Größenangabe, Alternativ-Text, Tooltips)</td></tr>
+          <tr><th scope="row">Attribut <code>hidden</code></th><td><code class="ref" data-find="index.html|&lt;section class=&quot;filter-bar&quot; id=&quot;filter&quot;">index.html:65</code><br><code class="ref" data-find="css/style.css|[hidden] {">css/style.css:435</code><br><code class="ref" data-find="js/app.js|var JS_ONLY_IDS">js/app.js:28</code></td><td>Teile, die JavaScript brauchen, sind im HTML versteckt; app.js entfernt hidden. Die CSS-Regel sorgt dafür, dass hidden auch gegen <code>display: flex</code> gewinnt.</td><td>–</td></tr>
+          <tr><th scope="row"><code>&lt;noscript&gt;</code></th><td><code class="ref" data-find="index.html|    &lt;noscript&gt;">index.html:163</code></td><td>Inhalt, den der Browser nur ohne JavaScript zeigt: die Erklärung, warum Filter und Steckbrief fehlen.</td><td>–</td></tr>
+          <tr><th scope="row"><code>fieldset</code>, <code>legend</code>, <code>label for</code>, <code>input type=&quot;radio&quot;</code></th><td><code class="ref" data-find="index.html|&lt;fieldset class=&quot;filter-group segmented&quot;&gt;">index.html:67</code><br><code class="ref" data-find="index.html|&lt;label class=&quot;segmented__option&quot; for=&quot;tag-0&quot;&gt;">index.html:71</code></td><td>Die sieben Wochentage sind Optionsfelder mit gemeinsamem <code>name=&quot;tag&quot;</code>; nur einer kann gewählt sein. legend beschriftet die Gruppe, label for verknüpft Text und Feld.</td><td>Vorlesung 3, „Formular“</td></tr>
+          <tr><th scope="row"><code>input type=&quot;range&quot;</code>, <code>output</code></th><td><code class="ref" data-find="index.html|type=&quot;range&quot;">index.html:97</code><br><code class="ref" data-find="index.html|&lt;output class=&quot;time-readout&quot;">index.html:92</code></td><td>Der Schieberegler für die Uhrzeit: Minuten von 0 bis 1440 in Schritten von 30. output zeigt den Wert an.</td><td>Vorlesung 3, „Formular“</td></tr>
+          <tr><th scope="row"><code>select</code>, <code>option</code></th><td><code class="ref" data-find="index.html|&lt;select id=&quot;quadrat-wahl&quot;&gt;">index.html:114</code><br><code class="ref" data-find="js/app.js|function fillSelect()">js/app.js:181</code></td><td>Die Liste „Quadrat wählen“ ist die Alternative zur Karte für Tastatur und Handy. Die 146 Einträge fügt app.js ein.</td><td>Vorlesung 3, „Formular“</td></tr>
+          <tr><th scope="row">Klasse <code>visually-hidden</code></th><td><code class="ref" data-find="css/style.css|.visually-hidden {">css/style.css:440</code><br><code class="ref" data-find="index.html|&lt;h2 class=&quot;visually-hidden&quot; id=&quot;filter-titel&quot;&gt;">index.html:66</code></td><td>Text, der unsichtbar ist, aber vorgelesen wird, z. B. „Montag“ hinter „Mo“ oder die versteckten Überschriften „Filter und Auswahl“ und „Karte und Legende“.</td><td>–</td></tr>
+          <tr><th scope="row"><code>aria-live</code>, <code>aria-label</code>, <code>aria-current</code></th><td><code class="ref" data-find="index.html|id=&quot;zusammenfassung&quot; aria-live">index.html:151</code><br><code class="ref" data-find="js/karte.js|function labelText(">js/karte.js:151</code><br><code class="ref" data-find="js/karte.js|entry.main.setAttribute(&quot;aria-current&quot;, &quot;true&quot;)">js/karte.js:432</code></td><td>Hilfen für Screenreader: Die Zusammenfassung wird bei jeder Änderung vorgelesen; jedes Quadrat hat einen Namen wie „Quadrat G2, 9 geöffnet“; das gewählte Quadrat ist „aktuell“.</td><td>–</td></tr>
+          <tr><th scope="row">Selektoren und Kaskade</th><td><code class="ref" data-find="css/style.css|.site-nav a {">css/style.css:534</code><br><code class="ref" data-find="css/style.css|.chip-input:checked + .chip {">css/style.css:990</code></td><td>Element-, Klassen- und kombinierte Selektoren. <code>+</code> heißt „das direkt folgende Geschwister“: das Label nach dem gewählten Optionsfeld wird zum farbigen Chip.</td><td>Vorlesung 4, „Allgemeine Syntax“</td></tr>
+          <tr><th scope="row">Pseudoklassen <code>:hover</code>, <code>:checked</code>, <code>:focus-visible</code></th><td><code class="ref" data-find="css/style.css|.chip:hover {">css/style.css:974</code><br><code class="ref" data-find="css/style.css|:focus-visible {">css/style.css:416</code></td><td>Zustände: Maus darüber, gewählt, mit der Tastatur fokussiert. Der Fokusrahmen erscheint nur bei Tastaturbedienung.</td><td>Vorlesung 4, „Pseudoklassen“</td></tr>
+          <tr><th scope="row">Variablen (Custom Properties)</th><td><code class="ref" data-find="css/style.css|:root {">css/style.css:141</code><br><code class="ref" data-find="css/style.css|--essen-3:">css/style.css:191</code></td><td>Alle Farben, Größen und Abstände stehen einmal unter <code>:root</code> und werden mit <code>var(--name)</code> benutzt. Eine Änderung dort wirkt auf der ganzen Website.</td><td>–</td></tr>
+          <tr><th scope="row">Einheit <code>rem</code></th><td><code class="ref" data-find="css/style.css|--text-m: 1rem;">css/style.css:205</code></td><td>Schriftgrößen in rem beziehen sich auf die Grundschrift des Browsers (meist 16 px) und wachsen mit, wenn jemand die Schrift vergrößert. Nur die Karte rechnet absichtlich in px, weil sie eine feste Zeichnung ist.</td><td>Vorlesung 4, „Die Maßeinheiten em und rem“</td></tr>
+          <tr><th scope="row">Flexbox und Grid</th><td><code class="ref" data-find="css/style.css|.filter-bar {">css/style.css:724</code><br><code class="ref" data-find="css/style.css|.map-layout {">css/style.css:705</code></td><td>Die Filterleiste ordnet ihre Gruppen mit <code>display: flex</code> nebeneinander und bricht sie auf schmalen Bildschirmen um; die Seite selbst ist ein Raster (<code>display: grid</code>) aus Filter, Karte und Steckbrief.</td><td>nicht in den Folien 1 bis 4</td></tr>
+          <tr><th scope="row">Media Query</th><td><code class="ref" data-find="css/index.css|@media (max-width: 47.99rem)">css/index.css:79</code></td><td>Regeln nur für schmale Bildschirme: dort erscheint der Tipp, dass man die Karte zur Seite wischen kann.</td><td>Vorlesung 4, Einführung (Responsive Webdesign)</td></tr>
+          <tr><th scope="row">Skripte am Ende von <code>body</code></th><td><code class="ref" data-find="index.html|&lt;script src=&quot;js/data/orte.js&quot;&gt;&lt;/script&gt;">index.html:191</code><br><code class="ref" data-find="index.html|&lt;script src=&quot;js/app.js&quot;&gt;&lt;/script&gt;">index.html:204</code></td><td>Klassische <code>&lt;script src&gt;</code>-Tags in fester Reihenfolge: erst die Daten, dann die Module, zuletzt app.js, das alles verbindet. So funktioniert die Seite auch per Doppelklick (file://).</td><td>Vorlesung 6 (JavaScript)</td></tr>
+          <tr><th scope="row">Funktion, die sofort läuft, und <code>&quot;use strict&quot;</code></th><td><code class="ref" data-find="js/app.js|(function () {">js/app.js:20</code><br><code class="ref" data-find="js/app.js|&quot;use strict&quot;;">js/app.js:21</code></td><td>Jedes Skript steckt in einer Funktion, die sofort aufgerufen wird. So bleiben die Variablen im Skript und stören keine anderen Skripte; nur <code>window.Karte</code> usw. sind von außen sichtbar. "use strict" meldet Tippfehler als Fehler.</td><td>Vorlesung 6</td></tr>
+          <tr><th scope="row"><code>document.getElementById</code></th><td><code class="ref" data-find="js/app.js|var mapBox = document.getElementById(&quot;karte&quot;);">js/app.js:30</code></td><td>Holt ein Element über seine id aus der Seite, damit das Skript es verändern kann.</td><td>Vorlesung 6</td></tr>
+          <tr><th scope="row"><code>addEventListener</code></th><td><code class="ref" data-find="js/filter.js|elements.slider.addEventListener(&quot;input&quot;">js/filter.js:242</code><br><code class="ref" data-find="js/app.js|window.addEventListener(&quot;hashchange&quot;, onHashChange);">js/app.js:221</code></td><td>Reagiert auf Ereignisse: der Regler bei jeder Bewegung (<code>input</code>), die Adresse bei jeder Änderung von #G1 (<code>hashchange</code>).</td><td>Vorlesung 6</td></tr>
+          <tr><th scope="row"><code>location.hash</code></th><td><code class="ref" data-find="js/app.js|function codeFromHash()">js/app.js:55</code><br><code class="ref" data-find="js/app.js|window.location.hash = code;">js/app.js:163</code></td><td>Der Teil der Adresse nach #. app.js liest ihn und öffnet das Quadrat. Deshalb funktionieren Links wie <code>index.html#G1</code> aus dem Verzeichnis, und die Zurück-Taste führt zum vorigen Quadrat.</td><td>Vorlesung 6</td></tr>
+          <tr><th scope="row">Schleife über ein Array</th><td><code class="ref" data-find="js/filter.js|function countOpen(">js/filter.js:69</code></td><td>Geht alle 995 Orte durch und zählt je Quadrat die Orte der Kategorie, die zur gewählten Zeit geöffnet haben.</td><td>Vorlesung 6</td></tr>
+          <tr><th scope="row">Öffnungszeiten in Minuten</th><td><code class="ref" data-find="js/oeffnungszeiten.js|function isOpen(">js/oeffnungszeiten.js:81</code><br><code class="ref" data-find="js/data/orte.js|&quot;zeiten&quot;:">js/data/orte.js:21</code></td><td>Jeder Ort hat sieben Listen (Montag bis Sonntag) mit Zeitspannen in Minuten seit Mitternacht; 1200 bis 1560 heißt 20:00 bis 02:00 am nächsten Tag.</td><td>Vorlesung 6</td></tr>
+          <tr><th scope="row"><code>innerHTML</code> und Maskieren</th><td><code class="ref" data-find="js/steckbrief.js|function escapeHtml(">js/steckbrief.js:81</code><br><code class="ref" data-find="js/steckbrief.js|panel.innerHTML = headMarkup(info, total)">js/steckbrief.js:396</code></td><td>Der Steckbrief wird als HTML-Text zusammengesetzt. Namen aus OpenStreetMap laufen vorher durch escapeHtml(), damit kein fremdes HTML oder Skript in die Seite kommt.</td><td>Vorlesung 6</td></tr>
+          <tr><th scope="row"><code>classList</code>, <code>setAttribute</code></th><td><code class="ref" data-find="js/karte.js|function showSelected(">js/karte.js:419</code></td><td>Schaltet Klassen (z. B. is-selected für den gelben Rand) und Attribute (aria-current) um; das Aussehen steht in css/karte.css.</td><td>Vorlesung 6</td></tr>
+          <tr><th scope="row">Karte als SVG (Variante SVG)</th><td><code class="ref" data-find="js/karte.js|container.innerHTML = &#x27;&lt;div class=&quot;map-scroll&quot;&gt;&#x27; + mapMarkup()">js/karte.js:557</code><br><code class="ref" data-find="js/karte.js|function step(now)">js/karte.js:460</code></td><td>Die Karte ist eine SVG-Grafik aus Polygonen. Beim Wählen wächst das Gebäude in einer 450-ms-Animation (requestAnimationFrame).</td><td>Vorlesung 6</td></tr>
+          <tr><th scope="row">Karte aus CSS 3D (Variante CSS 3D)</th><td><code class="ref" data-find="../variante-css3d/css/karte.css|perspective: var(--perspective);">css/karte.css (CSS 3D):70</code><br><code class="ref" data-find="../variante-css3d/css/karte.css|transform: rotateX(var(--tilt));">css/karte.css (CSS 3D):87</code></td><td>Die Karte besteht aus div-Elementen: perspective setzt das Auge, rotateX kippt die Bodenplatte, Wände stehen mit rotateX(-90deg) auf, transition macht das Wachsen weich.</td><td>Vorlesung 4/5 (CSS)</td></tr>
+          <tr><th scope="row">Weniger Bewegung</th><td><code class="ref" data-find="js/app.js|function reducedMotion()">js/app.js:71</code><br><code class="ref" data-find="css/style.css|@media (prefers-reduced-motion: reduce)">css/style.css:2015</code></td><td>Wer im Betriebssystem „Bewegung reduzieren“ eingestellt hat, bekommt keine Animationen.</td><td>–</td></tr>
+          <tr><th scope="row">[V3] <code>fetch</code></th><td><code class="ref" data-find="js/merkliste.js|return fetch(ENDPOINT, options)">js/merkliste.js:88</code></td><td>Fragt php/merken.php auf dem Server nach den gemerkten Orten, ohne die Seite neu zu laden.</td><td>Vorlesung 6 und 7</td></tr>
+        </tbody>
+      </table>
+    </div>
+    </section>
+    <section class="info-section" id="fragen" aria-labelledby="fragen-titel">
+      <h2 id="fragen-titel">Fragen, die kommen können</h2>
+    <dl class="doc-questions">
+      <dt>Was passiert genau, wenn ich auf G1 klicke?</dt>
+      <dd>karte.js erkennt am Attribut <code>data-code</code> das Quadrat und ruft onSelect auf. app.js setzt <code>location.hash = &quot;G1&quot;</code>. Das löst <code>hashchange</code> aus, <code>openBlock(&quot;G1&quot;)</code> lässt den Platz leuchten, füllt den Steckbrief und stellt die Liste auf G1.</dd>
+      <dt>Was sieht jemand ohne JavaScript?</dt>
+      <dd>Das feste Bild der Karte (V1), die Hinweisbox aus <code>&lt;noscript&gt;</code> und den Link zum Verzeichnis. Filter, Legende und Steckbrief tragen <code>hidden</code> und bleiben unsichtbar.</dd>
+      <dt>Warum rem statt px?</dt>
+      <dd>rem rechnet mit der Grundschrift des Browsers. Wer die Schrift größer stellt, bekommt alles größer. px nutzen wir nur in der Karte, weil sie eine Zeichnung mit festen Maßen ist, die als Ganzes skaliert wird.</dd>
+      <dt>Woher weiß die Seite, ob ein Ort geöffnet hat?</dt>
+      <dd>Aus den Öffnungszeiten in OpenStreetMap. tools/export_orte.py hat sie in Minuten-Spannen übersetzt (<code>zeiten</code>); <code>isOpen()</code> prüft, ob die gewählte Minute in einer Spanne liegt. Orte ohne bekannte Zeiten zählen nicht mit.</dd>
+      <dt>Warum steht nachts „12:00 Uhr“ statt „jetzt“?</dt>
+      <dd>Wenn zur aktuellen Zeit weniger als 10 Quadrate gefärbt wären, startet der Filter bei 12:00 Uhr und sagt das im Hinweis unter der Karte. Der Knopf „Jetzt“ springt zur echten Uhrzeit.</dd>
+    </dl>
+    </section>
+    <section class="info-section" id="versionen" aria-labelledby="versionen-titel">
+      <h2 id="versionen-titel">Versionen</h2>
+      <div class="prose">
+        <p><span class="version-tag">V1</span> nur HTML und CSS: festes Kartenbild, keine Skripte. <span class="version-tag">V2</span> mit JavaScript: interaktive Karte, Filter, Steckbrief, #G1-Links. <span class="version-tag">V3</span> mit PHP: gemerkte Orte (js/merkliste.js, php/merken.php). Die genauen Schritte stehen in <code>web/VERSIONEN.md</code>; im Quelltext sind alle Teile mit [V2] und [V3] markiert.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner container">
+      <p>Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL</p>
+      <nav class="site-footer__links" aria-label="Rechtliches">
+        <ul>
+          <li><a href="../impressum.html">Impressum</a></li>
+          <li><a href="../datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </nav>
+      <p>Studienprojekt <span aria-hidden="true">·</span> DHBW Mannheim <span aria-hidden="true">·</span> Webprogrammierung 2026</p>
+    </div>
+  </footer>
+</body>
+</html>

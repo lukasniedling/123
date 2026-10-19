@@ -1,0 +1,240 @@
+@charset "utf-8";
+/*
+ * konto.css - page styles of the account pages: login.php, registrieren.php, logout.php
+ * and meine-orte.php.                                                                   [V3]
+ *
+ * How it fits in: php/kopf.php links this file after css/style.css when a page asks for
+ * it (pageHeader('Anmelden', 'anmelden', ['css/konto.css'])). All colours, sizes and
+ * components (panel, form, field, notice, place list, block-code, swatch, button) come
+ * from css/style.css; this file only arranges them for these pages.
+ */
+
+
+/* =========================================================================
+   Login and registration: a form panel and an info column
+   ========================================================================= */
+
+/* Phones: the form first, the info below it. From 56rem the info moves to the right. */
+.account-layout {
+  display: grid;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+@media (min-width: 56rem) {
+  .account-layout {
+    grid-template-columns: minmax(0, 30rem) minmax(0, 1fr);
+    gap: var(--space-7);
+  }
+}
+
+/* The panel holding the form: never wider than a comfortable form line. */
+.account-panel {
+  max-width: 30rem;
+}
+
+/* The question panel on logout.php may be a little wider (its text is longer). */
+.account-panel--single {
+  max-width: 36rem;
+}
+
+.account-panel__title {
+  margin-bottom: var(--space-5);
+  font-size: var(--text-xl);
+}
+
+/* "Noch kein Konto? Jetzt registrieren": set apart from the form by a thin line. */
+.account-switch {
+  margin: var(--space-6) 0 0;
+  padding-top: var(--space-4);
+  border-top: 0.0625rem solid var(--color-ring);
+}
+
+/* --- Info column: three short points, each with a small symbol on the left --- */
+.account-info {
+  max-width: var(--measure);
+}
+
+.account-info__title {
+  font-size: var(--text-l);
+}
+
+.account-info__list {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Symbol column of fixed width, text next to it. */
+.account-info__list li {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: start;
+}
+
+/* A small paper tile for each symbol (pin, block code, lock, person, clock). */
+.account-info__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: var(--color-paper);
+  color: var(--color-roof);
+  border: 0.0625rem solid var(--color-ring);
+  border-radius: var(--radius-block);
+}
+
+/* The block code "G1" as a symbol: slightly smaller than in running text. */
+.account-info__icon .block-code {
+  min-width: 0;
+  font-size: var(--text-xs);
+}
+
+/* Inline SVG symbols take the text colour (currentColor = charcoal). */
+.account-info__lock,
+.account-info__person,
+.account-info__clock {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+}
+
+/* Text next to a 40 px tile: moves down a little to start at the tile's middle line. */
+.account-info__list li > span:last-child {
+  padding-top: var(--space-2);
+}
+
+
+/* =========================================================================
+   Meine Orte
+   ========================================================================= */
+
+/* Messages above the list: as wide as the empty-state panel below them. */
+.account-message {
+  max-width: 44rem;
+}
+
+/* "5 Orte in 3 Quadraten gemerkt" */
+.saved-summary {
+  margin-bottom: var(--space-5);
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+/* Groups (one panel per Quadrat): one column, two columns from 64rem. */
+.saved-groups {
+  display: grid;
+  gap: var(--space-5);
+  align-items: start;               /* a short group does not stretch to its neighbour's height */
+}
+
+@media (min-width: 64rem) {
+  .saved-groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Head of a group: title on the left, link to the map on the right (wraps on phones). */
+.saved-group__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  margin-bottom: var(--space-3);
+}
+
+.saved-group__title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  margin: 0;
+  font-size: var(--text-xl);
+}
+
+/* The block code in the title: like on the map, a small charcoal block. */
+.saved-group__title .block-code {
+  margin-bottom: 0;
+}
+
+.saved-group__count {
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+  font-weight: 400;
+}
+
+/* "Auf der Karte zeigen": a normal link with a touch-friendly height. */
+.saved-group__map-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target);
+  font-size: var(--text-s);
+  font-weight: 600;
+}
+
+.saved-group__text {
+  color: var(--color-text-muted);
+  font-size: var(--text-s);
+}
+
+/* The last place of a group needs no line below it: the panel edge closes the list. */
+.saved-group .place:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+/* Category and address below the name, side by side, wrapping when narrow. */
+.saved-place__details {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+  margin-top: var(--space-1);
+}
+
+/* Category with its colour: the swatch reads --cat-3 from the class cat-essen ... */
+.saved-place__category {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.saved-place__category .swatch {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+/* The small remove form sits in the place row without extra space. */
+.saved-place__form {
+  margin: 0;
+}
+
+/* --- Empty state: hollow tile and text; side by side from 30rem --- */
+.saved-empty {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4) var(--space-5);
+  max-width: 44rem;
+}
+
+@media (min-width: 30rem) {
+  .saved-empty {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.saved-empty__text h2 {
+  font-size: var(--text-xl);
+}
+
+.saved-empty__text p {
+  max-width: var(--measure);
+}

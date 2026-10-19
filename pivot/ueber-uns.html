@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<!--
+  ueber-uns.html - page "Über uns": idea, how to use the map, team, logo, video
+  and the technologies per lecture.  [V1]
+
+  Purpose: explains what "Quadrate" is and who built it. It also holds two
+  mandatory course elements: the logo (img/logo.svg) and a video (<video>).
+  How it fits in: a static text page built from docs/_vorlage.html; styles come
+  from css/style.css (shared design system) and css/info.css (this page's own
+  parts: steps, team cards, logo, photo row). The page itself needs no JavaScript.
+  Its text describes the finished site: parts marked [V2] (filter, colours and
+  profile of the map) are replaced by the V1 sentence given in their comment, and
+  parts marked [V3] (saved places) are removed for V1 and V2 (see web/VERSIONEN.md).
+  The page is identical in both map variants (web/variante-svg and
+  web/variante-css3d): the text does not name the map technique.
+  Team: names and roles filled in on 2026-09-29 (five members, the same order as
+  in impressum.html and datenschutz.html).
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Über uns – Quadrate</title>
+  <meta name="description" content="Die Idee hinter Quadrate, so funktioniert die Karte, das Team, das Logo und womit wir die Website gebaut haben.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/info.css">
+</head>
+<body>
+  <!-- Skip link: first element on the page, lets keyboard users jump over the navigation. -->
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="site-header">
+    <div class="site-header__inner container">
+      <a class="site-logo" href="index.html">
+        <img src="img/logo.svg" alt="Quadrate – zur Karte" width="200" height="33">
+      </a>
+
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <ul class="site-nav__list">
+          <li><a href="index.html">Karte</a></li>
+          <li><a href="quadrate.html">Quadrate</a></li>
+          <li><a href="vorschlagen.html">Ort vorschlagen</a></li>
+          <li><a href="ueber-uns.html" aria-current="page">Über uns</a></li>
+          <!-- [V3] account link: static pages link to login.php. PHP pages show
+               <a href="meine-orte.php">Meine Orte</a> instead while a user is logged in. -->
+          <li class="site-nav__item--account"><a href="login.php">Anmelden</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhalt" class="container">
+    <div class="page-intro">
+      <h1>Über uns</h1>
+      <!-- [V2] V1 instead: "Quadrate zeigt die Mannheimer Innenstadt als 3D-Karte mit allen 146 Quadraten. Ein Studienprojekt an der DHBW Mannheim." -->
+      <p class="lead">Quadrate zeigt die Mannheimer Innenstadt als 3D-Karte. Du wählst Tag, Uhrzeit und Kategorie und siehst, in welchen Quadraten gerade etwas geöffnet hat. Ein Studienprojekt an der DHBW Mannheim.</p>
+    </div>
+
+    <!-- In-page navigation: anchor links to the sections below (ids on the sections). -->
+    <nav class="info-toc info-toc--inline" aria-label="Auf dieser Seite">
+      <ul>
+        <li><a href="#idee">Die Idee</a></li>
+        <li><a href="#so-gehts">So funktioniert es</a></li>
+        <li><a href="#team">Das Team</a></li>
+        <li><a href="#logo">Das Logo</a></li>
+        <li><a href="#video">Video</a></li>
+        <li><a href="#technik">Womit wir bauen</a></li>
+      </ul>
+    </nav>
+
+    <!-- ============================== Idea ============================== -->
+    <section id="idee" aria-labelledby="idee-titel">
+      <h2 id="idee-titel">Die Idee</h2>
+      <div class="idea">
+        <div class="prose">
+          <p>Die Innenstadt von Mannheim ist ein Raster. Statt Straßennamen tragen die Häuserblöcke <em>Kürzel</em> aus einem Buchstaben und einer Zahl: die Quadrate. Die Buchstaben A bis K liegen links der Kurpfalzstraße, L bis U rechts davon. Gezählt wird vom Schloss aus nach Norden, die Zahlen steigen von der Kurpfalzstraße nach außen. Eine Adresse wie „M 2, 11“ heißt also: Quadrat <a class="block-code" href="index.html#M2">M2</a>, Haus Nummer 11.</p>
+          <p>Dieses Raster ist schon eine Karte. Jeder Block hat einen Namen und eine feste Stelle. Wir zeigen die 144 Quadrate und die beiden Sonderblöcke <a class="block-code" href="index.html#M3a">M3a</a> und <a class="block-code" href="index.html#M4a">M4a</a> als 3D-Modell aus der Vogelperspektive und färben jeden Block danach, wie viele Orte dort zu einer bestimmten Zeit geöffnet haben.</p>
+          <p>So siehst du auf einen Blick, wo du am Sonntagabend noch essen gehen kannst, wo am Samstagmittag die meisten Läden offen sind oder welches Museum am Dienstag geöffnet hat. Die Orte und ihre Öffnungszeiten stammen aus <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, einer freien Karte, an der Menschen auf der ganzen Welt mitarbeiten.</p>
+          <p class="source-note">Quelle zum Raster: Wikipedia, Artikel <a href="https://de.wikipedia.org/wiki/Quadratestadt">Quadratestadt</a> (abgerufen am 29.09.2026). Der Grundriss geht auf das Jahr 1606 zurück.</p>
+        </div>
+
+        <figure class="idea__map">
+          <!-- [V1] The same static map picture that index.html shows without JavaScript. -->
+          <!-- alt describes the picture for people who cannot see it; title is the tooltip for the mouse. -->
+          <img src="img/karte-statisch.png" alt="Die Quadrate als 3D-Karte aus der Vogelperspektive: dunkelgraue Blöcke mit weißen Kürzeln, dazwischen die sandfarbenen Achsen Kurpfalzstraße und Planken, unten das Schloss, rechts am Ende der Planken der Wasserturm." title="Karte der Quadrate (Standbild)" width="1600" height="1066">
+          <figcaption>Die Karte ohne Filter: jedes Quadrat mit seinem Kürzel.</figcaption>
+        </figure>
+      </div>
+
+      <!-- Photos and credits come from js/data/fotos.js (keys "schloss", "planken",
+           "wasserturm"). They are written into the HTML here, because this page works
+           without JavaScript. If a credit changes in fotos.js, change it here too.
+           "Ausschnitt": the site shows every photo in 3:2; Schloss (2:1) and Planken (4:3)
+           are cropped, and the licences ask to say so (details in the Impressum). -->
+      <h3 class="info-subtitle">Drei Orte, die jeder kennt</h3>
+      <ul class="photo-row">
+        <li>
+          <figure class="photo">
+            <img src="img/fotos/schloss.jpg" alt="Barockschloss Mannheim: Blick über den gepflasterten Ehrenhof auf den Mittelbau und die beiden Seitenflügel" title="Barockschloss Mannheim, Ehrenhof" width="1200" height="600" loading="lazy">
+            <figcaption>
+              <span class="photo__caption">Das Schloss: Hier beginnen die Buchstaben.</span>
+              <span class="photo__credit">Foto: Hubert Berberich (HubiB), <a href="https://creativecommons.org/licenses/by/3.0/deed.de">CC BY 3.0</a>, <a href="https://commons.wikimedia.org/wiki/File:SchlossEhrenhof_2017.jpg">Wikimedia Commons</a>, <a href="impressum.html#fotos">Ausschnitt</a></span>
+            </figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure class="photo">
+            <img src="img/fotos/planken.jpg" alt="Die Planken: breite Einkaufsstraße mit Straßenbahngleisen und Baumreihen, am Ende der Wasserturm" title="Die Planken" width="1200" height="900" loading="lazy">
+            <figcaption>
+              <span class="photo__caption">Die Planken: die Achse von West nach Ost.</span>
+              <span class="photo__credit">Foto: AnRo0002, <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.de">CC0 1.0</a>, <a href="https://commons.wikimedia.org/wiki/File:20171119Planken_Mannheim.jpg">Wikimedia Commons</a>, <a href="impressum.html#fotos">Ausschnitt</a></span>
+            </figcaption>
+          </figure>
+        </li>
+        <li>
+          <figure class="photo">
+            <img src="img/fotos/wasserturm.jpg" alt="Wasserturm am Friedrichsplatz: runder Turm aus Sandstein mit grüner Kuppel, davor Wasserbecken, Treppen und Bäume" title="Wasserturm am Friedrichsplatz" width="1200" height="800" loading="lazy">
+            <figcaption>
+              <span class="photo__caption">Der Wasserturm am Ende der Planken.</span>
+              <span class="photo__credit">Foto: Flocci Nivis, <a href="https://creativecommons.org/licenses/by/4.0/deed.de">CC BY 4.0</a>, <a href="https://commons.wikimedia.org/wiki/File:20180714_Mannheimer_Wasserturm_05.jpg">Wikimedia Commons</a></span>
+            </figcaption>
+          </figure>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ============================== How it works ============================== -->
+    <section class="info-section" id="so-gehts" aria-labelledby="so-gehts-titel">
+      <h2 id="so-gehts-titel">So funktioniert es</h2>
+      <!-- [V2] begin: intro, steps 1 to 4 and the paragraph below describe the filter and the profile,
+           which need JavaScript.
+           V1 instead: <p class="info-section__intro">In dieser Version zeigt die Startseite die Karte als Bild; Filter und Steckbrief folgen mit JavaScript. Alle 146 Quadrate stehen als Tabelle im <a href="quadrate.html">Verzeichnis</a>.</p> -->
+      <p class="info-section__intro">Die Karte auf der Startseite beantwortet eine Frage: Was hat gerade offen? So gehst du vor:</p>
+
+      <ol class="steps">
+        <li>
+          <h3 class="steps__title">Tag und Uhrzeit wählen</h3>
+          <p>Über der Karte stellst du den Wochentag ein und mit dem Schieberegler die Uhrzeit.</p>
+        </li>
+        <li>
+          <h3 class="steps__title">Kategorie wählen</h3>
+          <p>Essen, Trinken, Kultur oder Shoppen. Jede Kategorie hat eine eigene Farbe.</p>
+        </li>
+        <li>
+          <h3 class="steps__title">Karte lesen</h3>
+          <p>Je kräftiger ein Quadrat gefärbt ist, desto mehr passende Orte haben zu dieser Zeit geöffnet. Dunkelgrau heißt: keiner. Die Legende unter der Karte nennt die Stufen 1, 2–3, 4–6 und 7 oder mehr.</p>
+        </li>
+        <li>
+          <h3 class="steps__title">Quadrat anklicken</h3>
+          <p>Das Gebäude wächst und leuchtet, darunter erscheint sein Steckbrief: was das Quadrat besonders macht und welche Orte dort geöffnet sind. Mit der Tastatur gehst du mit der Tabulatortaste zum Quadrat und wählst es mit der Eingabetaste oder der Leertaste.</p>
+        </li>
+        <!-- [V3] saved places: remove this list item in V1 and V2. -->
+        <li>
+          <h3 class="steps__title">Orte merken</h3>
+          <p>Wenn du <a href="login.php">angemeldet</a> bist, kannst du Orte merken. Quadrate mit gemerkten Orten tragen auf der Karte eine Stecknadel.</p>
+        </li>
+      </ol>
+
+      <div class="prose">
+        <!-- Note [V2]: index.html#G1 is read by js/app.js (location.hash), index.html has no element with id="G1";
+             quadrate.html#q-G1 is a plain HTML anchor (id="q-G1" on the table row) and works in V1 too. -->
+        <p>Alle 146 Quadrate stehen auch als Tabelle im <a href="quadrate.html">Verzeichnis</a>; <a href="quadrate.html#q-G1">quadrate.html#q-G1</a> springt dort direkt zur Zeile des Marktplatzes. Auf der Karte öffnet ein Link wie <a href="index.html#G1">index.html#G1</a> den Steckbrief eines Quadrats: JavaScript liest den Teil nach dem # aus der Adresse. Ohne JavaScript zeigt die Startseite ein festes Bild der Karte; Filter und Steckbrief brauchen JavaScript.</p>
+      </div>
+      <!-- [V2] end -->
+
+      <div class="button-row">
+        <a class="button" href="index.html">Zur Karte</a>
+        <a class="button button--secondary" href="quadrate.html">Zum Verzeichnis</a>
+      </div>
+    </section>
+
+    <!-- ============================== Team ============================== -->
+    <!-- Team: one card per member with name and role, in the order the team gave on 2026-09-29.
+         The tile shows the initials like a block code on the map (decorative, hidden from
+         screen readers; Nikita Ermotschenko and Niko Eibach both have "NE").
+         To say more about your part, add one or two sentences as <p> after the role.
+         The same names are listed in impressum.html and datenschutz.html. -->
+    <section class="info-section" id="team" aria-labelledby="team-titel">
+      <h2 id="team-titel">Das Team</h2>
+      <p class="info-section__intro">Wir sind fünf Studierende im Studiengang Wirtschaftsinformatik an der DHBW Mannheim. Quadrate ist unser Gruppenprojekt im Modul Webprogrammierung.</p>
+
+      <ul class="team">
+        <li>
+          <article class="panel team-card" aria-labelledby="team-1">
+            <span class="block-tile" aria-hidden="true">MK</span>
+            <h3 class="team-card__name" id="team-1">Matti Katila</h3>
+            <p class="team-card__role">Inhalte und Anforderungen</p>
+          </article>
+        </li>
+        <li>
+          <article class="panel team-card" aria-labelledby="team-2">
+            <span class="block-tile" aria-hidden="true">NE</span>
+            <h3 class="team-card__name" id="team-2">Nikita Ermotschenko</h3>
+            <p class="team-card__role">Design und Kreativität</p>
+          </article>
+        </li>
+        <li>
+          <article class="panel team-card" aria-labelledby="team-3">
+            <span class="block-tile" aria-hidden="true">NE</span>
+            <h3 class="team-card__name" id="team-3">Niko Eibach</h3>
+            <p class="team-card__role">Programmierung</p>
+          </article>
+        </li>
+        <li>
+          <article class="panel team-card" aria-labelledby="team-4">
+            <span class="block-tile" aria-hidden="true">AS</span>
+            <h3 class="team-card__name" id="team-4">Anes Sahbegovic</h3>
+            <p class="team-card__role">Programmierung</p>
+          </article>
+        </li>
+        <li>
+          <article class="panel team-card" aria-labelledby="team-5">
+            <span class="block-tile" aria-hidden="true">LN</span>
+            <h3 class="team-card__name" id="team-5">Lukas Niedling</h3>
+            <p class="team-card__role">Tests und Präsentation</p>
+          </article>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ============================== Logo ============================== -->
+    <section class="info-section" id="logo" aria-labelledby="logo-titel">
+      <h2 id="logo-titel">Das Logo</h2>
+
+      <div class="logo-show">
+        <figure class="logo-show__figure">
+          <img class="logo-show__logo" src="img/logo.svg" alt="Logo von Quadrate: vier dunkelgraue Blöcke um ein sandfarbenes Kreuz, daneben der Schriftzug Quadrate" title="Logo von Quadrate" width="400" height="66">
+          <figcaption class="logo-show__small">
+            <img src="img/favicon.svg" alt="" width="32" height="32">
+            <span>Im Browser-Tab steht das Zeichen allein, auf einer hellen Platte (<code>img/favicon.svg</code>).</span>
+          </figcaption>
+        </figure>
+
+        <dl class="logo-parts">
+          <div>
+            <dt><span class="swatch swatch--roof" aria-hidden="true"></span>Vier Blöcke</dt>
+            <dd>Das Zeichen ist ein Ausschnitt aus der Karte: vier Quadrate an einer Kreuzung. Jeder Block hat ein dunkles Dach und darunter einen helleren Streifen, die Wand. So sehen die Gebäude auch auf der 3D-Karte aus.</dd>
+          </div>
+          <div>
+            <dt><span class="swatch swatch--sand" aria-hidden="true"></span>Sandfarbenes Kreuz</dt>
+            <dd>Die beiden Streifen stehen für die Kurpfalzstraße und die Planken. Sie kreuzen sich am Paradeplatz, in der Mitte der Quadrate, und helfen auf der Karte bei der Orientierung.</dd>
+          </div>
+          <div>
+            <dt><span class="swatch swatch--wall" aria-hidden="true"></span>Schriftzug und Farben</dt>
+            <dd>Der Schriftzug ist in der Archivo Bold gesetzt, derselben Schrift wie auf der ganzen Website, und in Linien umgewandelt. Alle Farben kommen aus der Karte: Dach, Wand und Achse. Das Logo ist eine SVG-Datei und bleibt in jeder Größe scharf.</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ============================== Video ============================== -->
+    <!-- Course element "video" (lecture 3): our own screen recording of the map (SVG variant,
+         2026-09-29), H.264 in an MP4 container, 1280 x 720, 32 seconds, 4.9 MB, without sound.
+         H.264 MP4 plays in every current browser. preload="none": the browser loads nothing
+         before the user presses play; the poster is the static map picture.
+         The video has no sound, so it needs no subtitles; the text below the player says what
+         it shows (for people who cannot see it). It shows OpenStreetMap data, hence the credit. -->
+    <section class="info-section" id="video" aria-labelledby="video-titel">
+      <h2 id="video-titel">Quadrate im Video</h2>
+
+      <div class="video-block">
+        <div class="embed">
+          <video controls preload="none" poster="img/karte-statisch.png" width="1280" height="720" aria-describedby="video-beschreibung">
+            <source src="video/quadrate.mp4" type="video/mp4">
+            <p>Dein Browser kann dieses Video nicht abspielen. <a href="video/quadrate.mp4">Video herunterladen</a></p>
+          </video>
+        </div>
+        <p class="source-note" id="video-beschreibung">Bildschirmaufnahme der Karte, 32 Sekunden, ohne Ton: Am Samstag um 19:00 Uhr wechselt die Kategorie von Essen zu Trinken, die Uhrzeit wandert auf 22:30 Uhr, dann zeigt die Karte Shoppen um 13:00 Uhr, Kultur und wieder Essen. Danach wachsen nacheinander die Quadrate O3, N1, G1 (Marktplatz) und Q1, und der Steckbrief von Q1 mit seinen Orten erscheint. Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL.</p>
+      </div>
+
+      <!-- Alternative: a video on YouTube. Please do not embed it with an <iframe>: the player
+           connects to Google as soon as the page loads and may store data in the browser, which
+           needs prior consent (§ 25 Abs. 1 TDDDG). Link to it instead (put the ID of the video,
+           the part after "watch?v=", in place of VIDEO-ID); datenschutz.html (#video) covers a link:
+      <p><a href="https://www.youtube.com/watch?v=VIDEO-ID">Video auf YouTube ansehen</a> (öffnet die Website von YouTube)</p>
+      -->
+    </section>
+
+    <!-- ============================== Technology ============================== -->
+    <section class="info-section" id="technik" aria-labelledby="technik-titel">
+      <h2 id="technik-titel">Womit wir bauen</h2>
+      <p class="info-section__intro">Die Website wächst mit den Vorlesungen. Jede Zwischenversion läuft für sich: <span class="version-tag">V1</span> nur mit HTML und CSS, <span class="version-tag">V2</span> mit JavaScript, <span class="version-tag">V3</span> mit PHP. Wir verwenden keine Frameworks und keine fremden Bibliotheken; Schriften, Fotos und Daten liegen auf unserem eigenen Server.</p>
+
+      <div class="table-wrap tech-table" role="region" aria-labelledby="technik-tabelle" tabindex="0">
+        <table class="data-table">
+          <caption id="technik-tabelle">Technik je Vorlesung</caption>
+          <thead>
+            <tr>
+              <th scope="col">Technik</th>
+              <th scope="col">Was wir damit gebaut haben</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">HTML <span class="version-tag">V1</span> <span class="tech-table__lecture">Vorlesung 2 und 3</span></th>
+              <td>
+                <ul>
+                  <li>Seitenaufbau mit Kopf, Navigation, Hauptteil und Fußzeile</li>
+                  <li>Tabelle aller Quadrate im Verzeichnis</li>
+                  <li>Formular „Ort vorschlagen“</li>
+                  <li>Eingebettete OpenStreetMap-Karte (iframe) und dieses Video</li>
+                  <li>Anker-Links, zum Beispiel <code>quadrate.html#q-G1</code> (Sprung zur Zeile G1 im Verzeichnis)</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">CSS <span class="version-tag">V1</span> <span class="tech-table__lecture">Vorlesung 4 und 5</span></th>
+              <td>
+                <ul>
+                  <li>Ein gemeinsames Design für alle Seiten mit Farben als Variablen</li>
+                  <li>Layout mit Flexbox und Grid, lesbar ab 360 Pixel Breite</li>
+                  <li>Eigene Schriften mit <code>@font-face</code></li>
+                  <li>Fester Kartenausschnitt als Bild</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">JavaScript <span class="version-tag">V2</span> <span class="tech-table__lecture">Vorlesung 6</span></th>
+              <td>
+                <ul>
+                  <li>Interaktive 3D-Karte, die Gebäude wachsen beim Anklicken</li>
+                  <li>Filter nach Wochentag, Uhrzeit und Kategorie</li>
+                  <li>Steckbrief mit den geöffneten Orten</li>
+                  <li>Sortieren der Tabelle im Verzeichnis</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">PHP <span class="version-tag">V3</span> <span class="tech-table__lecture">Vorlesung 7</span></th>
+              <td>
+                <ul>
+                  <li>Registrieren, Anmelden und Abmelden mit Sessions</li>
+                  <li>„Meine Orte“: gemerkte Orte speichern und verwalten</li>
+                  <li>Versand des Formulars „Ort vorschlagen“</li>
+                  <li>Speicherung in JSON-Dateien statt in einer Datenbank</li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="prose">
+        <p>Die Orte stammen aus <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> (Lizenz ODbL), die Fotos von <a href="https://commons.wikimedia.org/">Wikimedia Commons</a> mit freien Lizenzen. Alle Nachweise stehen im <a href="impressum.html#urheberrecht">Impressum</a>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner container">
+      <p>Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL</p>
+      <nav class="site-footer__links" aria-label="Rechtliches">
+        <ul>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </nav>
+      <p>Studienprojekt <span aria-hidden="true">·</span> DHBW Mannheim <span aria-hidden="true">·</span> Webprogrammierung 2026</p>
+    </div>
+  </footer>
+</body>
+</html>

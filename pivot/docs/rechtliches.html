@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<!--
+  docs/rechtliches.html - German explanation of impressum.html and datenschutz.html for the presentation.  [Doku]
+
+  How it fits in: one of the explanation pages in docs/ (overview: docs/index.html).
+  Line references (class "ref") are kept up to date by tools/export_docs_refs.py:
+  after a change of the code run  python3 tools/export_docs_refs.py  and then
+  zsh tools/sync_varianten.sh. The page is German, like all documents for the team.
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Impressum und Datenschutz – Erklärung – Quadrate</title>
+  <meta name="description" content="Erklärung von Impressum und Datenschutzerklärung für die Präsentation: Pflichtangaben, mailto, hr, Lizenzen.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/info.css">
+  <style>
+    /* Helper styles for the explanation pages only (prefix doc-). */
+    .doc-table td:first-child,
+    .doc-table th:first-child {
+      min-width: 9rem;
+    }
+
+    .doc-table .ref {
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .doc-questions dt {
+      margin-top: var(--space-4);
+      font-weight: 700;
+    }
+
+    .doc-questions dd {
+      margin: var(--space-1) 0 0;
+    }
+
+    .doc-kicker {
+      margin: 0 0 var(--space-2);
+      color: var(--color-text-muted);
+      font-size: var(--text-s);
+      font-weight: 600;
+    }
+
+    .doc-nav ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2) var(--space-4);
+      padding: 0;
+      list-style: none;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="site-header">
+    <div class="site-header__inner container">
+      <a class="site-logo" href="../index.html">
+        <img src="../img/logo.svg" alt="Quadrate – zur Karte" width="200" height="33">
+      </a>
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <ul class="site-nav__list">
+          <li><a href="../index.html">Karte</a></li>
+          <li><a href="../quadrate.html">Quadrate</a></li>
+          <li><a href="../vorschlagen.html">Ort vorschlagen</a></li>
+          <li><a href="../ueber-uns.html">Über uns</a></li>
+          <!-- [V3] account link -->
+          <li class="site-nav__item--account"><a href="../login.php">Anmelden</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhalt" class="container">
+    <div class="page-intro">
+      <p class="doc-kicker">Erklärung für die Präsentation</p>
+      <h1>Impressum und Datenschutz</h1>
+      <p class="lead">Was im Impressum und in der Datenschutzerklärung stehen muss und welche HTML-Elemente dort vorkommen.</p>
+    </div>
+
+    <nav class="doc-nav" aria-label="Alle Erklärungen">
+      <ul>
+        <li><a href="index.html">Überblick</a></li>
+        <li><a href="startseite.html">Startseite</a></li>
+        <li><a href="verzeichnis.html">Quadrate</a></li>
+        <li><a href="vorschlagen.html">Ort vorschlagen</a></li>
+        <li><a href="ueber-uns.html">Über uns</a></li>
+        <li><a href="rechtliches.html" aria-current="page">Impressum und Datenschutz</a></li>
+        <li><a href="php.html">Konto und PHP</a></li>
+      </ul>
+    </nav>
+
+    <section class="info-section" id="ueberblick" aria-labelledby="ueberblick-titel">
+      <h2 id="ueberblick-titel">Worum es geht</h2>
+      <div class="prose">
+        <p><code>impressum.html</code> nennt, wer hinter der Website steht (Pflichtangaben nach § 5 DDG) und woher Kartendaten, Fotos und Schriften kommen. <code>datenschutz.html</code> sagt, welche Daten die Website verarbeitet, wofür und welche Rechte Besucher haben (Art. 13 DSGVO). Laut Vorlesung 2 sind beide Pflicht.</p>
+        <p>Im Impressum stehen die fünf Mitglieder der Projektgruppe mit der Postanschrift der DHBW Mannheim („c/o“, weil die Gruppe über die Hochschule erreichbar ist). E-Mail-Adresse und Telefonnummer hat das Team für das Studienprojekt erfunden; das steht als Kommentar im Quelltext. Die Datenschutzerklärung bleibt ein Muster: Das Team prüft den Text vor einer Veröffentlichung und trägt die zwei Löschfristen ein, die noch in eckigen Klammern stehen.</p>
+        <p><strong>Vorschlag für die Präsentation:</strong> Matti Katila (Inhalte und Anforderungen). Die ganze Aufteilung steht im <a href="index.html#team">Überblick</a>.</p>
+      </div>
+    </section>
+    <section class="info-section" id="begriffe" aria-labelledby="begriffe-titel">
+      <h2 id="begriffe-titel">Begriffe im Quelltext</h2>
+    <div class="table-wrap" role="region" aria-labelledby="begriffe-tabelle" tabindex="0">
+      <table class="data-table doc-table">
+        <caption id="begriffe-tabelle">Begriffe auf Impressum und Datenschutz und wo sie stehen</caption>
+        <thead>
+          <tr><th scope="col">Begriff</th><th scope="col">Fundstelle</th><th scope="col">Was es tut</th><th scope="col">Vorlesung</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Pflichtangaben im Impressum</th><td><code class="ref" data-find="impressum.html|&lt;h2 id=&quot;anbieter&quot;&gt;">impressum.html:61</code><br><code class="ref" data-find="impressum.html|&lt;p&gt;Telefon:">impressum.html:85</code><br><code class="ref" data-find="impressum.html|&lt;h2 id=&quot;verantwortlich&quot;&gt;">impressum.html:94</code></td><td>Verantwortliche, Anschrift, Telefon, E-Mail – so verlangt es die Folie; die Rechtsgrundlage ist heute § 5 DDG (ersetzt seit 14.05.2024 das Telemediengesetz).</td><td>Vorlesung 2, „Typische Inhalte einer Webseite“ (Rechtliches ist Pflicht)</td></tr>
+          <tr><th scope="row"><code>address</code></th><td><code class="ref" data-find="impressum.html|&lt;address class=&quot;legal-address&quot;&gt;">impressum.html:63</code></td><td>Kontaktangaben der Verantwortlichen; <code>&lt;br&gt;</code> trennt die Zeilen der Anschrift.</td><td>Vorlesung 2 (Zeilenumbruch)</td></tr>
+          <tr><th scope="row">mailto-Link</th><td><code class="ref" data-find="impressum.html|&lt;a href=&quot;mailto:info@quadrate.com&quot;&gt;">impressum.html:84</code><br><code class="ref" data-find="datenschutz.html|&lt;a href=&quot;mailto:info@quadrate.com&quot;&gt;">datenschutz.html:111</code></td><td>Ein Link, der das E-Mail-Programm mit der Adresse öffnet.</td><td>Vorlesung 2, Hyperlinks (Der mailto-Link)</td></tr>
+          <tr><th scope="row">Trennlinie <code>&lt;hr&gt;</code></th><td><code class="ref" data-find="impressum.html|      &lt;hr&gt;">impressum.html:108</code><br><code class="ref" data-find="css/style.css|hr {">css/style.css:402</code></td><td>Trennt die Angaben zum Anbieter von den Lizenzen; das Aussehen (dünne Linie) steht im CSS. hr braucht kein End-Tag.</td><td>Vorlesung 2 (Blockelemente, Trennlinien)</td></tr>
+          <tr><th scope="row">Überschriften-Hierarchie</th><td><code class="ref" data-find="impressum.html|&lt;h2 id=&quot;urheberrecht&quot;&gt;">impressum.html:110</code><br><code class="ref" data-find="impressum.html|&lt;h3 id=&quot;fotos&quot;&gt;">impressum.html:119</code></td><td>h1 für die Seite, h2 für Abschnitte, h3 für Unterabschnitte; die ids sind Sprungziele (z. B. impressum.html#fotos aus den Fotonachweisen).</td><td>Vorlesung 2, Überschriften</td></tr>
+          <tr><th scope="row">Tabelle der Fotonachweise</th><td><code class="ref" data-find="impressum.html|&lt;caption id=&quot;fotos-tabelle&quot;&gt;Fotonachweise&lt;/caption&gt;">impressum.html:127</code></td><td>Für jedes Foto Motiv, Urheber, Lizenz und Quelle. Beim Foto der Jesuitenkirche steht der Nachweis genau so, wie der Fotograf ihn verlangt.</td><td>Vorlesung 3, „Tabellen“</td></tr>
+          <tr><th scope="row">Inhaltsverzeichnis <code>ol</code> mit Ankern</th><td><code class="ref" data-find="datenschutz.html|&lt;nav class=&quot;info-toc&quot; aria-labelledby=&quot;toc-titel&quot;&gt;">datenschutz.html:75</code></td><td>Nummerierte Liste von Links zu den Abschnitten der Datenschutzerklärung.</td><td>Vorlesung 2, Listen; Vorlesung 3, Anker</td></tr>
+          <tr><th scope="row"><code>&lt;strong&gt;</code></th><td><code class="ref" data-find="datenschutz.html|&lt;li&gt;&lt;strong&gt;Auskunft&lt;/strong&gt;">datenschutz.html:218</code><br><code class="ref" data-find="css/style.css|strong,">css/style.css:380</code></td><td>Hebt die Namen der Rechte hervor (wichtig, fett); die Darstellung legt CSS fest.</td><td>Vorlesung 2 (Inline-Elemente); Vorlesung 4</td></tr>
+          <tr><th scope="row">Versionskommentare im HTML</th><td><code class="ref" data-find="datenschutz.html|&lt;!-- [V3] --&gt;&lt;li&gt;&lt;a href=&quot;#konto&quot;&gt;">datenschutz.html:83</code><br><code class="ref" data-find="datenschutz.html|&lt;!-- [V2] begin: map, filter and profile need JavaScript">datenschutz.html:139</code></td><td>Absätze mit [V2] gelten erst mit JavaScript, Abschnitte mit [V3] erst mit PHP; für die Zwischenversionen werden sie entfernt.</td><td>Vorlesung 2, Kommentare</td></tr>
+          <tr><th scope="row">Sitzungs-Cookie <code>quadrate_sitzung</code></th><td><code class="ref" data-find="datenschutz.html|&lt;code&gt;quadrate_sitzung&lt;/code&gt;">datenschutz.html:152</code><br><code class="ref" data-find="php/lib.php|const SESSION_NAME = &#x27;quadrate_sitzung&#x27;;">php/lib.php:35</code></td><td>Der Text nennt denselben Namen wie der PHP-Code. Das Cookie gibt es nur beim Anmelden (V3).</td><td>Vorlesung 7</td></tr>
+          <tr><th scope="row">Druckansicht <code>@media print</code></th><td><code class="ref" data-find="css/style.css|@media print {">css/style.css:2037</code><br><code class="ref" data-find="css/info.css|@media print {">css/info.css:473</code></td><td>Beim Drucken fallen Navigation und Video weg, Link-Adressen werden ausgeschrieben.</td><td>Vorlesung 4, Einbinden von CSS (media="print")</td></tr>
+        </tbody>
+      </table>
+    </div>
+    </section>
+    <section class="info-section" id="fragen" aria-labelledby="fragen-titel">
+      <h2 id="fragen-titel">Fragen, die kommen können</h2>
+    <dl class="doc-questions">
+      <dt>Welche Angaben gehören ins Impressum?</dt>
+      <dd>Wer verantwortlich ist, eine Anschrift, Telefonnummer und E-Mail-Adresse (Folie Vorlesung 2). Bei uns: Projektgruppe mit Namen, Anschrift, Telefon, E-Mail und die verantwortliche Person für den Inhalt.</dd>
+      <dt>Welche Daten verarbeitet die Website?</dt>
+      <dd>Beim Aufruf über einen Server die üblichen Server-Logdaten. Mit PHP (V3): das Sitzungs-Cookie, Konto und gemerkte Orte, Vorschläge aus dem Formular. Außerdem lädt die OpenStreetMap-Karte auf „Ort vorschlagen“ Inhalte von fremden Servern.</dd>
+      <dt>Warum keine Google Fonts?</dt>
+      <dd>Weil beim Laden die IP-Adresse an Google ginge (Folie Vorlesung 4 zu Webfonts). Die Schriften liegen im Ordner fonts/ und werden mit @font-face eingebunden.</dd>
+      <dt>Wozu die Lizenzangaben?</dt>
+      <dd>Fotos von Wikimedia Commons und die Daten von OpenStreetMap dürfen wir nur mit Nennung von Urheber und Lizenz nutzen; die Karten-Datendateien stehen selbst unter der ODbL.</dd>
+    </dl>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner container">
+      <p>Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL</p>
+      <nav class="site-footer__links" aria-label="Rechtliches">
+        <ul>
+          <li><a href="../impressum.html">Impressum</a></li>
+          <li><a href="../datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </nav>
+      <p>Studienprojekt <span aria-hidden="true">·</span> DHBW Mannheim <span aria-hidden="true">·</span> Webprogrammierung 2026</p>
+    </div>
+  </footer>
+</body>
+</html>

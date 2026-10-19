@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<!--
+  datenschutz.html - privacy notice ("Datenschutzerklärung") of the website "Quadrate".  [V1]
+
+  Purpose: tells visitors which personal data the site processes, why, where
+  and for how long, and which rights they have (Art. 13 GDPR / DSGVO).
+  This is a SAMPLE written for a student project. The team must check it
+  against the finished site before it goes online. Since 2026-09-29 there are no
+  placeholders left (deletion: "spätestens nach Abschluss des Studienprojekts").
+  Controller and contact data are the same as in impressum.html.
+  How it fits in: a static text page built from docs/_vorlage.html; styles come
+  from css/style.css and css/info.css (table of contents, address blocks). No
+  JavaScript. Identical in both map variants.
+  Versions: paragraphs marked [V2] (map, filter and profile run in the browser)
+  only apply once JavaScript exists: remove them for V1. Sections and paragraphs
+  marked [V3] (session cookie, account, suggestion form) only apply once PHP
+  exists: remove them and their entries in the table of contents for V1 and V2.
+  The rest stays true in every version (see web/VERSIONEN.md).
+  Keep in sync with: vorschlagen.html (form fields, OSM iframe), php/vorschlag.php
+  (what is stored), registrieren.php / php/lib.php (account data, session cookie),
+  ueber-uns.html (video: local file or YouTube).
+  Facts checked on 2026-09-29: DDG / TDDDG on gesetze-im-internet.de, LfDI BW
+  contact page, OSMF privacy policy (edited 2026-01-25) and contact page, Google
+  privacy policy (effective 2026-04-02) and its frameworks page, EU Commission
+  page on adequacy decisions (UK renewed December 2025). The OSM embed page and a
+  map tile set no cookie in a test on 2026-09-29.
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Datenschutz – Quadrate</title>
+  <meta name="description" content="Datenschutzerklärung von Quadrate: welche Daten die Website verarbeitet, wofür und wie lange, und welche Rechte du hast.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/info.css">
+</head>
+<body>
+  <!-- Skip link: first element on the page, lets keyboard users jump over the navigation. -->
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="site-header">
+    <div class="site-header__inner container">
+      <a class="site-logo" href="index.html">
+        <img src="img/logo.svg" alt="Quadrate – zur Karte" width="200" height="33">
+      </a>
+
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <ul class="site-nav__list">
+          <li><a href="index.html">Karte</a></li>
+          <li><a href="quadrate.html">Quadrate</a></li>
+          <li><a href="vorschlagen.html">Ort vorschlagen</a></li>
+          <li><a href="ueber-uns.html">Über uns</a></li>
+          <!-- [V3] account link: static pages link to login.php. PHP pages show
+               <a href="meine-orte.php">Meine Orte</a> instead while a user is logged in. -->
+          <li class="site-nav__item--account"><a href="login.php">Anmelden</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhalt" class="container">
+    <div class="page-intro">
+      <h1>Datenschutzerklärung</h1>
+      <p class="lead">Quadrate kommt mit sehr wenigen Daten aus. Hier steht, welche es sind, wofür wir sie brauchen und welche Rechte du hast.</p>
+    </div>
+
+    <!-- Team: delete this notice after the text has been checked (all placeholders are filled since 2026-09-29). -->
+    <div class="notice notice--warning info-notice" role="status">
+      <p class="notice__title">Muster, noch zu prüfen</p>
+      <p>Diese Datenschutzerklärung ist ein Entwurf für unser Studienprojekt. Das Team prüft sie, bevor die Website irgendwann öffentlich erreichbar sein sollte.</p>
+    </div>
+
+    <!-- Table of contents: every entry links to the id of a heading below. -->
+    <nav class="info-toc" aria-labelledby="toc-titel">
+      <h2 class="info-toc__title" id="toc-titel">Inhalt</h2>
+      <ol>
+        <li><a href="#verantwortliche">Verantwortliche</a></li>
+        <li><a href="#kurz">Das Wichtigste in Kürze</a></li>
+        <li><a href="#aufruf">Aufruf der Website</a></li>
+        <li><a href="#browser">Was in deinem Browser passiert</a></li>
+        <li><a href="#cookies">Cookies</a></li>
+        <!-- [V3] --><li><a href="#konto">Anmeldung und „Meine Orte“</a></li>
+        <!-- [V3] --><li><a href="#vorschlaege">Vorschläge und Nachrichten</a></li>
+        <li><a href="#openstreetmap">OpenStreetMap-Karte</a></li>
+        <li><a href="#video">Video</a></li>
+        <li><a href="#schriften">Schriften, Fotos und Links</a></li>
+        <li><a href="#rechte">Deine Rechte</a></li>
+        <li><a href="#beschwerde">Beschwerde bei der Aufsichtsbehörde</a></li>
+        <li><a href="#aenderungen">Änderungen</a></li>
+      </ol>
+    </nav>
+
+    <div class="prose">
+      <!-- ============================== Controller ============================== -->
+      <h2 id="verantwortliche">Verantwortliche</h2>
+      <p>Verantwortlich für die Datenverarbeitung auf dieser Website im Sinne der Datenschutz-Grundverordnung (DSGVO) sind die fünf Mitglieder der Projektgruppe:</p>
+      <!-- One name line per team member, the same as in impressum.html. Postal address
+           c/o DHBW Mannheim (source in impressum.html). E-mail and telephone are the same
+           fictitious placeholders as in impressum.html: never write to or call them. -->
+      <address class="legal-address">
+        <p>Projektgruppe „Quadrate“<br>
+          Matti Katila<br>
+          Nikita Ermotschenko<br>
+          Niko Eibach<br>
+          Anes Sahbegovic<br>
+          Lukas Niedling</p>
+        <p>c/o Duale Hochschule Baden-Württemberg Mannheim<br>
+          Coblitzallee 1-9<br>
+          68163 Mannheim</p>
+        <p>E-Mail: <a href="mailto:info@quadrate.com">info@quadrate.com</a><br>
+          Telefon: +49 178 67123467</p>
+      </address>
+      <p>Quadrate ist ein nicht-kommerzielles Studienprojekt an der DHBW Mannheim. Weitere Angaben stehen im <a href="impressum.html">Impressum</a>.</p>
+
+      <!-- ============================== Summary ============================== -->
+      <h2 id="kurz">Das Wichtigste in Kürze</h2>
+      <ul>
+        <li>Keine Werbung, keine Statistik- oder Tracking-Dienste, keine Social-Media-Knöpfe.</li>
+        <li>Schriften, Fotos, Kartendaten und das Video liegen auf unserem eigenen Server. Beim Aufruf der Seiten entsteht keine Verbindung zu Google Fonts oder anderen fremden Diensten.</li>
+        <li>Einzige Ausnahme: die eingebettete OpenStreetMap-Karte auf der Seite <a href="vorschlagen.html">Ort vorschlagen</a>.</li>
+        <!-- [V3] --><li>Ein Cookie gibt es nur, wenn du die Seite zum Anmelden oder Registrieren öffnest. Es hält dich angemeldet und verschwindet beim Abmelden oder wenn du den Browser schließt.</li>
+        <!-- [V3] --><li>Daten aus deinem Konto und aus dem Formular speichern wir nur auf unserem Server. Wir geben sie nicht weiter.</li>
+      </ul>
+
+      <!-- ============================== Server and log files ============================== -->
+      <h2 id="aufruf">Aufruf der Website</h2>
+      <p>Wenn du eine Seite von Quadrate über einen Webserver aufrufst, schickt dein Browser technisch notwendige Angaben an diesen Server: deine IP-Adresse, Datum und Uhrzeit, die aufgerufene Datei, die Seite, von der du kommst, sowie Name und Version deines Browsers und Betriebssystems. Der Server braucht diese Angaben, um dir die Seite zu schicken, und schreibt sie in eine Protokolldatei (Server-Logdatei).</p>
+      <!-- Decision D-022 (2026-09-29): the site is not published. It runs only locally on a team
+           laptop (for the login and the form with the local server XAMPP), the source code lies in a
+           private GitHub repository. If the site is ever published, replace this paragraph with the
+           hosting company (name, address, data processing agreement) and its log retention time. -->
+      <p>Die Website ist nicht öffentlich im Internet erreichbar. Wir zeigen sie nur auf einem Laptop des Projektteams, zum Beispiel in der Präsentation; für Anmeldung und Formular läuft dort ein lokaler Webserver (XAMPP). Die Protokolldateien dieses lokalen Servers bleiben auf dem Laptop, wir werten sie nicht aus und löschen sie spätestens nach dem Ende des Studienprojekts.</p>
+      <p>Rechtsgrundlage ist unser berechtigtes Interesse, die Website sicher und fehlerfrei anzubieten (Art. 6 Abs. 1 lit. f DSGVO).</p>
+      <p>Öffnest du die Seiten als Dateien direkt auf deinem Rechner (per Doppelklick), geht nichts an einen Server von uns.</p>
+
+      <!-- ============================== In the browser ============================== -->
+      <h2 id="browser">Was in deinem Browser passiert</h2>
+      <!-- [V2] begin: map, filter and profile need JavaScript (the two paragraphs below).
+           V1 instead: <p>In dieser Version laufen auf unseren Seiten keine eigenen Skripte (JavaScript). Ausnahme ist nur die eingebettete Karte von OpenStreetMap, siehe unten.</p> -->
+      <p>Die Karte, die Filter und der Steckbrief laufen mit JavaScript direkt in deinem Browser. Die Daten dafür, also Orte, Umrisse der Quadrate, Texte und Fotos, liegen als Dateien bei der Website und werden mit der Seite geladen.</p>
+      <p>Welchen Tag, welche Uhrzeit und welche Kategorie du wählst und welches Quadrat du anklickst, wird nicht an uns übertragen und nicht gespeichert. Ein Link wie <code>index.html#G1</code> enthält das Quadrat als Anker; diesen Teil der Adresse schickt der Browser nicht an den Server.</p>
+      <!-- [V2] end -->
+
+      <!-- ============================== Cookies ============================== -->
+      <h2 id="cookies">Cookies</h2>
+      <!-- Keep true: if a script ever stores something in the browser (localStorage,
+           sessionStorage, IndexedDB), describe it here. -->
+      <p>Wir setzen keine Cookies für Werbung, Statistik oder Tracking und legen auch sonst keine Daten in deinem Browser ab, zum Beispiel im Local Storage.</p>
+      <!-- [V3] session cookie of the PHP login. Name and settings come from php/lib.php
+           (SESSION_NAME, startSession(), logout()); keep this text in sync. -->
+      <p>Nur wenn du die Seite <a href="login.php">Anmelden</a> oder <a href="registrieren.php">Registrieren</a> öffnest, setzt die Website ein einziges Cookie: das Sitzungs-Cookie <code>quadrate_sitzung</code>. Es enthält nur eine zufällige Kennung, mit der der Server dich während deines Besuchs wiedererkennt. Die Formulare brauchen es als Schutz gegen gefälschte Anfragen, und nach dem Anmelden hält es dich angemeldet.</p>
+      <!-- [V3] --><p>Zur Sitzung speichert der Server nur deinen Benutzernamen, solange du angemeldet bist, und einen zufälligen Prüfwert für die Formulare. Das Cookie gilt nur bis zum Schließen des Browsers. Beim Abmelden löschen wir das Cookie und die Sitzung; sonst löscht PHP die Sitzungsdaten auf dem Server automatisch, wenn eine Weile niemand sie nutzt (Standardeinstellung: frühestens 24 Minuten nach der letzten Nutzung; wann genau, hängt vom Server ab).</p>
+      <!-- [V3] --><p>Dieses Cookie ist technisch unbedingt erforderlich, damit die Anmeldung funktioniert, die du ausdrücklich nutzen möchtest. Dafür brauchen wir keine Einwilligung (§ 25 Abs. 2 Nr. 2 TDDDG). Rechtsgrundlage für die Verarbeitung ist Art. 6 Abs. 1 lit. b DSGVO.</p>
+
+      <!-- [V3] begin: whole section, login and saved places. Keep the list of stored data in
+           sync with registrieren.php and php/lib.php. -->
+      <!-- ============================== Account [V3] ============================== -->
+      <h2 id="konto">Anmeldung und „Meine Orte“</h2>
+      <p>Du kannst dich registrieren, um Orte zu merken. Dabei speichern wir:</p>
+      <ul>
+        <li>deinen Benutzernamen,</li>
+        <li>dein Passwort, aber nicht im Klartext, sondern nur als nicht umkehrbaren Hashwert,</li>
+        <li>Datum und Uhrzeit der Registrierung,</li>
+        <li>die Orte, die du dir merkst.</li>
+      </ul>
+      <p>Benutzername und Passwort brauchen wir für das Konto; ohne sie ist keine Registrierung möglich.</p>
+      <p>Die Daten liegen in Dateien auf dem Server der Website, in einem Ordner, der von außen nicht abrufbar ist. Nur das Projektteam hat Zugriff. Wir geben die Daten nicht weiter.</p>
+      <p>Gemerkte Orte kannst du jederzeit selbst auf der Seite „Meine Orte“ entfernen. Dein Konto löschen wir, sobald du uns darum bittest, spätestens nach Abschluss des Studienprojekts.</p>
+      <p>Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO: Wir brauchen die Daten, um dir die Merkliste anzubieten, die du nutzen möchtest.</p>
+      <!-- [V3] end -->
+
+      <!-- [V3] begin: whole section, the form on vorschlagen.html only sends data once
+           php/vorschlag.php exists. Keep the list of fields in sync with that form
+           (fields on 2026-09-29: name, email, ort, quadrat, kategorie, nachricht,
+           consent checkbox "datenschutz"; "website" is an empty trap field for bots). -->
+      <!-- ============================== Suggestion form [V3] ============================== -->
+      <h2 id="vorschlaege">Vorschläge und Nachrichten</h2>
+      <p>Über das Formular auf der Seite <a href="vorschlagen.html">Ort vorschlagen</a> kannst du uns einen Ort vorschlagen oder eine Nachricht schicken. Dabei speichern wir:</p>
+      <ul>
+        <li>deinen Namen und deine E-Mail-Adresse, damit wir dir antworten können,</li>
+        <li>die Kategorie und deine Nachricht,</li>
+        <li>den Namen des Ortes und das Quadrat, wenn du sie angibst,</li>
+        <li>Datum und Uhrzeit des Absendens.</li>
+      </ul>
+      <p>Name, E-Mail-Adresse, Kategorie und Nachricht brauchen wir, um deinen Vorschlag zu bearbeiten; ohne sie lässt sich das Formular nicht absenden. Name des Ortes und Quadrat sind freiwillig.</p>
+      <p>Die Angaben landen in einer Datei auf dem Server der Website, in einem Ordner, der von außen nicht abrufbar ist. Deine IP-Adresse speichern wir dabei nicht. Wir verschicken die Angaben nicht per E-Mail, nur das Projektteam liest sie, und wir geben sie nicht weiter.</p>
+      <p>Wir löschen einen Vorschlag, sobald wir ihn bearbeitet haben, spätestens nach Abschluss des Studienprojekts.</p>
+      <p>Rechtsgrundlage ist deine Einwilligung, die du mit dem Häkchen im Formular gibst (Art. 6 Abs. 1 lit. a DSGVO). Du kannst sie jederzeit per E-Mail an <a href="mailto:info@quadrate.com">info@quadrate.com</a> widerrufen; dann löschen wir deinen Vorschlag. Der Widerruf gilt ab diesem Zeitpunkt; was wir vorher mit deinen Angaben getan haben, bleibt rechtmäßig (Art. 7 Abs. 3 DSGVO).</p>
+      <!-- [V3] end -->
+
+      <!-- ============================== OpenStreetMap iframe ============================== -->
+      <h2 id="openstreetmap">OpenStreetMap-Karte auf „Ort vorschlagen“</h2>
+      <p>Auf der Seite <a href="vorschlagen.html">Ort vorschlagen</a> ist eine Karte von OpenStreetMap eingebettet (iframe). Sobald die Karte auf dieser Seite angezeigt wird, lädt dein Browser sie direkt von den Servern der OpenStreetMap Foundation. Dabei erhält die OpenStreetMap Foundation technisch notwendige Angaben: deine IP-Adresse, Datum und Uhrzeit, den gewünschten Kartenausschnitt, die Adresse unserer Website sowie Angaben zu deinem Browser. Die Kartenkacheln kommen über ein weltweites Netz von Zwischenspeicher-Servern (Content Delivery Network).</p>
+      <p>Anbieter ist die OpenStreetMap Foundation, St John's Innovation Centre, Cowley Road, Cambridge, CB4 0WS, Vereinigtes Königreich. Nach ihrer Datenschutzerklärung speichert sie personenbezogene Daten im Vereinigten Königreich und in den Niederlanden. Für das Vereinigte Königreich hat die EU-Kommission festgestellt, dass dort ein angemessenes Datenschutzniveau besteht (Angemessenheitsbeschluss nach Art. 45 DSGVO, verlängert im Dezember 2025).</p>
+      <p>Mehr dazu in der <a href="https://osmfoundation.org/wiki/Privacy_Policy">Datenschutzerklärung der OpenStreetMap Foundation</a> (englisch).</p>
+      <p>Rechtsgrundlage ist unser berechtigtes Interesse, dir die Lage der Quadrate auf einer echten Stadtkarte zu zeigen (Art. 6 Abs. 1 lit. f DSGVO).</p>
+      <p>Alle anderen Karten und Ortsdaten dieser Website, auch die Karte auf der Startseite, liegen auf unserem eigenen Server. Dafür entsteht keine Verbindung zu OpenStreetMap.</p>
+
+      <!-- ============================== Video ============================== -->
+      <h2 id="video">Video</h2>
+      <p>Das Video auf der Seite <a href="ueber-uns.html#video">Über uns</a> liegt als Datei auf unserem eigenen Server. Beim Abspielen entsteht keine Verbindung zu fremden Diensten.</p>
+      <!-- Team: only if ueber-uns.html links to a video on YouTube instead (see the comment there;
+           a YouTube iframe is not planned, because it would need prior consent under § 25 Abs. 1
+           TDDDG), add this sentence: -->
+      <!-- <p>Der Link „Video auf YouTube ansehen“ ist ein einfacher Link: Erst wenn du ihn anklickst, verlässt du unsere Website; danach gilt die <a href="https://policies.google.com/privacy?hl=de">Datenschutzerklärung von Google</a>.</p> -->
+
+      <!-- ============================== Fonts, photos, links ============================== -->
+      <h2 id="schriften">Schriften, Fotos und Links</h2>
+      <p>Die Schriften Archivo und IBM Plex Mono liegen auf unserem eigenen Server (Ordner <code>fonts/</code>). Wir nutzen keine Google Fonts; beim Laden der Schriften entsteht keine Verbindung zu Google oder einem anderen Anbieter.</p>
+      <p>Die Fotos stammen von Wikimedia Commons, liegen aber ebenfalls auf unserem Server. Beim Anzeigen entsteht keine Verbindung zu Wikimedia.</p>
+      <p>Links zu fremden Websites, zum Beispiel zu OpenStreetMap, Wikipedia oder den Lizenztexten von Creative Commons, sind einfache Links. Erst wenn du einen davon anklickst, verlässt du unsere Website; dann gilt die Datenschutzerklärung des jeweiligen Anbieters.</p>
+
+      <!-- ============================== Rights ============================== -->
+      <h2 id="rechte">Deine Rechte</h2>
+      <p>Du hast gegenüber uns folgende Rechte bei den Daten, die dich betreffen:</p>
+      <ul>
+        <li><strong>Auskunft</strong> darüber, ob und welche Daten wir über dich verarbeiten (Art. 15 DSGVO),</li>
+        <li><strong>Berichtigung</strong> falscher Daten (Art. 16 DSGVO),</li>
+        <li><strong>Löschung</strong> deiner Daten (Art. 17 DSGVO),</li>
+        <li><strong>Einschränkung</strong> der Verarbeitung (Art. 18 DSGVO),</li>
+        <li><strong>Datenübertragbarkeit</strong>: deine Daten in einem gängigen, maschinenlesbaren Format zu erhalten (Art. 20 DSGVO),</li>
+        <li><strong>Widerspruch</strong> gegen die Verarbeitung (Art. 21 DSGVO, siehe unten),</li>
+        <li><strong>Widerruf</strong> einer Einwilligung mit Wirkung für die Zukunft (Art. 7 Abs. 3 DSGVO).</li>
+      </ul>
+      <p>Berichtigen oder löschen wir Daten oder schränken wir ihre Verarbeitung ein, teilen wir das allen mit, denen wir die Daten offengelegt haben (Art. 19 DSGVO). Da wir keine Daten weitergeben, betrifft das in der Regel niemanden.</p>
+      <p><strong>Widerspruchsrecht:</strong> Wenn wir Daten auf Grund unseres berechtigten Interesses verarbeiten (Art. 6 Abs. 1 lit. f DSGVO), kannst du dieser Verarbeitung jederzeit widersprechen, wenn sich dafür Gründe aus deiner besonderen Situation ergeben (Art. 21 Abs. 1 DSGVO). Wir verarbeiten die Daten dann nicht mehr, es sei denn, wir können zwingende schutzwürdige Gründe nachweisen, die deine Interessen überwiegen.</p>
+      <p>Um ein Recht zu nutzen, schreib uns einfach eine E-Mail an <a href="mailto:info@quadrate.com">info@quadrate.com</a>.</p>
+
+      <!-- ============================== Supervisory authority ============================== -->
+      <h2 id="beschwerde">Beschwerde bei der Aufsichtsbehörde</h2>
+      <p>Wenn du meinst, dass wir deine Daten nicht richtig verarbeiten, kannst du dich bei einer Datenschutz-Aufsichtsbehörde beschweren (Art. 77 DSGVO), besonders in dem EU-Land, in dem du wohnst oder arbeitest. Die Aufsichtsbehörde in Baden-Württemberg ist:</p>
+      <address class="legal-address">
+        <p>Der Landesbeauftragte für den Datenschutz und die Informationsfreiheit Baden-Württemberg (LfDI BW)<br>
+          Heilbronner Straße 35<br>
+          70191 Stuttgart</p>
+        <p>Postanschrift: Postfach 10 29 32, 70025 Stuttgart<br>
+          Telefon: 0711 615541-0<br>
+          E-Mail: poststelle@lfdi.bwl.de<br>
+          Website: <a href="https://www.baden-wuerttemberg.datenschutz.de/">www.baden-wuerttemberg.datenschutz.de</a></p>
+      </address>
+      <p>Eine Beschwerde geht auch online über das <a href="https://www.baden-wuerttemberg.datenschutz.de/beschwerde/">Beschwerdeformular des LfDI BW</a>.</p>
+
+      <!-- ============================== Changes ============================== -->
+      <h2 id="aenderungen">Änderungen</h2>
+      <p>Wenn sich die Website ändert, zum Beispiel wenn wir ein Video einbinden oder neue Funktionen hinzukommen, passen wir diese Datenschutzerklärung an.</p>
+
+      <p class="legal-date">Stand: 29. September 2026</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner container">
+      <p>Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL</p>
+      <nav class="site-footer__links" aria-label="Rechtliches">
+        <ul>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html" aria-current="page">Datenschutz</a></li>
+        </ul>
+      </nav>
+      <p>Studienprojekt <span aria-hidden="true">·</span> DHBW Mannheim <span aria-hidden="true">·</span> Webprogrammierung 2026</p>
+    </div>
+  </footer>
+</body>
+</html>

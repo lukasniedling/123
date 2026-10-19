@@ -1,0 +1,178 @@
+@charset "utf-8";
+/*
+ * formular.css - page styles of vorschlagen.html ("Ort vorschlagen / Kontakt").
+ * Version: [V1] layout and form groups; the counter and the notices are only
+ * used once js/formular.js runs [V2].
+ *
+ * How it fits in: vorschlagen.html links css/style.css first and this file
+ * second. style.css already styles fields, errors, chips, buttons, notices and
+ * the iframe frame (.embed); this file only adds what is special on this page:
+ * the two-column layout (form | map), fields inside a fieldset, the category
+ * chips as a required radio group, the character counter and the hidden
+ * honeypot field. Colours, sizes and spacing come from the tokens in style.css.
+ */
+
+
+/* --- Page layout: form and map ---
+   One column on phones (form first, then the map). From 64rem the map moves
+   next to the form, so it is in view while choosing the Quadrat. */
+.suggest-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);   /* minmax(0, ...) lets wide content shrink instead of overflowing */
+  gap: var(--space-7);
+}
+
+@media (min-width: 64rem) {
+  .suggest-layout {
+    grid-template-columns: minmax(0, 40rem) minmax(0, 1fr);
+    align-items: start;             /* each column only as tall as its content */
+  }
+}
+
+.suggest-form > h2,
+.suggest-map > h2 {
+  font-size: var(--text-xl);
+}
+
+
+/* --- Fieldsets that hold whole fields ("Über dich", "Dein Vorschlag") ---
+   .fieldset in style.css has no gap, because it was made for rows of
+   checkboxes; fields with label, hint and error need space between them. */
+.fieldset--fields {
+  gap: var(--space-5);
+  padding: var(--space-4) var(--space-4) var(--space-5);
+}
+
+.fieldset--fields > legend {
+  font-size: var(--text-l);
+}
+
+/* A hint directly under the legend, for the whole group. */
+.fieldset--fields > .field__hint {
+  margin-top: calc(-1 * var(--space-3));   /* sits closer to the legend than the gap would allow */
+}
+
+@media (min-width: 30rem) {
+  .fieldset--fields {
+    padding: var(--space-5) var(--space-5) var(--space-6);
+  }
+}
+
+
+/* --- Category: a fieldset that behaves like one .field ---
+   A fieldset brings a border, padding and a minimum width from the browser;
+   all three are removed so it looks like the other fields. The legend would
+   otherwise inherit the look of ".fieldset legend" from the outer fieldset. */
+.field--choice {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.field--choice > legend {
+  margin-bottom: var(--space-2);
+  padding: 0;
+  font-size: var(--text-m);
+  font-weight: 600;
+}
+
+.field--choice .chip-group {
+  margin-top: var(--space-1);
+}
+
+/* Error state of the group: every chip gets the error border, so the whole
+   row shows that one of them must be chosen. */
+.field--error .chip {
+  border-color: var(--color-error);
+}
+
+
+/* --- Error state for inputs that only contain spaces ---
+   style.css colours a field green with :user-valid as soon as the browser
+   thinks it is fine. A name made only of spaces passes the browser check but
+   not ours (js/formular.js and php/vorschlag.php trim the text first). This
+   rule has the same weight as the :user-valid rule and comes later, so the
+   error colour wins. */
+.form .field--error input,
+.form .field--error textarea {
+  border-color: var(--color-error);
+}
+
+/* After a send attempt the browser marks every valid field with :user-valid,
+   and style.css draws it green. An optional field that is still empty (its
+   placeholder is shown) has nothing to confirm, so it keeps its normal border. */
+.form input:not([required]):placeholder-shown:user-valid {
+  border-color: var(--color-control-line);
+}
+
+/* The checkbox is drawn by the browser; the thick left edge from style.css
+   would look broken on it, so it gets an error-coloured ring instead. */
+.form .field--error .check input,
+.form .check input:user-invalid {
+  box-shadow: 0 0 0 0.125rem var(--color-error);
+}
+
+
+/* --- [V2] Character counter under the message ---
+   "123 von 1.000 Zeichen", right-aligned in the code font like other counts.
+   It turns brown when fewer than 100 characters are left and red at the limit;
+   the text changes too, so colour is not the only signal. */
+.counter {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-family: var(--font-code);
+  font-size: var(--text-s);
+  text-align: right;
+}
+
+.counter--near {
+  color: var(--color-warning);
+  font-weight: 600;
+}
+
+.counter--full {
+  color: var(--color-error);
+  font-weight: 600;
+}
+
+
+/* --- [V3] Honeypot field against spam robots ---
+   Hidden for people (display: none also takes it out of the tab order and
+   hides it from screen readers). Robots that fill in every field of the HTML
+   do not read this stylesheet, so they fill it and php/vorschlag.php drops
+   their request. */
+.honeypot {
+  display: none;
+}
+
+
+/* --- [V2] Notices from js/formular.js ---
+   Above the form: "Senden nur mit PHP-Server" (file://) and the list of
+   fields to fix. Inside the form, above the buttons: "Alles richtig
+   ausgefüllt" when the page runs from a file. */
+#formular-meldungen > .notice {
+  margin-bottom: var(--space-5);
+}
+
+/* The list of fields to fix inside the error notice. */
+#formular-meldungen ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+/* Inside the form the grid gap already makes the space. */
+.form > .notice {
+  margin: 0;
+}
+
+
+/* --- Map next to the form ---
+   In one column the map is as wide as the form, not wider. */
+.suggest-map {
+  max-width: 40rem;
+}
+
+.suggest-map .embed {
+  margin-bottom: var(--space-3);
+}

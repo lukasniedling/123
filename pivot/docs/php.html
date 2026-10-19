@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<!--
+  docs/php.html - German explanation of the PHP part (login, registration, saved places) for the presentation.  [Doku]
+
+  How it fits in: one of the explanation pages in docs/ (overview: docs/index.html).
+  Line references (class "ref") are kept up to date by tools/export_docs_refs.py:
+  after a change of the code run  python3 tools/export_docs_refs.py  and then
+  zsh tools/sync_varianten.sh. The page is German, like all documents for the team.
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Konto, Merkliste und PHP – Erklärung – Quadrate</title>
+  <meta name="description" content="Erklärung des PHP-Teils von Quadrate (Anmelden, Registrieren, gemerkte Orte) für die Präsentation.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/info.css">
+  <style>
+    /* Helper styles for the explanation pages only (prefix doc-). */
+    .doc-table td:first-child,
+    .doc-table th:first-child {
+      min-width: 9rem;
+    }
+
+    .doc-table .ref {
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .doc-questions dt {
+      margin-top: var(--space-4);
+      font-weight: 700;
+    }
+
+    .doc-questions dd {
+      margin: var(--space-1) 0 0;
+    }
+
+    .doc-kicker {
+      margin: 0 0 var(--space-2);
+      color: var(--color-text-muted);
+      font-size: var(--text-s);
+      font-weight: 600;
+    }
+
+    .doc-nav ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2) var(--space-4);
+      padding: 0;
+      list-style: none;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="site-header">
+    <div class="site-header__inner container">
+      <a class="site-logo" href="../index.html">
+        <img src="../img/logo.svg" alt="Quadrate – zur Karte" width="200" height="33">
+      </a>
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <ul class="site-nav__list">
+          <li><a href="../index.html">Karte</a></li>
+          <li><a href="../quadrate.html">Quadrate</a></li>
+          <li><a href="../vorschlagen.html">Ort vorschlagen</a></li>
+          <li><a href="../ueber-uns.html">Über uns</a></li>
+          <!-- [V3] account link -->
+          <li class="site-nav__item--account"><a href="../login.php">Anmelden</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhalt" class="container">
+    <div class="page-intro">
+      <p class="doc-kicker">Erklärung für die Präsentation</p>
+      <h1>Konto, Merkliste und PHP</h1>
+      <p class="lead">Wie Anmelden, Registrieren und das Merken von Orten funktionieren und warum dabei nichts verloren geht.</p>
+    </div>
+
+    <nav class="doc-nav" aria-label="Alle Erklärungen">
+      <ul>
+        <li><a href="index.html">Überblick</a></li>
+        <li><a href="startseite.html">Startseite</a></li>
+        <li><a href="verzeichnis.html">Quadrate</a></li>
+        <li><a href="vorschlagen.html">Ort vorschlagen</a></li>
+        <li><a href="ueber-uns.html">Über uns</a></li>
+        <li><a href="rechtliches.html">Impressum und Datenschutz</a></li>
+        <li><a href="php.html" aria-current="page">Konto und PHP</a></li>
+      </ul>
+    </nav>
+
+    <section class="info-section" id="ueberblick" aria-labelledby="ueberblick-titel">
+      <h2 id="ueberblick-titel">Worum es geht</h2>
+      <div class="prose">
+        <p>Ab <span class="version-tag">V3</span> läuft ein PHP-Server (XAMPP). Besucher können ein Konto anlegen (<code>registrieren.php</code>), sich anmelden (<code>login.php</code>) und abmelden (<code>logout.php</code>) und Orte aus dem Steckbrief merken. <code>meine-orte.php</code> listet die gemerkten Orte nach Quadrat. Die Karte markiert Quadrate mit gemerkten Orten mit einer Stecknadel.</p>
+        <p>Es gibt keine Datenbank: <code>php/lib.php</code> speichert Konten und gemerkte Orte als JSON-Dateien im Ordner <code>daten/</code>. <code>php/kopf.php</code> und <code>php/fuss.php</code> drucken Kopf und Fuß jeder PHP-Seite. Auf der Karte spricht <code>js/merkliste.js</code> per fetch mit <code>php/merken.php</code>. Stile: <code>css/konto.css</code>.</p>
+        <p><strong>Vor der Vorführung unter macOS:</strong> Der Webserver muss in <code>daten/</code> schreiben dürfen. Einmal im Terminal im Ordner der Website <code>chmod 777 daten</code> (nur auf dem eigenen Rechner). Sonst scheitert schon die erste Registrierung. Den Grund eines Fehlers schreibt lib.php in das Fehlerprotokoll von Apache (XAMPP: apache/logs/error_log, Zeilen mit „Quadrate:“).</p>
+        <p><strong>Vorschlag für die Präsentation:</strong> Anes Sahbegovic (Programmierung). Die ganze Aufteilung steht im <a href="index.html#team">Überblick</a>.</p>
+      </div>
+    </section>
+    <section class="info-section" id="begriffe" aria-labelledby="begriffe-titel">
+      <h2 id="begriffe-titel">Begriffe im Quelltext</h2>
+    <div class="table-wrap" role="region" aria-labelledby="begriffe-tabelle" tabindex="0">
+      <table class="data-table doc-table">
+        <caption id="begriffe-tabelle">Begriffe des PHP-Teils und wo sie stehen</caption>
+        <thead>
+          <tr><th scope="col">Begriff</th><th scope="col">Fundstelle</th><th scope="col">Was es tut</th><th scope="col">Vorlesung</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row"><code>require_once</code></th><td><code class="ref" data-find="login.php|require_once __DIR__ . &#x27;/php/lib.php&#x27;;">login.php:19</code></td><td>Bindet eine andere PHP-Datei ein (einmal). Jede Seite lädt zuerst lib.php mit allen Hilfsfunktionen.</td><td>Vorlesung 7</td></tr>
+          <tr><th scope="row"><code>session_start</code>, <code>$_SESSION</code></th><td><code class="ref" data-find="php/lib.php|function startSession(): void">php/lib.php:86</code><br><code class="ref" data-find="php/lib.php|$_SESSION[&#x27;user&#x27;] = $name;">php/lib.php:131</code></td><td>Eine Sitzung merkt sich auf dem Server, wer angemeldet ist. Der Browser bekommt dafür nur eine zufällige Kennung im Cookie quadrate_sitzung.</td><td>Vorlesung 7</td></tr>
+          <tr><th scope="row">Cookie-Einstellungen</th><td><code class="ref" data-find="php/lib.php|&#x27;httponly&#x27; =&gt; true,">php/lib.php:103</code><br><code class="ref" data-find="php/lib.php|function sitePath(): string">php/lib.php:71</code></td><td>httponly: JavaScript kann das Cookie nicht lesen; samesite=Lax: fremde Seiten schicken es nicht mit; path: nur für den Ordner dieser Website.</td><td>Vorlesung 7</td></tr>
+          <tr><th scope="row"><code>$_POST</code>, <code>isPost()</code></th><td><code class="ref" data-find="php/lib.php|function isPost(): bool">php/lib.php:212</code><br><code class="ref" data-find="php/lib.php|function postValue(string $field): string">php/lib.php:200</code></td><td>Die Felder eines gesendeten Formulars; isPost() prüft, ob die Seite mit POST aufgerufen wurde.</td><td>Vorlesung 7</td></tr>
+          <tr><th scope="row"><code>password_hash</code>, <code>password_verify</code></th><td><code class="ref" data-find="php/lib.php|password_hash($password, PASSWORD_DEFAULT)">php/lib.php:477</code><br><code class="ref" data-find="php/lib.php|if (!password_verify($password, $users[$name][&#x27;hash&#x27;])) {">php/lib.php:500</code></td><td>Das Passwort wird nie gespeichert, nur ein gesalzener Prüfwert (bcrypt). Beim Anmelden vergleicht password_verify die Eingabe mit dem Prüfwert. bcrypt nutzt nur 72 Byte, deshalb die Höchstlänge.</td><td>Vorlesung 7</td></tr>
+          <tr><th scope="row">CSRF-Token</th><td><code class="ref" data-find="php/lib.php|function csrfField(): string">php/lib.php:530</code><br><code class="ref" data-find="php/lib.php|function isCsrfValid($token): bool">php/lib.php:539</code></td><td>Jedes Formular trägt ein geheimes Token aus der Sitzung. Eine fremde Website kennt es nicht und kann deshalb keine Formulare im Namen des Besuchers senden.</td><td>Vorlesung 7</td></tr>
+          <tr><th scope="row"><code>h()</code> = <code>htmlspecialchars</code></th><td><code class="ref" data-find="php/lib.php|function h($text): string">php/lib.php:180</code></td><td>Maskiert alles, was aus Eingaben oder Dateien kommt, bevor es ausgegeben wird (Schutz gegen XSS).</td><td>Vorlesung 7</td></tr>
+          <tr><th scope="row"><code>header('Location: …')</code></th><td><code class="ref" data-find="php/lib.php|function redirect(string $target): void">php/lib.php:190</code></td><td>Leitet den Browser weiter (Status 303, Muster Post/Redirect/Get), danach endet das Skript mit exit.</td><td>Vorlesung 7</td></tr>
+          <tr><th scope="row">HTTP-Statuscodes</th><td><code class="ref" data-find="registrieren.php|http_response_code(409);">registrieren.php:69</code><br><code class="ref" data-find="php/merken.php|sendJson(401,">php/merken.php:80</code></td><td>400 falsche Angaben, 401 nicht angemeldet, 403 falsches Token, 409 Name vergeben, 500 Speichern ging nicht.</td><td>Vorlesung 7</td></tr>
+          <tr><th scope="row">JSON-Dateien statt Datenbank</th><td><code class="ref" data-find="php/lib.php|function readJson(string $file): ?array">php/lib.php:333</code><br><code class="ref" data-find="php/lib.php|function writeJson(string $file, array $data): bool">php/lib.php:361</code></td><td>json_decode liest, json_encode schreibt. Geschrieben wird erst in eine .tmp-Datei, die dann die alte ersetzt. Ist eine Datei kaputt, gibt readJson null zurück, und nichts wird überschrieben.</td><td>Vorlesung 7</td></tr>
+          <tr><th scope="row">Sperre mit <code>flock</code></th><td><code class="ref" data-find="php/lib.php|function lockData(int $mode)">php/lib.php:302</code></td><td>Während ein Aufruf liest und schreibt, warten alle anderen. So können sich zwei Registrierungen nicht gegenseitig löschen.</td><td>Vorlesung 7</td></tr>
+          <tr><th scope="row">Daten der Website auf dem Server lesen</th><td><code class="ref" data-find="php/lib.php|function readJsData(string $file, string $variable): array">php/lib.php:562</code></td><td>PHP liest js/data/orte.js und quadrate.js: den Wert nach „window.ORTE = “ ausschneiden und mit json_decode lesen (die Dateien sind dafür als JSON geschrieben).</td><td>Vorlesung 7</td></tr>
+          <tr><th scope="row">Alternative Syntax in Vorlagen</th><td><code class="ref" data-find="meine-orte.php|&lt;?php foreach ($groups as $code =&gt; $list) : ?&gt;">meine-orte.php:135</code><br><code class="ref" data-find="login.php|&lt;?php if ($message !== &#x27;&#x27;) : ?&gt;">login.php:86</code></td><td>In HTML-Teilen schreibt man <code>if (…) :</code> … <code>endif;</code> und <code>foreach … : … endforeach;</code>; <code>&lt;?= … ?&gt;</code> gibt einen Wert aus.</td><td>Vorlesung 7</td></tr>
+          <tr><th scope="row"><code>daten/.htaccess</code> und <code>.gitignore</code></th><td><code class="ref" data-find="daten/.htaccess|Require all denied">daten/.htaccess:8</code><br><code class="ref" data-find="daten/.gitignore|*.json">daten/.gitignore:6</code></td><td>Apache liefert keine Datei aus daten/ an Browser aus; die JSON-Dateien mit Kontodaten kommen nie ins Git-Repository.</td><td>–</td></tr>
+          <tr><th scope="row">[V3] fetch und JSON im Browser</th><td><code class="ref" data-find="js/merkliste.js|function sendRequest(payload)">js/merkliste.js:63</code><br><code class="ref" data-find="js/steckbrief.js|function toggleSaved(button)">js/steckbrief.js:474</code></td><td>Der Knopf „Merken“ schickt die Änderung als JSON an php/merken.php und bekommt die neue Liste zurück, ohne die Seite neu zu laden. Scheitert etwas, bleibt die alte Liste.</td><td>Vorlesung 6 und 7</td></tr>
+        </tbody>
+      </table>
+    </div>
+    </section>
+    <section class="info-section" id="fragen" aria-labelledby="fragen-titel">
+      <h2 id="fragen-titel">Fragen, die kommen können</h2>
+    <dl class="doc-questions">
+      <dt>Wie merkt sich der Server, dass ich angemeldet bin?</dt>
+      <dd>Nach dem Anmelden steht mein Benutzername in <code>$_SESSION['user']</code> auf dem Server. Mein Browser schickt bei jedem Aufruf das Cookie quadrate_sitzung mit der Kennung der Sitzung mit.</dd>
+      <dt>Wo stehen die Passwörter?</dt>
+      <dd>Nirgends. In daten/benutzer.json steht nur der Hash von password_hash. Selbst wir können das Passwort daraus nicht zurückrechnen.</dd>
+      <dt>Was schützt vor gefälschten Formularen?</dt>
+      <dd>Das CSRF-Token: ein Zufallswert aus der Sitzung, der in jedem Formular mitgeschickt und mit hash_equals geprüft wird.</dd>
+      <dt>Was passiert, wenn zwei Leute gleichzeitig registrieren?</dt>
+      <dd>lockData(LOCK_EX) sperrt eine Hilfsdatei; der zweite Aufruf wartet, bis der erste gelesen, geprüft und geschrieben hat.</dd>
+      <dt>Warum ist die Seite nach dem Absenden sofort wieder „leer“?</dt>
+      <dd>Muster Post/Redirect/Get: Nach dem POST leitet PHP mit Status 303 auf eine normale Seite weiter. Neu laden sendet das Formular dann nicht noch einmal.</dd>
+    </dl>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner container">
+      <p>Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL</p>
+      <nav class="site-footer__links" aria-label="Rechtliches">
+        <ul>
+          <li><a href="../impressum.html">Impressum</a></li>
+          <li><a href="../datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </nav>
+      <p>Studienprojekt <span aria-hidden="true">·</span> DHBW Mannheim <span aria-hidden="true">·</span> Webprogrammierung 2026</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<!--
+  docs/vorschlagen.html - German explanation of vorschlagen.html (form, iframe, php/vorschlag.php) for the presentation.  [Doku]
+
+  How it fits in: one of the explanation pages in docs/ (overview: docs/index.html).
+  Line references (class "ref") are kept up to date by tools/export_docs_refs.py:
+  after a change of the code run  python3 tools/export_docs_refs.py  and then
+  zsh tools/sync_varianten.sh. The page is German, like all documents for the team.
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ort vorschlagen: das Formular – Erklärung – Quadrate</title>
+  <meta name="description" content="Erklärung der Seite Ort vorschlagen (Formular, iframe, Prüfungen) für die Präsentation: Begriffe im Quelltext mit Fundstellen und mögliche Fragen.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/info.css">
+  <style>
+    /* Helper styles for the explanation pages only (prefix doc-). */
+    .doc-table td:first-child,
+    .doc-table th:first-child {
+      min-width: 9rem;
+    }
+
+    .doc-table .ref {
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .doc-questions dt {
+      margin-top: var(--space-4);
+      font-weight: 700;
+    }
+
+    .doc-questions dd {
+      margin: var(--space-1) 0 0;
+    }
+
+    .doc-kicker {
+      margin: 0 0 var(--space-2);
+      color: var(--color-text-muted);
+      font-size: var(--text-s);
+      font-weight: 600;
+    }
+
+    .doc-nav ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2) var(--space-4);
+      padding: 0;
+      list-style: none;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="site-header">
+    <div class="site-header__inner container">
+      <a class="site-logo" href="../index.html">
+        <img src="../img/logo.svg" alt="Quadrate – zur Karte" width="200" height="33">
+      </a>
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <ul class="site-nav__list">
+          <li><a href="../index.html">Karte</a></li>
+          <li><a href="../quadrate.html">Quadrate</a></li>
+          <li><a href="../vorschlagen.html">Ort vorschlagen</a></li>
+          <li><a href="../ueber-uns.html">Über uns</a></li>
+          <!-- [V3] account link -->
+          <li class="site-nav__item--account"><a href="../login.php">Anmelden</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhalt" class="container">
+    <div class="page-intro">
+      <p class="doc-kicker">Erklärung für die Präsentation</p>
+      <h1>Ort vorschlagen: das Formular</h1>
+      <p class="lead">Wie das Formular gebaut ist, wer was prüft (Browser, JavaScript, PHP) und was mit den Angaben passiert.</p>
+    </div>
+
+    <nav class="doc-nav" aria-label="Alle Erklärungen">
+      <ul>
+        <li><a href="index.html">Überblick</a></li>
+        <li><a href="startseite.html">Startseite</a></li>
+        <li><a href="verzeichnis.html">Quadrate</a></li>
+        <li><a href="vorschlagen.html" aria-current="page">Ort vorschlagen</a></li>
+        <li><a href="ueber-uns.html">Über uns</a></li>
+        <li><a href="rechtliches.html">Impressum und Datenschutz</a></li>
+        <li><a href="php.html">Konto und PHP</a></li>
+      </ul>
+    </nav>
+
+    <section class="info-section" id="ueberblick" aria-labelledby="ueberblick-titel">
+      <h2 id="ueberblick-titel">Worum es geht</h2>
+      <div class="prose">
+        <p><code>vorschlagen.html</code> ist das Kontaktformular: Besucher schlagen einen Ort vor oder stellen eine Frage. Rechts daneben zeigt eine eingebettete OpenStreetMap-Karte (iframe) die Innenstadt.</p>
+        <p>Die Seite hat alle drei Stufen: <span class="version-tag">V1</span> das Formular mit den Prüfungen des Browsers (required, minlength, pattern …); <span class="version-tag">V2</span> <code>js/formular.js</code> zeigt freundliche Fehlermeldungen, zählt die Zeichen und erklärt, dass Senden per Doppelklick (file://) nicht geht; <span class="version-tag">V3</span> <code>php/vorschlag.php</code> nimmt das Formular auf dem Server an, prüft alles noch einmal und speichert es in <code>daten/vorschlaege.json</code>. Stile: <code>css/formular.css</code>.</p>
+        <p><strong>Vorschlag für die Präsentation:</strong> Lukas Niedling (Tests und Präsentation) zeigt Formular, Prüfungen und iframe; den PHP-Teil (<code>php/vorschlag.php</code>) erklärt Anes Sahbegovic (Programmierung). Die ganze Aufteilung steht im <a href="index.html#team">Überblick</a>.</p>
+      </div>
+    </section>
+    <section class="info-section" id="begriffe" aria-labelledby="begriffe-titel">
+      <h2 id="begriffe-titel">Begriffe im Quelltext</h2>
+    <div class="table-wrap" role="region" aria-labelledby="begriffe-tabelle" tabindex="0">
+      <table class="data-table doc-table">
+        <caption id="begriffe-tabelle">Begriffe auf der Seite Ort vorschlagen und wo sie stehen</caption>
+        <thead>
+          <tr><th scope="col">Begriff</th><th scope="col">Fundstelle</th><th scope="col">Was es tut</th><th scope="col">Vorlesung</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row"><code>form</code>, <code>action</code>, <code>method=&quot;post&quot;</code></th><td><code class="ref" data-find="vorschlagen.html|&lt;form class=&quot;form&quot; id=&quot;vorschlag-formular&quot;">vorschlagen.html:74</code></td><td>Das Formular schickt seine Felder an die Adresse in action. post schickt sie im Inhalt der Anfrage, nicht in der Adresse wie get.</td><td>Vorlesung 3, „Formular“</td></tr>
+          <tr><th scope="row"><code>fieldset</code>, <code>legend</code></th><td><code class="ref" data-find="vorschlagen.html|&lt;legend&gt;Über dich&lt;/legend&gt;">vorschlagen.html:77</code></td><td>Gruppiert zusammengehörige Felder mit einer Überschrift.</td><td>Vorlesung 3, „Formular“</td></tr>
+          <tr><th scope="row"><code>label for</code> und <code>id</code></th><td><code class="ref" data-find="vorschlagen.html|&lt;label class=&quot;field__label&quot; for=&quot;name&quot;&gt;">vorschlagen.html:80</code></td><td>Verbindet die Beschriftung mit dem Feld: ein Klick auf den Text setzt den Cursor ins Feld, Screenreader lesen den Text vor.</td><td>Vorlesung 3, „Formular“</td></tr>
+          <tr><th scope="row"><code>input type=&quot;text&quot;</code> / <code>type=&quot;email&quot;</code></th><td><code class="ref" data-find="vorschlagen.html|&lt;input id=&quot;name&quot; name=&quot;name&quot; type=&quot;text&quot;">vorschlagen.html:82</code><br><code class="ref" data-find="vorschlagen.html|&lt;input id=&quot;email&quot; name=&quot;email&quot; type=&quot;email&quot;">vorschlagen.html:91</code></td><td>Textfelder; type="email" lässt den Browser prüfen, ob ein @ darin steht, und zeigt auf Handys die passende Tastatur.</td><td>Vorlesung 3, „Formular“</td></tr>
+          <tr><th scope="row"><code>required</code>, <code>minlength</code>, <code>maxlength</code>, <code>pattern</code></th><td><code class="ref" data-find="vorschlagen.html|pattern=&quot;[^@\s]+@[^@\s]+\.[^@\s]+&quot;">vorschlagen.html:92</code></td><td>Prüfungen des Browsers ohne JavaScript (V1): Pflichtfeld, Mindest- und Höchstlänge, Muster (hier: nach dem @ muss ein Punkt kommen).</td><td>Vorlesung 3, „Formular“</td></tr>
+          <tr><th scope="row"><code>select</code>, <code>optgroup</code>, <code>option</code></th><td><code class="ref" data-find="vorschlagen.html|&lt;select id=&quot;quadrat&quot; name=&quot;quadrat&quot;">vorschlagen.html:109</code><br><code class="ref" data-find="vorschlagen.html|&lt;optgroup label=&quot;A bis K (links der Kurpfalzstraße)&quot;&gt;">vorschlagen.html:111</code></td><td>Auswahlliste der 146 Quadrate, in zwei Gruppen (links und rechts der Kurpfalzstraße).</td><td>Vorlesung 3, „Formular“</td></tr>
+          <tr><th scope="row">Optionsfelder (<code>type=&quot;radio&quot;</code>)</th><td><code class="ref" data-find="vorschlagen.html|id=&quot;kategorie-essen&quot; value=&quot;essen&quot; required">vorschlagen.html:271</code></td><td>Fünf Felder mit demselben name="kategorie": nur eines kann gewählt werden. required an einem macht die ganze Gruppe zur Pflicht.</td><td>Vorlesung 3, „Formular“</td></tr>
+          <tr><th scope="row"><code>textarea</code></th><td><code class="ref" data-find="vorschlagen.html|&lt;textarea id=&quot;nachricht&quot;">vorschlagen.html:283</code></td><td>Mehrzeiliges Textfeld für die Nachricht.</td><td>Vorlesung 3, „Formular“</td></tr>
+          <tr><th scope="row">Checkbox für die Einwilligung</th><td><code class="ref" data-find="vorschlagen.html|&lt;input id=&quot;datenschutz&quot; name=&quot;datenschutz&quot; type=&quot;checkbox&quot;">vorschlagen.html:303</code></td><td>Ohne Häkchen lässt sich das Formular nicht senden; der Link führt zur Datenschutzerklärung (öffnet in einem neuen Tab: <code>target=&quot;_blank&quot;</code>).</td><td>Vorlesung 2, Hyperlinks (Zielfenster)</td></tr>
+          <tr><th scope="row"><code>button type=&quot;submit&quot;</code> / <code>type=&quot;reset&quot;</code></th><td><code class="ref" data-find="vorschlagen.html|&lt;button class=&quot;button&quot; type=&quot;submit&quot;&gt;Vorschlag senden&lt;/button&gt;">vorschlagen.html:310</code></td><td>Senden schickt das Formular ab, reset leert alle Felder.</td><td>Vorlesung 3, „Formular“</td></tr>
+          <tr><th scope="row"><code>iframe</code></th><td><code class="ref" data-find="vorschlagen.html|&lt;iframe src=&quot;https://www.openstreetmap.org/export/embed.html">vorschlagen.html:323</code></td><td>Bettet eine fremde Seite ein, hier die Karte von openstreetmap.org. title beschreibt sie für Screenreader, loading="lazy" lädt sie erst beim Scrollen. Der Datenschutz dazu steht in datenschutz.html#openstreetmap.</td><td>Vorlesung 3, „Media“; Team-Übung 2</td></tr>
+          <tr><th scope="row">Inline-Stil (<code>style</code>-Attribut)</th><td><code class="ref" data-find="vorschlagen.html|&lt;p style=&quot;font-size: 0.875rem; color: #54575e;&quot;&gt;">vorschlagen.html:332</code></td><td>Absichtlich einmal CSS direkt am Element: es gilt nur für diesen Absatz und schlägt die Regeln aus den CSS-Dateien. Sonst stehen alle Stile in css/formular.css.</td><td>Vorlesung 3, Team-Übung 2; Vorlesung 4, „Inline-Formatierung“</td></tr>
+          <tr><th scope="row">Pseudoklasse <code>:user-invalid</code></th><td><code class="ref" data-find="css/style.css|input:user-invalid,">css/style.css:1314</code></td><td>Färbt ein Feld rot, sobald der Browser es für falsch hält, aber erst nachdem der Besucher etwas eingegeben hat (V1, ohne JavaScript).</td><td>Vorlesung 4, „Pseudoklassen“</td></tr>
+          <tr><th scope="row">Honeypot gegen Spam</th><td><code class="ref" data-find="vorschlagen.html|&lt;div class=&quot;honeypot&quot;&gt;">vorschlagen.html:293</code><br><code class="ref" data-find="css/formular.css|.honeypot {">css/formular.css:145</code></td><td>Ein Feld, das Menschen nicht sehen und leer lassen; Roboter füllen es aus. php/vorschlag.php verwirft solche Anfragen.</td><td>–</td></tr>
+          <tr><th scope="row">[V2] <code>event.preventDefault()</code></th><td><code class="ref" data-find="js/formular.js|function handleSubmit(event)">js/formular.js:332</code></td><td>Hält das Absenden an, wenn ein Feld falsch ist oder die Seite per Doppelklick geöffnet wurde, und zeigt stattdessen die Liste der Felder.</td><td>Vorlesung 6</td></tr>
+          <tr><th scope="row">[V2] <code>noValidate</code></th><td><code class="ref" data-find="js/formular.js|form.noValidate = true;">js/formular.js:490</code></td><td>Schaltet die kleinen Sprechblasen des Browsers ab, weil das Skript eigene deutsche Meldungen unter die Felder schreibt.</td><td>Vorlesung 6</td></tr>
+          <tr><th scope="row">[V2] <code>location.protocol</code></th><td><code class="ref" data-find="js/formular.js|function isOpenedAsFile()">js/formular.js:290</code></td><td>Ist die Adresse file://, gibt es keinen PHP-Server: das Skript erklärt das, statt den PHP-Quelltext anzeigen zu lassen.</td><td>Vorlesung 6</td></tr>
+          <tr><th scope="row">[V2] Zeichenzähler</th><td><code class="ref" data-find="js/formular.js|function updateCounter()">js/formular.js:433</code></td><td>Zählt bei jeder Eingabe die Zeichen der Nachricht („123 von 1.000 Zeichen“).</td><td>Vorlesung 6</td></tr>
+          <tr><th scope="row">[V3] <code>$_POST</code> und Prüfung auf dem Server</th><td><code class="ref" data-find="php/vorschlag.php|function validateSuggestion(array $input): array">php/vorschlag.php:131</code><br><code class="ref" data-find="php/lib.php|function postValue(string $field): string">php/lib.php:200</code></td><td>PHP liest die gesendeten Felder und prüft sie noch einmal, weil jeder Daten an die Adresse schicken kann, auch ohne unser Formular.</td><td>Vorlesung 7</td></tr>
+          <tr><th scope="row">[V3] <code>htmlspecialchars</code> (<code>h()</code>)</th><td><code class="ref" data-find="php/lib.php|function h($text): string">php/lib.php:180</code></td><td>Alles, was ein Besucher eingegeben hat, wird maskiert, bevor PHP es ausgibt. So kann niemand HTML oder JavaScript einschleusen (XSS).</td><td>Vorlesung 7</td></tr>
+          <tr><th scope="row">[V3] Post/Redirect/Get</th><td><code class="ref" data-find="php/vorschlag.php|redirect(&#x27;vorschlag.php?status=gesendet&#x27;);">php/vorschlag.php:279</code></td><td>Nach dem Speichern leitet PHP auf die Dankeseite weiter (Status 303). Neu laden schickt das Formular dann nicht noch einmal.</td><td>Vorlesung 7</td></tr>
+          <tr><th scope="row">[V3] Datei sperren mit <code>flock</code></th><td><code class="ref" data-find="php/lib.php|function lockData(int $mode)">php/lib.php:302</code><br><code class="ref" data-find="php/vorschlag.php|function saveSuggestion(array $suggestion): string">php/vorschlag.php:217</code></td><td>Während ein Aufruf die Liste liest und schreibt, warten alle anderen. Eine kaputte Datei wird nie überschrieben.</td><td>Vorlesung 7</td></tr>
+        </tbody>
+      </table>
+    </div>
+    </section>
+    <section class="info-section" id="fragen" aria-labelledby="fragen-titel">
+      <h2 id="fragen-titel">Fragen, die kommen können</h2>
+    <dl class="doc-questions">
+      <dt>Was ist der Unterschied zwischen get und post?</dt>
+      <dd>Bei get stehen die Felder in der Adresse (sichtbar, im Verlauf gespeichert, kurz). Bei post stehen sie im Inhalt der Anfrage. Für ein Formular mit Name und E-Mail ist post richtig.</dd>
+      <dt>Warum prüft der Server noch einmal, wenn der Browser schon prüft?</dt>
+      <dd>Die Prüfung im Browser lässt sich umgehen (Entwicklertools, eigene Anfragen). Nur was der Server prüft, ist sicher.</dd>
+      <dt>Warum kann man das Formular per Doppelklick nicht senden?</dt>
+      <dd>Dann fehlt ein Webserver, der PHP ausführt. Der Browser würde nur den Programmtext von vorschlag.php zeigen. Mit XAMPP unter http://localhost/ klappt es.</dd>
+      <dt>Wozu das iframe, und was hat es mit Datenschutz zu tun?</dt>
+      <dd>Es zeigt eine echte Stadtkarte zur Orientierung. Beim Laden verbindet sich der Browser mit den Servern von OpenStreetMap und überträgt die IP-Adresse; das steht in der Datenschutzerklärung und im Hinweis unter der Karte.</dd>
+      <dt>Warum ein Inline-Stil, wenn doch alles in CSS-Dateien steht?</dt>
+      <dd>Als Beispiel für die Übung „Inline-Verfahren“: Ein style-Attribut gilt nur für ein Element und überschreibt die Regeln der Dateien. Für eine ganze Website ist das unpraktisch, deshalb nur dieses eine Mal.</dd>
+    </dl>
+    </section>
+    <section class="info-section" id="versionen" aria-labelledby="versionen-titel">
+      <h2 id="versionen-titel">Versionen</h2>
+      <div class="prose">
+        <p><span class="version-tag">V1</span> Formular, iframe und Prüfungen des Browsers; <code>action=&quot;#&quot;</code> und der Hinweis „Der Versand folgt mit PHP (V3).“ (steht als Kommentar im Quelltext). <span class="version-tag">V2</span> js/formular.js dazu. <span class="version-tag">V3</span> <code>action=&quot;php/vorschlag.php&quot;</code>, die Einwilligungs-Checkbox und der Abschnitt „Vorschläge und Nachrichten“ der Datenschutzerklärung.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner container">
+      <p>Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL</p>
+      <nav class="site-footer__links" aria-label="Rechtliches">
+        <ul>
+          <li><a href="../impressum.html">Impressum</a></li>
+          <li><a href="../datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </nav>
+      <p>Studienprojekt <span aria-hidden="true">·</span> DHBW Mannheim <span aria-hidden="true">·</span> Webprogrammierung 2026</p>
+    </div>
+  </footer>
+</body>
+</html>

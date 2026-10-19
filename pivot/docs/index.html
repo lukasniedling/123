@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<!--
+  docs/index.html - overview of the German explanation pages for the presentation.  [Doku]
+
+  How it fits in: start page of docs/ (not linked from the website navigation). The pages
+  startseite.html, verzeichnis.html, vorschlagen.html, ueber-uns.html, rechtliches.html and php.html
+  explain one subpage each; styleguide.html shows the design system.
+  Line references (class "ref") are kept up to date by tools/export_docs_refs.py:
+  after a change of the code run  python3 tools/export_docs_refs.py  and then
+  zsh tools/sync_varianten.sh. The page is German, like all documents for the team.
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Erklärungen zu Quadrate – Erklärung – Quadrate</title>
+  <meta name="description" content="Überblick über die Erklärungsseiten für die Präsentation von Quadrate: Unterseiten, Ablauf, Kursinhalte und ihre Fundstellen.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/info.css">
+  <style>
+    /* Helper styles for the explanation pages only (prefix doc-). */
+    .doc-table td:first-child,
+    .doc-table th:first-child {
+      min-width: 9rem;
+    }
+
+    .doc-table .ref {
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .doc-questions dt {
+      margin-top: var(--space-4);
+      font-weight: 700;
+    }
+
+    .doc-questions dd {
+      margin: var(--space-1) 0 0;
+    }
+
+    .doc-kicker {
+      margin: 0 0 var(--space-2);
+      color: var(--color-text-muted);
+      font-size: var(--text-s);
+      font-weight: 600;
+    }
+
+    .doc-nav ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2) var(--space-4);
+      padding: 0;
+      list-style: none;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="site-header">
+    <div class="site-header__inner container">
+      <a class="site-logo" href="../index.html">
+        <img src="../img/logo.svg" alt="Quadrate – zur Karte" width="200" height="33">
+      </a>
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <ul class="site-nav__list">
+          <li><a href="../index.html">Karte</a></li>
+          <li><a href="../quadrate.html">Quadrate</a></li>
+          <li><a href="../vorschlagen.html">Ort vorschlagen</a></li>
+          <li><a href="../ueber-uns.html">Über uns</a></li>
+          <!-- [V3] account link -->
+          <li class="site-nav__item--account"><a href="../login.php">Anmelden</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhalt" class="container">
+    <div class="page-intro">
+      <p class="doc-kicker">Erklärung für die Präsentation</p>
+      <h1>Erklärungen zu Quadrate</h1>
+      <p class="lead">Für jede Unterseite eine Erklärung auf Deutsch: Begriffe aus dem Quelltext mit Fundstelle, die passende Vorlesung und Fragen, die kommen können.</p>
+    </div>
+
+    <nav class="doc-nav" aria-label="Alle Erklärungen">
+      <ul>
+        <li><a href="index.html" aria-current="page">Überblick</a></li>
+        <li><a href="startseite.html">Startseite</a></li>
+        <li><a href="verzeichnis.html">Quadrate</a></li>
+        <li><a href="vorschlagen.html">Ort vorschlagen</a></li>
+        <li><a href="ueber-uns.html">Über uns</a></li>
+        <li><a href="rechtliches.html">Impressum und Datenschutz</a></li>
+        <li><a href="php.html">Konto und PHP</a></li>
+      </ul>
+    </nav>
+
+    <section class="info-section" id="zweck" aria-labelledby="zweck-titel">
+      <h2 id="zweck-titel">Wozu diese Seiten</h2>
+      <div class="prose">
+        <p>Laut Vorlesung 1 („Erwartungshorizont“) präsentiert das Team die Website, und jede und jeder sucht sich eine Unterseite aus und „sollte in der Lage sein, anhand des Quellcodes gewisse Begriffe erklären zu können“. Die Präsentation ist laut Folie am 21.10.2026 (Uhrzeit mit dem Dozenten klären).</p>
+        <p>Der Programmcode ist auf Englisch kommentiert. Diese Seiten erklären ihn auf Deutsch: je Unterseite die wichtigsten Begriffe mit Fundstelle (Datei:Zeile), die passende Vorlesung und Fragen, die kommen können. Die Fundstellen gelten für beide Kartenvarianten; nur <code>js/karte.js</code> und <code>css/karte.css</code> unterscheiden sich, dort steht „(CSS 3D)“ dabei.</p>
+        <p>Wie aus der fertigen Website die Zwischenversionen V1 (HTML und CSS) und V2 (mit JavaScript) entstehen, steht in <code>web/VERSIONEN.md</code> im Projektordner.</p>
+      </div>
+    </section>
+    <section class="info-section" id="seiten" aria-labelledby="seiten-titel">
+      <h2 id="seiten-titel">Die Unterseiten</h2>
+      <div class="table-wrap" role="region" aria-labelledby="seiten-tabelle" tabindex="0">
+        <table class="data-table doc-table">
+          <caption id="seiten-tabelle">Die Unterseiten und ihre Erklärungen</caption>
+          <thead>
+            <tr><th scope="col">Unterseite</th><th scope="col">Dateien</th><th scope="col">Erklärung</th><th scope="col">Versionen</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Karte</th><td><code>index.html</code>, js/karte.js, js/filter.js, js/steckbrief.js, js/app.js</td><td><a href="startseite.html">Startseite</a></td><td>V1 Bild, V2 interaktiv</td></tr>
+            <tr><th scope="row">Quadrate</th><td><code>quadrate.html</code>, js/verzeichnis.js</td><td><a href="verzeichnis.html">Quadrate</a></td><td>V1 Tabelle, V2 Sortieren</td></tr>
+            <tr><th scope="row">Ort vorschlagen</th><td><code>vorschlagen.html</code>, js/formular.js, php/vorschlag.php</td><td><a href="vorschlagen.html">Ort vorschlagen</a></td><td>V1, V2, V3 Versand</td></tr>
+            <tr><th scope="row">Über uns</th><td><code>ueber-uns.html</code></td><td><a href="ueber-uns.html">Über uns</a></td><td>V1</td></tr>
+            <tr><th scope="row">Impressum, Datenschutz</th><td><code>impressum.html</code>, <code>datenschutz.html</code></td><td><a href="rechtliches.html">Impressum und Datenschutz</a></td><td>V1</td></tr>
+            <tr><th scope="row">Anmelden, Meine Orte</th><td><code>login.php</code>, <code>registrieren.php</code>, <code>logout.php</code>, <code>meine-orte.php</code>, php/lib.php</td><td><a href="php.html">Konto und PHP</a></td><td>V3</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <!-- Team of five with the roles the team gave on 2026-09-29 (as on ueber-uns.html). -->
+    <section class="info-section" id="team" aria-labelledby="team-titel">
+      <h2 id="team-titel">Vorschlag: wer präsentiert was</h2>
+      <div class="prose">
+        <p>Jede Person stellt eine eigene Unterseite vor, passend zu ihrer Rolle im Team (Namen und Rollen wie auf „Über uns“). Zusammen decken die fünf Teile HTML, CSS, JavaScript und PHP ab. Niko und Anes können Karte und PHP-Teil tauschen.</p>
+      </div>
+      <div class="table-wrap" role="region" aria-labelledby="team-tabelle" tabindex="0">
+        <table class="data-table doc-table">
+          <caption id="team-tabelle">Vorschlag für die Aufteilung der Präsentation</caption>
+          <thead>
+            <tr><th scope="col">Person</th><th scope="col">Rolle</th><th scope="col">Stellt vor</th><th scope="col">Erklärung</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Matti Katila</th><td>Inhalte und Anforderungen</td><td>Quadrate (Verzeichnis), woher Orte und Texte kommen (OpenStreetMap, ODbL), Impressum und Datenschutz</td><td><a href="verzeichnis.html">Quadrate</a>, <a href="rechtliches.html">Impressum und Datenschutz</a></td></tr>
+            <tr><th scope="row">Nikita Ermotschenko</th><td>Design und Kreativität</td><td>Über uns (Idee, Team, Logo, Video) und das gemeinsame Design in <code>css/style.css</code>: Farben, Schriften, Bausteine</td><td><a href="ueber-uns.html">Über uns</a>, <a href="styleguide.html">Styleguide</a></td></tr>
+            <tr><th scope="row">Niko Eibach</th><td>Programmierung</td><td>Karte: Filter, Steckbrief und Adresse <code>#G1</code> mit JavaScript, dazu die 3D-Karte (<code>js/karte.js</code>, <code>css/karte.css</code>)</td><td><a href="startseite.html">Startseite</a></td></tr>
+            <tr><th scope="row">Anes Sahbegovic</th><td>Programmierung</td><td>PHP: Registrieren, Anmelden, Orte merken, Meine Orte und was <code>php/vorschlag.php</code> mit dem gesendeten Formular macht</td><td><a href="php.html">Konto und PHP</a>, PHP-Teil von <a href="vorschlagen.html">Ort vorschlagen</a></td></tr>
+            <tr><th scope="row">Lukas Niedling</th><td>Tests und Präsentation</td><td>Ort vorschlagen (Formular, Prüfungen im Browser und mit JavaScript, iframe) und der Ablauf: Einstieg, Übergaben, Test vorher, Abschluss</td><td><a href="vorschlagen.html">Ort vorschlagen</a>, <a href="#ablauf">Ablauf</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section class="info-section" id="ablauf" aria-labelledby="ablauf-titel">
+      <h2 id="ablauf-titel">Vorschlag für den Ablauf der Präsentation</h2>
+      <div class="prose">
+        <ol>
+          <li>Einstieg (Lukas Niedling): die Idee in einem Satz, den Ablauf ansagen.</li>
+          <li>Über uns (Nikita Ermotschenko): Idee, Team, Logo und Video; dazu Farben, Schriften und Bausteine aus <code>css/style.css</code> (Styleguide).</li>
+          <li>Startseite (Niko Eibach): Tag, Uhrzeit und Kategorie ändern, ein Quadrat anklicken, Steckbrief zeigen; einmal mit der Tastatur (Tab, Eingabetaste). Danach die Technik: JavaScript und die 3D-Karte.</li>
+          <li>Quadrate (Matti Katila): Tabelle, Sprung zu einer Reihe, Sortieren, Link zurück zur Karte; woher Orte und Texte kommen.</li>
+          <li>Ort vorschlagen (Lukas Niedling): Formular mit einem Fehler absenden, die Meldungen zeigen, dann über XAMPP richtig senden.</li>
+          <li>V3 über XAMPP (Anes Sahbegovic): registrieren, einen Ort merken, Stecknadel auf der Karte, Meine Orte; was PHP mit dem gesendeten Formular macht.</li>
+          <li>Impressum und Datenschutz (Matti Katila): Pflichtangaben nach § 5 DDG, nur ein Cookie.</li>
+          <li>Abschluss und Fragen (Lukas Niedling).</li>
+        </ol>
+        <p>Vorher spielt Lukas Niedling den Ablauf einmal ganz auf dem Laptop für die Präsentation durch. Die Vorführung mit PHP braucht XAMPP und unter macOS Schreibrechte für den Ordner daten/ (siehe <a href="php.html">Konto und PHP</a>).</p>
+      </div>
+    </section>
+    <section class="info-section" id="kurs" aria-labelledby="kurs-titel">
+      <h2 id="kurs-titel">Wo die Kursinhalte stehen</h2>
+    <div class="table-wrap" role="region" aria-labelledby="kurs-tabelle" tabindex="0">
+      <table class="data-table doc-table">
+        <caption id="kurs-tabelle">Elemente aus den Vorlesungen und ihre Fundstellen</caption>
+        <thead>
+          <tr><th scope="col">Begriff</th><th scope="col">Fundstelle</th><th scope="col">Was es tut</th><th scope="col">Vorlesung</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Grundgerüst, <code>charset</code>, <code>title</code></th><td><code class="ref" data-find="index.html|&lt;!DOCTYPE html&gt;">index.html:1</code><br><code class="ref" data-find="index.html|&lt;title&gt;Karte – Quadrate&lt;/title&gt;">index.html:23</code></td><td>Jede Seite beginnt mit Dokumenttyp, Sprache, Zeichenkodierung, Titel und Stylesheets.</td><td>Vorlesung 2</td></tr>
+          <tr><th scope="row">Überschriften, Absätze, Listen</th><td><code class="ref" data-find="ueber-uns.html|&lt;ol class=&quot;steps&quot;&gt;">ueber-uns.html:136</code><br><code class="ref" data-find="ueber-uns.html|&lt;dl class=&quot;logo-parts&quot;&gt;">ueber-uns.html:235</code></td><td>h1 bis h3, p, ul, ol und dl auf allen Textseiten.</td><td>Vorlesung 2</td></tr>
+          <tr><th scope="row">Fett, kursiv, Zeilenumbruch, Trennlinie</th><td><code class="ref" data-find="datenschutz.html|&lt;li&gt;&lt;strong&gt;Auskunft&lt;/strong&gt;">datenschutz.html:218</code><br><code class="ref" data-find="ueber-uns.html|&lt;em&gt;Kürzel&lt;/em&gt;">ueber-uns.html:77</code><br><code class="ref" data-find="impressum.html|&lt;p&gt;Projektgruppe „Quadrate“&lt;br&gt;">impressum.html:64</code><br><code class="ref" data-find="impressum.html|      &lt;hr&gt;">impressum.html:108</code></td><td>strong, em, br und hr; „unterstrichen“ sind bei uns die Links (text-decoration im CSS), das Element &lt;u&gt; hat in HTML5 eine andere Bedeutung.</td><td>Vorlesung 2, Team-Übung 1</td></tr>
+          <tr><th scope="row">Links: relativ, absolut, Zielfenster, mailto, Anker</th><td><code class="ref" data-find="index.html|&lt;li&gt;&lt;a href=&quot;quadrate.html&quot;&gt;Quadrate&lt;/a&gt;&lt;/li&gt;">index.html:44</code><br><code class="ref" data-find="index.html|&lt;a href=&quot;https://www.openstreetmap.org/copyright&quot;&gt;">index.html:179</code><br><code class="ref" data-find="vorschlagen.html|target=&quot;_blank&quot;">vorschlagen.html:304</code><br><code class="ref" data-find="impressum.html|&lt;a href=&quot;mailto:">impressum.html:84</code><br><code class="ref" data-find="ueber-uns.html|&lt;a href=&quot;quadrate.html#q-G1&quot;&gt;">ueber-uns.html:163</code></td><td>Navigation mit relativen Pfaden, externe Links mit voller Adresse, ein neuer Tab, mailto und ein Anker auf einer anderen Seite.</td><td>Vorlesung 2 und 3</td></tr>
+          <tr><th scope="row">Bilder mit width, height, alt, title</th><td><code class="ref" data-find="ueber-uns.html|title=&quot;Barockschloss Mannheim, Ehrenhof&quot;">ueber-uns.html:100</code></td><td>Alle Bilder haben Maße und alt, die Inhaltsbilder zusätzlich einen Tooltip (title).</td><td>Vorlesung 2</td></tr>
+          <tr><th scope="row">Tabelle</th><td><code class="ref" data-find="quadrate.html|&lt;table class=&quot;data-table directory-table&quot;">quadrate.html:113</code></td><td>Verzeichnis, Fotonachweise und Technik-Tabelle.</td><td>Vorlesung 3</td></tr>
+          <tr><th scope="row">Formular</th><td><code class="ref" data-find="vorschlagen.html|&lt;form class=&quot;form&quot; id=&quot;vorschlag-formular&quot;">vorschlagen.html:74</code></td><td>Kontaktformular „Ort vorschlagen“ mit Text, E-Mail, Liste, Optionsfeldern, Textfeld und Checkbox.</td><td>Vorlesung 3, Team-Übung 2</td></tr>
+          <tr><th scope="row">iframe, Video, Logo</th><td><code class="ref" data-find="vorschlagen.html|&lt;iframe src=&quot;https://www.openstreetmap.org">vorschlagen.html:323</code><br><code class="ref" data-find="ueber-uns.html|&lt;video controls">ueber-uns.html:264</code><br><code class="ref" data-find="ueber-uns.html|&lt;img class=&quot;logo-show__logo&quot;">ueber-uns.html:228</code></td><td>OpenStreetMap-Karte als iframe, eigenes MP4-Video, eigenes Logo.</td><td>Vorlesung 3, Team-Übung 2</td></tr>
+          <tr><th scope="row">Inline-Stil</th><td><code class="ref" data-find="vorschlagen.html|&lt;p style=&quot;font-size: 0.875rem; color: #54575e;&quot;&gt;">vorschlagen.html:332</code></td><td>Genau ein style-Attribut als Beispiel; sonst externe CSS-Dateien.</td><td>Vorlesung 3, Team-Übung 2; Vorlesung 4</td></tr>
+          <tr><th scope="row">Externe CSS-Datei, <code>@charset</code>, Kommentare</th><td><code class="ref" data-find="index.html|&lt;link rel=&quot;stylesheet&quot; href=&quot;css/style.css&quot;&gt;">index.html:26</code><br><code class="ref" data-find="css/style.css|@charset &quot;utf-8&quot;;">css/style.css:1</code></td><td>Jede CSS-Datei beginnt mit @charset und einem Kopfkommentar.</td><td>Vorlesung 4</td></tr>
+          <tr><th scope="row">Einheiten, Farben, Vererbung</th><td><code class="ref" data-find="css/style.css|--text-m: 1rem;">css/style.css:205</code><br><code class="ref" data-find="css/style.css|--color-text: #2b2d31;">css/style.css:161</code><br><code class="ref" data-find="css/style.css|background: rgba(220, 212, 195, 0.45);">css/style.css:1445</code></td><td>Schriftgrößen in rem, Farben als Hexwerte und rgba() mit Transparenz; body vererbt Schrift und Farbe an alle Elemente.</td><td>Vorlesung 4</td></tr>
+          <tr><th scope="row">strong, b, em, i im CSS</th><td><code class="ref" data-find="css/style.css|strong,">css/style.css:380</code><br><code class="ref" data-find="css/style.css|font-style: italic;">css/style.css:387</code></td><td>Die Darstellung ist im CSS festgelegt, wie auf der Folie.</td><td>Vorlesung 4</td></tr>
+          <tr><th scope="row">Link-Zustände</th><td><code class="ref" data-find="css/style.css|a:link {">css/style.css:346</code><br><code class="ref" data-find="css/style.css|a:visited {">css/style.css:350</code><br><code class="ref" data-find="css/style.css|a:focus {">css/style.css:354</code><br><code class="ref" data-find="css/style.css|a:hover {">css/style.css:358</code><br><code class="ref" data-find="css/style.css|a:active {">css/style.css:362</code></td><td>Die fünf Pseudoklassen in der Reihenfolge link, visited, focus, hover, active; nur die Unterstreichung ändert sich.</td><td>Vorlesung 4</td></tr>
+          <tr><th scope="row">Herstellerpräfixe</th><td><code class="ref" data-find="css/style.css|-webkit-text-size-adjust: 100%;">css/style.css:268</code></td><td>Laut Folie meist überflüssig. Übrig sind nur Präfixe, die Safari noch braucht, jeweils mit Kommentar.</td><td>Vorlesung 4</td></tr>
+          <tr><th scope="row">Eigene Schriften mit <code>@font-face</code></th><td><code class="ref" data-find="css/style.css|@font-face {">css/style.css:52</code></td><td>Archivo und IBM Plex Mono liegen im Ordner fonts/, keine Google Fonts (Datenschutz, Folie „Externe Schriften einbinden“).</td><td>Vorlesung 4</td></tr>
+          <tr><th scope="row">Impressum und Datenschutz</th><td><code class="ref" data-find="impressum.html|&lt;p&gt;Telefon:">impressum.html:85</code><br><code class="ref" data-find="datenschutz.html|&lt;h2 id=&quot;rechte&quot;&gt;">datenschutz.html:215</code></td><td>Pflichtseiten mit Verantwortlichen, Anschrift, Telefon, E-Mail und den Rechten der Besucher.</td><td>Vorlesung 2</td></tr>
+        </tbody>
+      </table>
+    </div>
+    </section>
+    <section class="info-section" id="folien" aria-labelledby="folien-titel">
+      <h2 id="folien-titel">Stolperfallen in den Folien</h2>
+      <div class="prose">
+        <p>Einige Codebeispiele der Folien enthalten kleine Fehler. Bitte so nicht übernehmen und bei Fragen die richtige Form nennen:</p>
+        <ul>
+          <li><code>&lt;titel&gt;</code> heißt richtig <code>&lt;title&gt;</code>.</li>
+          <li>Die Datenzelle einer Tabelle ist <code>&lt;td&gt;</code>, nicht ein zweites <code>&lt;th&gt;</code>.</li>
+          <li>In <code>&lt;a href=&quot;#wichtig&gt;</code> fehlt das schließende Anführungszeichen.</li>
+          <li><code>alt</code> gibt es nur bei Bildern, nicht bei Links.</li>
+          <li>Im Code immer gerade Anführungszeichen <code>&quot;</code>, keine typografischen „ “.</li>
+          <li><code>@charset &quot;utf-8&quot;;</code> genau so, mit geraden Anführungszeichen.</li>
+        </ul>
+      </div>
+    </section>
+    <section class="info-section" id="pflege" aria-labelledby="pflege-titel">
+      <h2 id="pflege-titel">Wenn sich der Code ändert</h2>
+      <div class="prose">
+        <p>Jede Fundstelle merkt sich den Text, auf den sie zeigt. Nach einer Änderung im Code aktualisiert <code>python3 tools/export_docs_refs.py</code> alle Zeilennummern in diesen Seiten; danach <code>zsh tools/sync_varianten.sh</code>. Meldet das Werkzeug „NOT FOUND“, wurde der Text geändert, und die Fundstelle muss von Hand angepasst werden.</p>
+        <p>Weitere Seiten im Ordner docs/: der <a href="styleguide.html">Styleguide</a> mit allen Bausteinen des Designs und die Vorlage <code>_vorlage.html</code> für neue Seiten.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner container">
+      <p>Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL</p>
+      <nav class="site-footer__links" aria-label="Rechtliches">
+        <ul>
+          <li><a href="../impressum.html">Impressum</a></li>
+          <li><a href="../datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </nav>
+      <p>Studienprojekt <span aria-hidden="true">·</span> DHBW Mannheim <span aria-hidden="true">·</span> Webprogrammierung 2026</p>
+    </div>
+  </footer>
+</body>
+</html>

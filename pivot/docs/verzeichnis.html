@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<!--
+  docs/verzeichnis.html - German explanation of quadrate.html (directory table) for the presentation.  [Doku]
+
+  How it fits in: one of the explanation pages in docs/ (overview: docs/index.html).
+  Line references (class "ref") are kept up to date by tools/export_docs_refs.py:
+  after a change of the code run  python3 tools/export_docs_refs.py  and then
+  zsh tools/sync_varianten.sh. The page is German, like all documents for the team.
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quadrate: das Verzeichnis als Tabelle – Erklärung – Quadrate</title>
+  <meta name="description" content="Erklärung der Seite Quadrate (Tabelle aller 146 Quadrate) für die Präsentation: Begriffe im Quelltext mit Fundstellen und mögliche Fragen.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/info.css">
+  <style>
+    /* Helper styles for the explanation pages only (prefix doc-). */
+    .doc-table td:first-child,
+    .doc-table th:first-child {
+      min-width: 9rem;
+    }
+
+    .doc-table .ref {
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .doc-questions dt {
+      margin-top: var(--space-4);
+      font-weight: 700;
+    }
+
+    .doc-questions dd {
+      margin: var(--space-1) 0 0;
+    }
+
+    .doc-kicker {
+      margin: 0 0 var(--space-2);
+      color: var(--color-text-muted);
+      font-size: var(--text-s);
+      font-weight: 600;
+    }
+
+    .doc-nav ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2) var(--space-4);
+      padding: 0;
+      list-style: none;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="site-header">
+    <div class="site-header__inner container">
+      <a class="site-logo" href="../index.html">
+        <img src="../img/logo.svg" alt="Quadrate – zur Karte" width="200" height="33">
+      </a>
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <ul class="site-nav__list">
+          <li><a href="../index.html">Karte</a></li>
+          <li><a href="../quadrate.html">Quadrate</a></li>
+          <li><a href="../vorschlagen.html">Ort vorschlagen</a></li>
+          <li><a href="../ueber-uns.html">Über uns</a></li>
+          <!-- [V3] account link -->
+          <li class="site-nav__item--account"><a href="../login.php">Anmelden</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhalt" class="container">
+    <div class="page-intro">
+      <p class="doc-kicker">Erklärung für die Präsentation</p>
+      <h1>Quadrate: das Verzeichnis als Tabelle</h1>
+      <p class="lead">Wie die Tabelle aller 146 Quadrate gebaut ist, was die Anker tun und wie JavaScript sortiert und sucht.</p>
+    </div>
+
+    <nav class="doc-nav" aria-label="Alle Erklärungen">
+      <ul>
+        <li><a href="index.html">Überblick</a></li>
+        <li><a href="startseite.html">Startseite</a></li>
+        <li><a href="verzeichnis.html" aria-current="page">Quadrate</a></li>
+        <li><a href="vorschlagen.html">Ort vorschlagen</a></li>
+        <li><a href="ueber-uns.html">Über uns</a></li>
+        <li><a href="rechtliches.html">Impressum und Datenschutz</a></li>
+        <li><a href="php.html">Konto und PHP</a></li>
+      </ul>
+    </nav>
+
+    <section class="info-section" id="ueberblick" aria-labelledby="ueberblick-titel">
+      <h2 id="ueberblick-titel">Worum es geht</h2>
+      <div class="prose">
+        <p><code>quadrate.html</code> listet alle 146 Quadrate in einer Tabelle: Lage, Art (Gebäude, Platz, Park), die Zahl der Orte je Kategorie und einen Link zur Karte. Über der Tabelle stehen eine Sprungliste zu den Reihen A bis U und (mit JavaScript) ein Suchfeld.</p>
+        <p>Die Seite wird nicht von Hand geschrieben: <code>tools/export_verzeichnis.py</code> liest <code>js/data/quadrate.js</code> und <code>js/data/orte.js</code>, zählt die Orte und schreibt die fertige Tabelle als HTML. Deshalb funktioniert die Seite schon ohne JavaScript (V1). <code>js/verzeichnis.js</code> fügt in V2 nur das Sortieren und die Suche hinzu; Stile stehen in <code>css/verzeichnis.css</code>.</p>
+        <p><strong>Vorschlag für die Präsentation:</strong> Matti Katila (Inhalte und Anforderungen). Die ganze Aufteilung steht im <a href="index.html#team">Überblick</a>.</p>
+      </div>
+    </section>
+    <section class="info-section" id="begriffe" aria-labelledby="begriffe-titel">
+      <h2 id="begriffe-titel">Begriffe im Quelltext</h2>
+    <div class="table-wrap" role="region" aria-labelledby="begriffe-tabelle" tabindex="0">
+      <table class="data-table doc-table">
+        <caption id="begriffe-tabelle">Begriffe auf der Seite Quadrate und wo sie stehen</caption>
+        <thead>
+          <tr><th scope="col">Begriff</th><th scope="col">Fundstelle</th><th scope="col">Was es tut</th><th scope="col">Vorlesung</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row"><code>table</code>, <code>caption</code></th><td><code class="ref" data-find="quadrate.html|&lt;table class=&quot;data-table directory-table&quot;">quadrate.html:113</code><br><code class="ref" data-find="quadrate.html|&lt;caption id=&quot;directory-caption&quot;&gt;">quadrate.html:114</code></td><td>Eine Tabelle mit Überschrift (caption). Die caption nennt, was die Tabelle zeigt; Screenreader lesen sie zuerst.</td><td>Vorlesung 3, „Tabellen“</td></tr>
+          <tr><th scope="row"><code>thead</code>, <code>tbody</code>, <code>tr</code>, <code>th</code>, <code>td</code></th><td><code class="ref" data-find="quadrate.html|&lt;thead&gt;">quadrate.html:116</code><br><code class="ref" data-find="quadrate.html|&lt;tr id=&quot;q-A1&quot;&gt;">quadrate.html:130</code><br><code class="ref" data-find="quadrate.html|&lt;td class=&quot;directory-table__location&quot;&gt;links der Kurpfalzstraße, Reihe A&lt;/td&gt;">quadrate.html:132</code></td><td>tr ist eine Zeile, th eine Kopfzelle, td eine Datenzelle (auf der Folie steht versehentlich zweimal &lt;th&gt;). thead und tbody trennen Kopf und Inhalt.</td><td>Vorlesung 3, „Tabellen“</td></tr>
+          <tr><th scope="row"><code>scope=&quot;col&quot;</code>, <code>scope=&quot;row&quot;</code></th><td><code class="ref" data-find="quadrate.html|&lt;th scope=&quot;col&quot; data-sort-type=&quot;text&quot;&gt;Quadrat&lt;/th&gt;">quadrate.html:118</code><br><code class="ref" data-find="quadrate.html|&lt;th scope=&quot;row&quot;&gt;&lt;span class=&quot;block-code&quot;&gt;A1&lt;/span&gt;&lt;/th&gt;">quadrate.html:131</code></td><td>Sagt, ob eine Kopfzelle für eine Spalte oder eine Zeile gilt. So kann ein Screenreader zu jeder Zahl „Essen“ und „A1“ ansagen.</td><td>–</td></tr>
+          <tr><th scope="row">Anker in der Seite</th><td><code class="ref" data-find="quadrate.html|&lt;a class=&quot;block-code&quot; href=&quot;#q-A1&quot;&gt;">quadrate.html:69</code><br><code class="ref" data-find="quadrate.html|&lt;tr id=&quot;q-A1&quot;&gt;">quadrate.html:130</code></td><td>Die Sprungliste verlinkt mit <code>href=&quot;#q-A1&quot;</code> auf die Zeile mit <code>id=&quot;q-A1&quot;</code>. Das ist ein reiner HTML-Anker und funktioniert ohne JavaScript.</td><td>Vorlesung 3, „Hyperlinks zu einer Sektion“</td></tr>
+          <tr><th scope="row">Link auf eine andere Seite</th><td><code class="ref" data-find="quadrate.html|&lt;a href=&quot;index.html#A1&quot;&gt;">quadrate.html:139</code></td><td>Jede Zeile führt zur Karte: <code>index.html#A1</code>. Auf der Startseite liest JavaScript den Teil nach # und öffnet das Quadrat (V2).</td><td>Vorlesung 2, Hyperlinks; Vorlesung 3, Team-Übung 2</td></tr>
+          <tr><th scope="row">Pseudoklasse <code>:target</code></th><td><code class="ref" data-find="css/style.css|.data-table tr:target {">css/style.css:1464</code></td><td>Die Zeile, auf die ein Anker zeigt (z. B. quadrate.html#q-G1), wird gelb wie das gewählte Quadrat auf der Karte.</td><td>Vorlesung 4, „Pseudoklassen“ (Überblick)</td></tr>
+          <tr><th scope="row"><code>position: sticky</code></th><td><code class="ref" data-find="css/style.css|position: sticky;">css/style.css:1432</code></td><td>Die Kopfzeile der Tabelle bleibt beim Scrollen durch 146 Zeilen oben stehen.</td><td>–</td></tr>
+          <tr><th scope="row"><code>overflow</code>, <code>role=&quot;region&quot;</code>, <code>tabindex=&quot;0&quot;</code></th><td><code class="ref" data-find="quadrate.html|&lt;div class=&quot;table-wrap table-wrap--tall&quot; role=&quot;region&quot;">quadrate.html:112</code><br><code class="ref" data-find="css/style.css|.table-wrap--tall {">css/style.css:1393</code></td><td>Der Rahmen um die Tabelle scrollt selbst. role und tabindex machen ihn mit der Tastatur erreichbar, damit man ihn mit den Pfeiltasten scrollen kann.</td><td>–</td></tr>
+          <tr><th scope="row"><code>data-*</code>-Attribute</th><td><code class="ref" data-find="quadrate.html|data-sort-type=&quot;number&quot;">quadrate.html:121</code></td><td>Eigene Attribute für das Skript: data-sort-type sagt verzeichnis.js, ob eine Spalte als Text oder als Zahl sortiert wird.</td><td>Vorlesung 6</td></tr>
+          <tr><th scope="row">Sortieren mit <code>Array.sort</code></th><td><code class="ref" data-find="js/verzeichnis.js|function compareItems(a, b)">js/verzeichnis.js:49</code><br><code class="ref" data-find="js/verzeichnis.js|sorted.sort(compareItems);">js/verzeichnis.js:70</code></td><td>Die Vergleichsfunktion gibt eine negative oder positive Zahl zurück. localeCompare mit <code>numeric: true</code> sortiert „L9“ vor „L10“.</td><td>Vorlesung 6</td></tr>
+          <tr><th scope="row"><code>appendChild</code> verschiebt Zeilen</th><td><code class="ref" data-find="js/verzeichnis.js|body.appendChild(sorted[i].row);">js/verzeichnis.js:73</code></td><td>Hängt eine vorhandene Zeile ans Ende der Tabelle. Nacheinander für alle Zeilen ergibt das die neue Reihenfolge, ohne Zeilen neu zu bauen.</td><td>Vorlesung 6</td></tr>
+          <tr><th scope="row"><code>aria-sort</code></th><td><code class="ref" data-find="js/verzeichnis.js|headings[i].setAttribute(&quot;aria-sort&quot;, sortDirection);">js/verzeichnis.js:86</code><br><code class="ref" data-find="css/style.css|[aria-sort=&quot;ascending&quot;] .sort-button::after {">css/style.css:1506</code></td><td>Sagt Screenreadern, wie die Spalte sortiert ist; CSS zeichnet daraus den Pfeil.</td><td>–</td></tr>
+          <tr><th scope="row">Suche mit dem Ereignis <code>input</code></th><td><code class="ref" data-find="js/verzeichnis.js|searchField.addEventListener(&quot;input&quot;, onSearchInput);">js/verzeichnis.js:227</code><br><code class="ref" data-find="js/verzeichnis.js|function rowMatches(row, query)">js/verzeichnis.js:147</code></td><td>Bei jedem Tastendruck werden Zeilen, die nicht passen, mit <code>hidden</code> ausgeblendet; die Statuszeile zählt mit.</td><td>Vorlesung 6</td></tr>
+          <tr><th scope="row">Generierte Seite</th><td><code class="ref" data-find="../../tools/export_verzeichnis.py|def german_date(iso_date):">tools/export_verzeichnis.py:185</code></td><td>Die Tabelle entsteht mit einem Python-Werkzeug aus den Datendateien. Nach neuen Daten: <code>python3 tools/export_verzeichnis.py</code>.</td><td>–</td></tr>
+        </tbody>
+      </table>
+    </div>
+    </section>
+    <section class="info-section" id="fragen" aria-labelledby="fragen-titel">
+      <h2 id="fragen-titel">Fragen, die kommen können</h2>
+    <dl class="doc-questions">
+      <dt>Was ist der Unterschied zwischen th und td?</dt>
+      <dd>th ist eine Kopfzelle (fett, mit scope für Spalte oder Zeile), td eine normale Datenzelle. In unserer Tabelle ist der Code jeder Zeile (A1) eine Kopfzelle der Zeile.</dd>
+      <dt>Wie funktioniert der Sprung zur Reihe G?</dt>
+      <dd>Der Link hat <code>href=&quot;#q-G1&quot;</code>, die Tabellenzeile hat <code>id=&quot;q-G1&quot;</code>. Der Browser scrollt zur Zeile, <code>:target</code> färbt sie gelb. Kein JavaScript nötig.</dd>
+      <dt>Warum steht die Tabelle fertig im HTML und wird nicht von JavaScript gebaut?</dt>
+      <dd>So ist sie ohne JavaScript vollständig (V1), Suchmaschinen und Screenreader sehen sie sofort. JavaScript sortiert und filtert nur die vorhandenen Zeilen.</dd>
+      <dt>Warum sortiert „L10“ nach „L9“?</dt>
+      <dd>Weil localeCompare mit <code>numeric: true</code> Zahlen im Text als Zahlen vergleicht. Ohne diese Option käme „L10“ vor „L2“.</dd>
+    </dl>
+    </section>
+    <section class="info-section" id="versionen" aria-labelledby="versionen-titel">
+      <h2 id="versionen-titel">Versionen</h2>
+      <div class="prose">
+        <p><span class="version-tag">V1</span> die fertige Tabelle mit Sprungliste. <span class="version-tag">V2</span> js/verzeichnis.js: Sortierknöpfe in den Spaltenköpfen und Suchfeld (im HTML mit <code>hidden</code> versteckt, das Skript zeigt es). Die Links „Auf der Karte“ öffnen das Quadrat erst ab V2; in V1 zeigen sie die Startseite.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner container">
+      <p>Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL</p>
+      <nav class="site-footer__links" aria-label="Rechtliches">
+        <ul>
+          <li><a href="../impressum.html">Impressum</a></li>
+          <li><a href="../datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </nav>
+      <p>Studienprojekt <span aria-hidden="true">·</span> DHBW Mannheim <span aria-hidden="true">·</span> Webprogrammierung 2026</p>
+    </div>
+  </footer>
+</body>
+</html>

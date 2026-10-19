@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!--
+  docs/_vorlage.html - page skeleton of the website "Quadrate".  [V1]
+
+  Purpose: every page (index.html, quadrate.html, vorschlagen.html, ueber-uns.html,
+  impressum.html, datenschutz.html and the PHP pages) starts as a copy of this file,
+  so that head, header, navigation and footer are identical everywhere.
+
+  How it fits in: the file is a copy source, not a page of the site. All paths
+  (css/, img/, index.html ...) are written for pages in the site root. Opened
+  directly from docs/ it therefore shows without styles and logo; the rendered
+  result of every part is shown in docs/styleguide.html.
+
+  How to use it:
+   1. Copy the file into the site root and rename it (e.g. quadrate.html).
+   2. Set <title> ("Seitenname – Quadrate") and the meta description.
+   3. Move aria-current="page" to the navigation link of the new page
+      (on impressum.html and datenschutz.html no main link gets it).
+   4. Replace the content of <main>. The index page gives <main> the map
+      layout classes shown in docs/styleguide.html, section "Startseite".
+   5. Add scripts at the end of <body>, each with its version marker.
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Seitenname – Quadrate</title>
+  <meta name="description" content="Kurze Beschreibung der Seite in einem Satz.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- index.html only, variant-specific map styles: <link rel="stylesheet" href="css/karte.css"> -->
+</head>
+<body>
+  <!-- Skip link: first element on the page, lets keyboard users jump over the navigation. -->
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="site-header">
+    <div class="site-header__inner container">
+      <a class="site-logo" href="index.html">
+        <img src="img/logo.svg" alt="Quadrate – zur Karte" width="200" height="33">
+      </a>
+
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <ul class="site-nav__list">
+          <li><a href="index.html">Karte</a></li>
+          <li><a href="quadrate.html">Quadrate</a></li>
+          <li><a href="vorschlagen.html" aria-current="page">Ort vorschlagen</a></li>
+          <li><a href="ueber-uns.html">Über uns</a></li>
+          <!-- [V3] account link: static pages link to login.php. PHP pages show
+               <a href="meine-orte.php">Meine Orte</a> instead while a user is logged in. -->
+          <li class="site-nav__item--account"><a href="login.php">Anmelden</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhalt" class="container">
+    <div class="page-intro">
+      <h1>Seitenname</h1>
+      <p class="lead">Ein bis zwei Sätze, worum es auf dieser Seite geht.</p>
+    </div>
+
+    <div class="prose">
+      <p>Inhalt der Seite.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner container">
+      <p>Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL</p>
+      <nav class="site-footer__links" aria-label="Rechtliches">
+        <ul>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </nav>
+      <p>Studienprojekt <span aria-hidden="true">·</span> DHBW Mannheim <span aria-hidden="true">·</span> Webprogrammierung 2026</p>
+    </div>
+  </footer>
+
+  <!-- Scripts go here, one line each, with their marker, e.g.:
+       [V2] <script src="js/data/orte.js"></script>
+       [V2] <script src="js/app.js"></script> -->
+</body>
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<!--
+  vorschlagen.html - page "Ort vorschlagen / Kontakt" of the website "Quadrate".
+  Version: [V1] form and OpenStreetMap iframe (plain HTML + CSS),
+           [V2] friendlier checks, character counter and file:// notice (js/formular.js),
+           [V3] sending: php/vorschlag.php receives, checks and stores the form.
+
+  Purpose: visitors suggest a place in the Quadrate (or send a general question).
+  The form uses fieldset/legend, a label for every field and the browser's own
+  checks (required, minlength, maxlength, pattern, type="email").
+  The OpenStreetMap map in an <iframe> helps to find the right Quadrat.
+
+  How it fits in: header, navigation and footer are copied from docs/_vorlage.html.
+  Shared styles come from css/style.css, the page layout from css/formular.css.
+  The list of the 146 Quadrate in the select was generated once from
+  js/data/quadrate.js (same order and codes as Karte.codes()); names are added
+  for well-known squares and parks so the list is easier to search.
+  php/vorschlag.php checks a sent code against js/data/quadrate.js on the server.
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ort vorschlagen – Quadrate</title>
+  <meta name="description" content="Schlag uns einen Ort in den Mannheimer Quadraten vor oder schreib uns eine Nachricht.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/formular.css">
+</head>
+<body>
+  <!-- Skip link: first element on the page, lets keyboard users jump over the navigation. -->
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="site-header">
+    <div class="site-header__inner container">
+      <a class="site-logo" href="index.html">
+        <img src="img/logo.svg" alt="Quadrate – zur Karte" width="200" height="33">
+      </a>
+
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <ul class="site-nav__list">
+          <li><a href="index.html">Karte</a></li>
+          <li><a href="quadrate.html">Quadrate</a></li>
+          <li><a href="vorschlagen.html" aria-current="page">Ort vorschlagen</a></li>
+          <li><a href="ueber-uns.html">Über uns</a></li>
+          <!-- [V3] account link: static pages link to login.php. PHP pages show
+               <a href="meine-orte.php">Meine Orte</a> instead while a user is logged in. -->
+          <li class="site-nav__item--account"><a href="login.php">Anmelden</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhalt" class="container">
+    <div class="page-intro">
+      <h1>Ort vorschlagen</h1>
+      <p class="lead">Dir fehlt ein Lieblingsort auf der Karte, eine Öffnungszeit stimmt nicht oder du hast eine Frage zum Projekt? Schreib uns.</p>
+      <p>Die Orte auf unserer Karte stammen aus OpenStreetMap (Stand 28.09.2026). Wir prüfen jeden Vorschlag und nehmen ihn beim nächsten Daten-Stand auf.</p>
+    </div>
+
+    <div class="suggest-layout">
+      <section class="suggest-form" aria-labelledby="formular-titel">
+        <h2 id="formular-titel">Schreib uns</h2>
+
+        <!-- [V2] js/formular.js writes its notices here: the hint that sending needs
+             a PHP server (page opened as file://) and the list of fields to fix. -->
+        <div id="formular-meldungen"></div>
+
+        <!-- [V3] sending: method="post" sends the fields to php/vorschlag.php, which
+             checks them again and stores them. Without a PHP server (V1, V2 or opened
+             by double-click) the browser cannot run that file. In V1 and V2 the note
+             "Der Versand folgt mit PHP (V3)." replaces the consent field below.
+             V1 and V2 instead: action="#" -->
+        <form class="form" id="vorschlag-formular" action="php/vorschlag.php" method="post" accept-charset="utf-8">
+
+          <fieldset class="fieldset fieldset--fields">
+            <legend>Über dich</legend>
+
+            <div class="field">
+              <label class="field__label" for="name">Dein Name <span class="field__required">(Pflichtfeld)</span></label>
+              <p class="field__hint" id="name-hinweis">Ein Vorname reicht.</p>
+              <input id="name" name="name" type="text" required minlength="2" maxlength="80" autocomplete="name" aria-describedby="name-hinweis">
+              <p class="field__error" id="name-fehler">Bitte gib deinen Namen ein, mindestens 2 Zeichen.</p>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="email">E-Mail <span class="field__required">(Pflichtfeld)</span></label>
+              <p class="field__hint" id="email-hinweis">Nur für eine Antwort von uns. Wir geben sie nicht weiter.</p>
+              <!-- pattern: the browser alone would accept "anna@beispiel"; the pattern also
+                   asks for a dot in the part after the @ (same rule as in php/vorschlag.php). -->
+              <input id="email" name="email" type="email" required maxlength="254" autocomplete="email"
+                     pattern="[^@\s]+@[^@\s]+\.[^@\s]+" title="Zum Beispiel anna@beispiel.de" aria-describedby="email-hinweis">
+              <p class="field__error" id="email-fehler">Bitte gib eine vollständige E-Mail-Adresse ein, zum Beispiel anna@beispiel.de.</p>
+            </div>
+          </fieldset>
+
+          <fieldset class="fieldset fieldset--fields" aria-describedby="vorschlag-hinweis">
+            <legend>Dein Vorschlag</legend>
+            <p class="field__hint" id="vorschlag-hinweis">Nur eine Frage? Dann lass Ort und Quadrat leer und wähle Sonstiges.</p>
+
+            <div class="field">
+              <label class="field__label" for="ort">Name des Ortes <span class="field__required">(freiwillig)</span></label>
+              <input id="ort" name="ort" type="text" maxlength="120" autocomplete="off" placeholder="zum Beispiel Café am Wasserturm">
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="quadrat">Quadrat <span class="field__required">(freiwillig)</span></label>
+              <p class="field__hint" id="quadrat-hinweis">Das Kürzel steht auf unserer Karte, zum Beispiel G1 für den Marktplatz.</p>
+              <select id="quadrat" name="quadrat" aria-describedby="quadrat-hinweis">
+                <option value="">Weiß ich nicht</option>
+                <optgroup label="A bis K (links der Kurpfalzstraße)">
+                  <option value="A1">A1</option>
+                  <option value="A2">A2</option>
+                  <option value="A3">A3</option>
+                  <option value="A4">A4</option>
+                  <option value="A5">A5</option>
+                  <option value="B1">B1</option>
+                  <option value="B2">B2</option>
+                  <option value="B3">B3 (Schillerplatz)</option>
+                  <option value="B4">B4</option>
+                  <option value="B5">B5</option>
+                  <option value="B6">B6</option>
+                  <option value="B7">B7</option>
+                  <option value="C1">C1</option>
+                  <option value="C2">C2</option>
+                  <option value="C3">C3</option>
+                  <option value="C4">C4</option>
+                  <option value="C5">C5 (Toulonplatz)</option>
+                  <option value="C6">C6</option>
+                  <option value="C7">C7</option>
+                  <option value="C8">C8</option>
+                  <option value="D1">D1</option>
+                  <option value="D2">D2</option>
+                  <option value="D3">D3</option>
+                  <option value="D4">D4</option>
+                  <option value="D5">D5</option>
+                  <option value="D6">D6</option>
+                  <option value="D7">D7</option>
+                  <option value="E1">E1</option>
+                  <option value="E2">E2</option>
+                  <option value="E3">E3</option>
+                  <option value="E4">E4</option>
+                  <option value="E5">E5</option>
+                  <option value="E6">E6</option>
+                  <option value="E7">E7</option>
+                  <option value="F1">F1</option>
+                  <option value="F2">F2</option>
+                  <option value="F3">F3</option>
+                  <option value="F4">F4</option>
+                  <option value="F5">F5</option>
+                  <option value="F6">F6</option>
+                  <option value="F7">F7</option>
+                  <option value="G1">G1 (Marktplatz)</option>
+                  <option value="G2">G2</option>
+                  <option value="G3">G3</option>
+                  <option value="G4">G4</option>
+                  <option value="G5">G5</option>
+                  <option value="G6">G6</option>
+                  <option value="G7">G7</option>
+                  <option value="H1">H1</option>
+                  <option value="H2">H2</option>
+                  <option value="H3">H3</option>
+                  <option value="H4">H4</option>
+                  <option value="H5">H5</option>
+                  <option value="H6">H6 (Swanseaplatz)</option>
+                  <option value="H7">H7</option>
+                  <option value="I1">I1</option>
+                  <option value="I2">I2</option>
+                  <option value="I3">I3</option>
+                  <option value="I4">I4</option>
+                  <option value="I5">I5</option>
+                  <option value="I6">I6</option>
+                  <option value="I7">I7</option>
+                  <option value="K1">K1</option>
+                  <option value="K2">K2</option>
+                  <option value="K3">K3</option>
+                  <option value="K4">K4</option>
+                  <option value="K5">K5</option>
+                  <option value="K6">K6</option>
+                  <option value="K7">K7</option>
+                </optgroup>
+                <optgroup label="L bis U (rechts der Kurpfalzstraße)">
+                  <option value="L1">L1</option>
+                  <option value="L2">L2</option>
+                  <option value="L3">L3</option>
+                  <option value="L4">L4</option>
+                  <option value="L5">L5</option>
+                  <option value="L6">L6</option>
+                  <option value="L7">L7</option>
+                  <option value="L8">L8</option>
+                  <option value="L9">L9</option>
+                  <option value="L10">L10</option>
+                  <option value="L11">L11</option>
+                  <option value="L12">L12</option>
+                  <option value="L13">L13</option>
+                  <option value="L14">L14</option>
+                  <option value="L15">L15</option>
+                  <option value="M1">M1</option>
+                  <option value="M2">M2</option>
+                  <option value="M3">M3</option>
+                  <option value="M3a">M3a</option>
+                  <option value="M4">M4</option>
+                  <option value="M4a">M4a</option>
+                  <option value="M5">M5</option>
+                  <option value="M6">M6 (Lauersche Gärten)</option>
+                  <option value="M7">M7</option>
+                  <option value="N1">N1</option>
+                  <option value="N2">N2 (Dalbergplatz)</option>
+                  <option value="N3">N3</option>
+                  <option value="N4">N4</option>
+                  <option value="N5">N5 (Scipiogarten)</option>
+                  <option value="N6">N6</option>
+                  <option value="N7">N7</option>
+                  <option value="O1">O1 (Paradeplatz)</option>
+                  <option value="O2">O2</option>
+                  <option value="O3">O3</option>
+                  <option value="O4">O4</option>
+                  <option value="O5">O5 (Kapuzinerplanken)</option>
+                  <option value="O6">O6 (Kapuzinerplanken)</option>
+                  <option value="O7">O7</option>
+                  <option value="P1">P1</option>
+                  <option value="P2">P2</option>
+                  <option value="P3">P3</option>
+                  <option value="P4">P4</option>
+                  <option value="P5">P5</option>
+                  <option value="P6">P6</option>
+                  <option value="P7">P7</option>
+                  <option value="Q1">Q1</option>
+                  <option value="Q2">Q2</option>
+                  <option value="Q3">Q3</option>
+                  <option value="Q4">Q4</option>
+                  <option value="Q5">Q5</option>
+                  <option value="Q6">Q6</option>
+                  <option value="Q7">Q7</option>
+                  <option value="R1">R1</option>
+                  <option value="R2">R2</option>
+                  <option value="R3">R3</option>
+                  <option value="R4">R4</option>
+                  <option value="R5">R5</option>
+                  <option value="R6">R6</option>
+                  <option value="R7">R7 (Lameygarten)</option>
+                  <option value="S1">S1</option>
+                  <option value="S2">S2</option>
+                  <option value="S3">S3</option>
+                  <option value="S4">S4</option>
+                  <option value="S5">S5</option>
+                  <option value="S6">S6</option>
+                  <option value="T1">T1</option>
+                  <option value="T2">T2</option>
+                  <option value="T3">T3</option>
+                  <option value="T4">T4</option>
+                  <option value="T5">T5</option>
+                  <option value="T6">T6</option>
+                  <option value="U1">U1</option>
+                  <option value="U2">U2 (Herschelplatz)</option>
+                  <option value="U3">U3</option>
+                  <option value="U4">U4</option>
+                  <option value="U5">U5</option>
+                  <option value="U6">U6</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <!-- Radio group: "required" on one radio makes the whole group required.
+                 The radios are hidden visually; their labels are drawn as category chips
+                 (css/style.css, section 9), so keyboard and screen readers still use the radios. -->
+            <fieldset class="field field--choice" id="kategorie-gruppe" aria-describedby="kategorie-hinweis">
+              <legend class="field__label">Kategorie <span class="field__required">(Pflichtfeld)</span></legend>
+              <p class="field__hint" id="kategorie-hinweis">Bei einer allgemeinen Frage passt Sonstiges.</p>
+              <ul class="chip-group">
+                <li><input class="chip-input visually-hidden" type="radio" name="kategorie" id="kategorie-essen" value="essen" required><label class="chip cat-essen" for="kategorie-essen"><span class="chip__swatch"></span>Essen</label></li>
+                <li><input class="chip-input visually-hidden" type="radio" name="kategorie" id="kategorie-trinken" value="trinken"><label class="chip cat-trinken" for="kategorie-trinken"><span class="chip__swatch"></span>Trinken</label></li>
+                <li><input class="chip-input visually-hidden" type="radio" name="kategorie" id="kategorie-kultur" value="kultur"><label class="chip cat-kultur" for="kategorie-kultur"><span class="chip__swatch"></span>Kultur</label></li>
+                <li><input class="chip-input visually-hidden" type="radio" name="kategorie" id="kategorie-shoppen" value="shoppen"><label class="chip cat-shoppen" for="kategorie-shoppen"><span class="chip__swatch"></span>Shoppen</label></li>
+                <li><input class="chip-input visually-hidden" type="radio" name="kategorie" id="kategorie-sonstiges" value="sonstiges"><label class="chip" for="kategorie-sonstiges"><span class="chip__swatch"></span>Sonstiges</label></li>
+              </ul>
+              <p class="field__error" id="kategorie-fehler">Bitte wähle eine Kategorie. Bei einer allgemeinen Frage passt Sonstiges.</p>
+            </fieldset>
+
+            <div class="field">
+              <label class="field__label" for="nachricht">Nachricht <span class="field__required">(Pflichtfeld)</span></label>
+              <p class="field__hint" id="nachricht-hinweis">Was sollen wir wissen? Zum Beispiel Adresse, Öffnungszeiten oder was den Ort besonders macht. Mindestens 10, höchstens 1000 Zeichen.</p>
+              <textarea id="nachricht" name="nachricht" rows="6" required minlength="10" maxlength="1000" aria-describedby="nachricht-hinweis"></textarea>
+              <!-- [V2] character counter, shown and updated by js/formular.js -->
+              <p class="counter" id="nachricht-zaehler" hidden>0 von 1000 Zeichen</p>
+              <p class="field__error" id="nachricht-fehler">Bitte schreib uns eine Nachricht mit mindestens 10 Zeichen.</p>
+            </div>
+          </fieldset>
+
+          <!-- [V3] Honeypot against spam robots: people never see this field (css/formular.css
+               hides it), robots fill in every field they find. php/vorschlag.php drops every
+               request in which it is not empty. The label explains it for browsers without CSS. -->
+          <div class="honeypot">
+            <label for="website">Dieses Feld bitte leer lassen</label>
+            <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+          </div>
+
+          <!-- [V3] consent for storing the suggestion (php/vorschlag.php stores it). Before V3 nothing
+               is stored and the section datenschutz.html#vorschlaege does not exist.
+               V1 and V2 instead: <p class="field__hint">Der Versand folgt mit PHP (V3).</p> -->
+          <div class="field">
+            <label class="check" for="datenschutz">
+              <input id="datenschutz" name="datenschutz" type="checkbox" value="ja" required>
+              <span>Ich habe die <a href="datenschutz.html#vorschlaege" target="_blank">Datenschutzerklärung<span class="visually-hidden"> (öffnet in einem neuen Tab)</span></a> gelesen und bin einverstanden, dass meine Angaben gespeichert werden, um den Vorschlag zu bearbeiten. Die Einwilligung kann ich jederzeit per E-Mail widerrufen. <span class="field__required">(Pflichtfeld)</span></span>
+            </label>
+            <p class="field__error" id="datenschutz-fehler">Bitte bestätige, dass du die Datenschutzerklärung gelesen hast.</p>
+          </div>
+
+          <div class="button-row">
+            <button class="button" type="submit">Vorschlag senden</button>
+            <button class="button button--secondary" type="reset">Eingaben löschen</button>
+          </div>
+        </form>
+      </section>
+
+      <aside class="suggest-map" aria-labelledby="karte-titel">
+        <h2 id="karte-titel">Welches Quadrat?</h2>
+        <p>Die Karte von OpenStreetMap zeigt die Innenstadt. Du kannst sie verschieben und vergrößern. Die Kürzel der Quadrate findest du auf unserer <a href="index.html">Karte</a> und im <a href="quadrate.html">Verzeichnis</a>.</p>
+
+        <!-- iframe: embeds the map page of openstreetmap.org (bbox = the Quadrate).
+             loading="lazy": on phones the map loads only when it scrolls into view. -->
+        <div class="embed embed--map">
+          <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=8.455,49.479,8.477,49.495&amp;layer=mapnik"
+                  title="Karte der Mannheimer Innenstadt mit den Quadraten (OpenStreetMap)"
+                  width="640" height="480" loading="lazy"></iframe>
+        </div>
+        <p><a href="https://www.openstreetmap.org/#map=16/49.4870/8.4660">Größere Karte bei OpenStreetMap öffnen</a></p>
+
+        <!-- Course exercise "Inline-Verfahren" (lecture 3, Team-Übung 2; lecture 4 p.11): this
+             style attribute is used on purpose to show inline CSS. It beats every rule of the
+             style sheets for this one element. All other styles of this page are in css/formular.css. -->
+        <p style="font-size: 0.875rem; color: #54575e;">Hinweis zum Datenschutz: Beim Laden dieser Karte verbindet sich dein Browser mit den Servern von OpenStreetMap und übermittelt dabei deine IP-Adresse. Mehr dazu in unserer <a href="datenschutz.html#openstreetmap">Datenschutzerklärung</a>.</p>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner container">
+      <p>Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL</p>
+      <nav class="site-footer__links" aria-label="Rechtliches">
+        <ul>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </nav>
+      <p>Studienprojekt <span aria-hidden="true">·</span> DHBW Mannheim <span aria-hidden="true">·</span> Webprogrammierung 2026</p>
+    </div>
+  </footer>
+
+  <!-- [V2] friendly form messages, character counter, file:// notice -->
+  <script src="js/formular.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+daten/ - Speicher des PHP-Teils [V3]
+====================================
+
+Die Website hat keine Datenbank. Die PHP-Skripte speichern ihre Daten als
+JSON-Dateien in diesem Ordner. Die Dateien entstehen von selbst, sobald sich
+jemand registriert oder einen Ort merkt.
+
+  benutzer.json    Konten: Benutzername -> Passwort-Hash (password_hash) und Datum
+                   der Registrierung. Das Passwort selbst wird nie gespeichert.
+  merkliste.json   Gemerkte Orte: Benutzername -> Liste von Ort-Kennungen aus
+                   js/data/orte.js (zum Beispiel "n283313010").
+  sperre.lock      Leere Hilfsdatei. PHP sperrt sie (flock), damit immer nur ein
+                   Aufruf gleichzeitig schreibt.
+  *.tmp            Entsteht kurz beim Schreiben: PHP schreibt zuerst in eine
+                   .tmp-Datei und benennt sie dann um. So ist eine JSON-Datei nie
+                   nur halb geschrieben.
+  weitere .json    Das Formular "Ort vorschlagen" (php/vorschlag.php) legt seine
+                   Daten ebenfalls hier ab.
+
+Schutz
+------
+.htaccess enthält "Require all denied": Apache 2.4 (XAMPP) liefert keine Datei
+aus diesem Ordner an einen Browser aus. Probe: Der Aufruf von
+http://localhost/<Projektordner>/daten/LIESMICH.txt muss "403 Forbidden" zeigen.
+Voraussetzung: Apache liest .htaccess-Dateien (AllowOverride, in XAMPP für
+htdocs eingestellt).
+
+Schreibrechte (vor der ersten Vorführung prüfen!)
+-------------------------------------------------
+Der Webserver muss in diesen Ordner schreiben dürfen.
+  XAMPP unter Windows: klappt ohne weitere Schritte.
+  XAMPP unter macOS/Linux: Apache läuft als eigener Benutzer (oft "daemon") und
+  darf in einen kopierten Projektordner nicht schreiben. Dann scheitert schon die
+  erste Registrierung mit "Die Daten konnten nicht gespeichert werden". Einmal im
+  Terminal, im Ordner der Website (in beiden Varianten):
+      chmod 777 daten
+  (nur auf dem eigenen Rechner zum Testen, nicht auf einem öffentlichen Server;
+  etwas enger geht es mit: chmod o+w daten).
+  Den genauen Grund eines Fehlers schreibt php/lib.php in das Fehlerprotokoll von
+  Apache (XAMPP: Ordner apache/logs, Datei error_log), Zeilen mit "Quadrate:".
+
+Kaputte Dateien
+---------------
+Ist eine JSON-Datei nicht lesbar oder kein gültiges JSON mehr (zum Beispiel nach
+einer Änderung von Hand), überschreibt PHP sie nie: Registrieren, Merken und
+Vorschläge melden dann "Die Daten konnten nicht gespeichert werden", bis die Datei
+repariert oder gelöscht ist. So gehen keine Konten verloren.
+
+Git
+---
+Die JSON-Dateien enthalten Kontodaten und gehören nicht ins Repository.
+Die Datei daten/.gitignore in diesem Ordner schließt sie schon aus:
+    *.json
+    *.lock
+    *.tmp
+Eingecheckt werden nur .gitignore, .htaccess und LIESMICH.txt.
+
+Zurücksetzen
+------------
+Alle .json-Dateien löschen: Danach gibt es keine Konten und keine gemerkten
+Orte mehr.

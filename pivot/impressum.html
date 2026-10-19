@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<!--
+  impressum.html - legal notice ("Impressum") of the website "Quadrate".  [V1]
+
+  Purpose: names the people behind the site (§ 5 DDG, Digitale-Dienste-Gesetz,
+  in force since 14.05.2024; it replaced the old TMG) and lists the licences of
+  map data, photos and fonts.
+  How it fits in: a static text page built from docs/_vorlage.html; styles come
+  from css/style.css and css/info.css. No JavaScript. Identical in V1, V2, V3
+  and in both map variants; only the sentence about the contact form is [V3].
+  Contact data filled in on 2026-09-29 with the team's data: the five members,
+  the postal address c/o DHBW Mannheim, e-mail and telephone. The e-mail address
+  and the telephone number are fictitious (see the comment at "Kontakt"). One name
+  line per member. Never publish an address or number that is not yours to publish.
+  Course (lecture 2): an Impressum names the responsible person, telephone, postal
+  address and e-mail address.
+  Photo credits: copied from js/data/fotos.js. If a photo or credit changes
+  there, change the table in the section "Fotos" too.
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Impressum – Quadrate</title>
+  <meta name="description" content="Impressum von Quadrate, einem nicht-kommerziellen Studienprojekt an der DHBW Mannheim: Anbieter, Kontakt, Haftung und Lizenzen.">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/info.css">
+</head>
+<body>
+  <!-- Skip link: first element on the page, lets keyboard users jump over the navigation. -->
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="site-header">
+    <div class="site-header__inner container">
+      <a class="site-logo" href="index.html">
+        <img src="img/logo.svg" alt="Quadrate – zur Karte" width="200" height="33">
+      </a>
+
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <ul class="site-nav__list">
+          <li><a href="index.html">Karte</a></li>
+          <li><a href="quadrate.html">Quadrate</a></li>
+          <li><a href="vorschlagen.html">Ort vorschlagen</a></li>
+          <li><a href="ueber-uns.html">Über uns</a></li>
+          <!-- [V3] account link: static pages link to login.php. PHP pages show
+               <a href="meine-orte.php">Meine Orte</a> instead while a user is logged in. -->
+          <li class="site-nav__item--account"><a href="login.php">Anmelden</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhalt" class="container">
+    <div class="page-intro">
+      <h1>Impressum</h1>
+      <p class="lead">Wer hinter Quadrate steht, wie du uns erreichst und woher Karten, Fotos und Schriften kommen.</p>
+    </div>
+
+    <div class="prose">
+      <h2 id="anbieter">Angaben gemäß § 5 DDG</h2>
+      <!-- One name line per team member, in the same order as the team cards on ueber-uns.html. -->
+      <address class="legal-address">
+        <p>Projektgruppe „Quadrate“<br>
+          Matti Katila<br>
+          Nikita Ermotschenko<br>
+          Niko Eibach<br>
+          Anes Sahbegovic<br>
+          Lukas Niedling</p>
+        <!-- Postal address: the group is reached via the university ("c/o"). Street and
+             postcode as given by the DHBW Mannheim itself, checked on 2026-09-29 at
+             https://www.mannheim.dhbw.de/impressum (www.dhbw-mannheim.de/impressum
+             redirects there): "Coblitzallee 1-9, 68163 Mannheim". -->
+        <p>c/o Duale Hochschule Baden-Württemberg Mannheim<br>
+          Coblitzallee 1-9<br>
+          68163 Mannheim</p>
+      </address>
+
+      <h2 id="kontakt">Kontakt</h2>
+      <!-- mailto: opens the e-mail program with the address filled in (lecture 2). -->
+      <!-- E-mail address and telephone number are fictitious placeholders chosen by the team
+           for this student project: nobody reads or answers them. Never send a message to
+           the address or call the number. The number is plain text on purpose (no tel: link). -->
+      <p>E-Mail: <a href="mailto:info@quadrate.com">info@quadrate.com</a></p>
+      <p>Telefon: +49 178 67123467</p>
+      <!-- [V3] the form only sends messages from V3 on (php/vorschlag.php); remove this sentence in V1 and V2. -->
+      <p>Oder über unser Formular <a href="vorschlagen.html">Ort vorschlagen</a>, dort kannst du uns auch allgemeine Fragen schicken.</p>
+
+      <h2 id="projekt">Über dieses Projekt</h2>
+      <p>Quadrate ist ein nicht-kommerzielles Studienprojekt im Modul Webprogrammierung des Studiengangs Wirtschaftsinformatik an der DHBW Mannheim (Duale Hochschule Baden-Württemberg Mannheim). Die Website verfolgt keine wirtschaftlichen Zwecke: Es gibt keine Werbung, keine Bezahlangebote und keine Partnerlinks.</p>
+      <p>Anbieter der Website ist die oben genannte Projektgruppe, nicht die Hochschule.</p>
+      <p>Die Pflicht zum Impressum nach § 5 des Digitale-Dienste-Gesetzes (DDG) gilt für geschäftsmäßige, in der Regel gegen Entgelt angebotene digitale Dienste. Wir machen die Angaben trotzdem vollständig, damit alle wissen, wer hinter dieser Seite steht (siehe auch § 18 Abs. 1 Medienstaatsvertrag).</p>
+
+      <h2 id="verantwortlich">Verantwortlich für den Inhalt</h2>
+      <!-- The whole team is responsible, not a single member. -->
+      <p>Die Projektgruppe „Quadrate“: Matti Katila, Nikita Ermotschenko, Niko Eibach, Anes Sahbegovic und Lukas Niedling, Anschrift wie oben.</p>
+
+      <h2 id="haftung-inhalte">Haftung für Inhalte</h2>
+      <p>Wir haben die Inhalte dieser Website sorgfältig erstellt. Für eigene Inhalte sind wir nach den allgemeinen Gesetzen verantwortlich.</p>
+      <p>Die Orte und ihre Öffnungszeiten stammen aus OpenStreetMap, einer Karte, die Freiwillige pflegen. Sie können veraltet oder unvollständig sein, und Feiertage sind nicht berücksichtigt. Den Stand der Daten nennt der Hinweis unter der Karte. Bitte verlass dich vor einem Besuch nicht allein auf diese Angaben. Die Texte im Steckbrief sind kurze Zusammenfassungen; wo ein Text auf Quellen beruht, stehen sie darunter.</p>
+      <p>Wenn dir ein Fehler auffällt, schreib uns bitte. Wir korrigieren ihn so schnell wie möglich.</p>
+
+      <h2 id="haftung-links">Haftung für Links</h2>
+      <p>Diese Website enthält Links zu fremden Websites, zum Beispiel zu OpenStreetMap, Wikimedia Commons, Wikipedia und Creative Commons. Auf deren Inhalte haben wir keinen Einfluss; dafür ist allein der jeweilige Anbieter verantwortlich.</p>
+      <p>Als wir die Links gesetzt haben, haben wir die verlinkten Seiten geprüft und keine Rechtsverstöße erkannt. Eine ständige Kontrolle ohne konkreten Anlass können wir nicht leisten. Erfahren wir von einem Rechtsverstoß, entfernen wir den Link sofort.</p>
+
+      <!-- <hr>: a thematic break (lecture 2) between the provider details and the licences. -->
+      <hr>
+
+      <h2 id="urheberrecht">Urheberrecht und Lizenzen</h2>
+
+      <h3 id="eigene-inhalte">Eigene Inhalte</h3>
+      <p>Texte, Programmcode, Logo und Gestaltung hat die Projektgruppe selbst erstellt. Wenn du etwas davon außerhalb dieses Studienprojekts nutzen möchtest, frag uns bitte vorher.</p>
+
+      <h3 id="kartendaten">Kartendaten</h3>
+      <p>Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende. Die Daten stehen unter der <a href="https://opendatacommons.org/licenses/odbl/1-0/">Open Database License (ODbL) 1.0</a>.</p>
+      <p>Die Liste der Orte und die Umrisse der Quadrate haben wir aus diesen Daten abgeleitet. Die daraus erzeugten Datendateien (<code>js/data/orte.js</code> und <code>js/data/karte-daten.js</code>) stehen ebenfalls unter der ODbL 1.0.</p>
+
+      <h3 id="fotos">Fotos</h3>
+      <p>Alle Fotos stammen von Wikimedia Commons und stehen unter freien Lizenzen. Wir haben sie auf 1200 Pixel Breite verkleinert. Auf der Website erscheinen sie im Seitenverhältnis 3:2; bei Fotos mit anderem Format werden dabei die Ränder abgeschnitten (Ausschnitt). Das betrifft die Fotos von Jesuitenkirche, Zeughaus, Konkordienkirche, Barockschloss und Planken. Sonst ist nichts verändert.</p>
+
+      <!-- Source of every row: js/data/fotos.js (fields urheber, lizenz, lizenzUrl, quelle).
+           The Jesuitenkirche credit is the exact attribution text the photographer asks for
+           (field namensnennung, with the licence as its last part), so it stays in one cell. -->
+      <div class="table-wrap" role="region" aria-labelledby="fotos-tabelle" tabindex="0">
+        <table class="data-table credit-table">
+          <caption id="fotos-tabelle">Fotonachweise</caption>
+          <thead>
+            <tr>
+              <th scope="col">Motiv</th>
+              <th scope="col">Urheber</th>
+              <th scope="col">Lizenz und Quelle</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Marktplatz, <a class="block-code" href="index.html#G1">G1</a></th>
+              <td>Georg Buzin</td>
+              <td><a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/wiki/File:Altes_Rathaus_und_Sankt_Sebastianskirche_auf_dem_Mannheimer_Marktplatz.jpg">Wikimedia Commons</a></td>
+            </tr>
+            <tr>
+              <th scope="row">Paradeplatz, <a class="block-code" href="index.html#O1">O1</a></th>
+              <td>Hubert Berberich (HubiB)</td>
+              <td><a href="https://creativecommons.org/licenses/by-sa/3.0/deed.de">CC BY-SA 3.0</a>, <a href="https://commons.wikimedia.org/wiki/File:Paradeplatz_Mannheim_2019.jpg">Wikimedia Commons</a></td>
+            </tr>
+            <tr>
+              <th scope="row">Schillerplatz, <a class="block-code" href="index.html#B3">B3</a></th>
+              <td>Flocci Nivis</td>
+              <td><a href="https://creativecommons.org/licenses/by/4.0/deed.de">CC BY 4.0</a>, <a href="https://commons.wikimedia.org/wiki/File:20180714_Schillerdenkmal_Mannheim_02.jpg">Wikimedia Commons</a></td>
+            </tr>
+            <tr>
+              <th scope="row">Jesuitenkirche, <a class="block-code" href="index.html#A4">A4</a></th>
+              <td>© Achim Lammerts / Wikimedia Commons / „2025-08-31 D500-0570 Achim-Lammerts Mannheim Jesuitenkirche“ / <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">CC BY-SA 4.0</a></td>
+              <td><a href="https://commons.wikimedia.org/wiki/File:2025-08-31_D500-0570_Achim-Lammerts_Mannheim_Jesuitenkirche.jpg">Wikimedia Commons</a></td>
+            </tr>
+            <tr>
+              <th scope="row">Zeughaus, <a class="block-code" href="index.html#C5">C5</a></th>
+              <td>Tournasol7</td>
+              <td><a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/wiki/File:Zeughaus_in_Mannheim_(2).jpg">Wikimedia Commons</a></td>
+            </tr>
+            <tr>
+              <th scope="row">Konkordienkirche, <a class="block-code" href="index.html#R2">R2</a></th>
+              <td>Immanuel Giel</td>
+              <td><a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/wiki/File:Konkordienkirche_Mannheim_06.jpg">Wikimedia Commons</a></td>
+            </tr>
+            <tr>
+              <th scope="row">Herschelbad, <a class="block-code" href="index.html#U3">U3</a></th>
+              <td>Hubert Berberich (HubiB)</td>
+              <td><a href="https://creativecommons.org/licenses/by/3.0/deed.de">CC BY 3.0</a>, <a href="https://commons.wikimedia.org/wiki/File:Herschelbad_Mannheim_Front.jpg">Wikimedia Commons</a></td>
+            </tr>
+            <tr>
+              <th scope="row">Wasserturm</th>
+              <td>Flocci Nivis</td>
+              <td><a href="https://creativecommons.org/licenses/by/4.0/deed.de">CC BY 4.0</a>, <a href="https://commons.wikimedia.org/wiki/File:20180714_Mannheimer_Wasserturm_05.jpg">Wikimedia Commons</a></td>
+            </tr>
+            <tr>
+              <th scope="row">Barockschloss</th>
+              <td>Hubert Berberich (HubiB)</td>
+              <td><a href="https://creativecommons.org/licenses/by/3.0/deed.de">CC BY 3.0</a>, <a href="https://commons.wikimedia.org/wiki/File:SchlossEhrenhof_2017.jpg">Wikimedia Commons</a></td>
+            </tr>
+            <tr>
+              <th scope="row">Planken</th>
+              <td>AnRo0002</td>
+              <td><a href="https://creativecommons.org/publicdomain/zero/1.0/deed.de">CC0 1.0</a>, <a href="https://commons.wikimedia.org/wiki/File:20171119Planken_Mannheim.jpg">Wikimedia Commons</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="schriften">Schriften</h3>
+      <p>Die Website nutzt die Schriften Archivo (The Archivo Project Authors) und IBM Plex Mono (IBM Corp.). Beide stehen unter der SIL Open Font License 1.1 und liegen mit ihrem Lizenztext im Ordner <code>fonts/</code>: <a href="fonts/OFL-Archivo.txt">Lizenz Archivo</a>, <a href="fonts/OFL-IBM-Plex-Mono.txt">Lizenz IBM Plex Mono</a>. Der Schriftzug im Logo ist die Archivo Bold, in Linien umgewandelt; die Lizenz erlaubt das.</p>
+
+      <p class="legal-date">Stand: 29. September 2026</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner container">
+      <p>Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL</p>
+      <nav class="site-footer__links" aria-label="Rechtliches">
+        <ul>
+          <li><a href="impressum.html" aria-current="page">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </nav>
+      <p>Studienprojekt <span aria-hidden="true">·</span> DHBW Mannheim <span aria-hidden="true">·</span> Webprogrammierung 2026</p>
+    </div>
+  </footer>
+</body>
+</html>

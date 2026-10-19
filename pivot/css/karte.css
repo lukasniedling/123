@@ -1,0 +1,456 @@
+@charset "utf-8";
+/*
+ * karte.css - styles of the 3D map in the CSS 3D variant: the map is made of HTML elements that CSS
+ * turns in 3D.                                                                            [V2]
+ *
+ * Everything in this file belongs to the interactive map that js/karte.js builds from
+ * js/data/karte-daten.js. Version 1 shows the static image img/karte-statisch.png instead and does not
+ * need this file.
+ *
+ * How the 3D view works (course topics: perspective, transform, transform-style, transition):
+ *   .map-stage   the "stage", 1600 x 1066 px, the same size as the reference image 03. It has a perspective
+ *                (distance of the eye) and is scaled as a whole to the width of the page.
+ *   .map-plane   the ground plate with the ground texture img/boden.svg. rotateX() tilts it away from us,
+ *                so that the Schloss is in front and the north of the city is at the back.
+ *   .map-block   one Quadrat. Its walls are divs that stand up with rotateX(-90deg); its roof is a div
+ *                lifted with translateZ(). transform-style: preserve-3d keeps all of them in one 3D space,
+ *                so the browser itself decides what is in front.
+ *   Numbers that depend on the map (sizes, angles) come from karte-daten.js; karte.js puts them into the
+ *   custom properties (--...) used below.
+ * Units: the map is one fixed 1600 px drawing that is scaled as a whole, so sizes (also font sizes) are in px on
+ * purpose: they must fit the geometry exactly. The rest of the site uses rem (css/style.css).
+ */
+
+/* ---------- design values of the map ---------- */
+.map-root {
+  --map-ground: #e7e4dd;          /* ground */
+  --map-roof: #3a3d43;            /* roofs (charcoal) */
+  --map-wall: #62666e;            /* walls, a little lighter than the roofs */
+  --map-roof-edge: #6b6f78;       /* thin light edge around every roof */
+  --map-text-light: #ffffff;      /* codes on the roofs */
+  --map-text-dark: #2b2d31;       /* codes on open squares and on light category colours */
+  --map-selected: #ffcf3f;        /* yellow edges of the selected block */
+  --map-light: 255, 214, 102;     /* warm light from below (r, g, b, used with an alpha value) */
+  --map-focus: #ffffff;           /* keyboard focus frame */
+  /* grow / shrink animation: --duration-grow comes from css/style.css (0 ms for less motion);
+     450ms is the fallback for karte-test.html, which does not load style.css */
+  --map-duration: var(--duration-grow, 450ms);
+  --map-easing: cubic-bezier(0.2, 0.8, 0.3, 1);   /* an ease-out curve: fast start, soft landing */
+  --map-colour-duration: 300ms;   /* colour changes of the category filter */
+  --grow-factor: 2.4;             /* selected block: roof height x 2.4 (clearly visible from the steep camera) */
+}
+
+/* ---------- frame, stage and plane ---------- */
+
+/* The frame takes the width of the page. On very narrow screens the map keeps a minimum size
+   and the frame scrolls sideways instead of making the codes unreadably small. */
+.map-scroll {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: var(--map-ground);
+}
+
+/* Has the size of the scaled stage (set by karte.js), so the page reserves the right height. */
+.map-sizer {
+  position: relative;
+  overflow: hidden;
+}
+
+.map-stage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--stage-width);
+  height: var(--stage-height);
+  overflow: hidden;
+  background: var(--map-ground);
+  /* the eye is --perspective pixels in front of the stage, above the point --origin-x / --origin-y */
+  perspective: var(--perspective);
+  perspective-origin: var(--origin-x) var(--origin-y);
+  /* scale the finished picture to the page width (karte.js sets --scale) */
+  transform: scale(var(--scale, 1));
+  transform-origin: 0 0;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.map-plane {
+  position: absolute;
+  left: var(--plane-left);
+  top: var(--plane-top);
+  width: var(--plane-width);
+  height: var(--plane-height);
+  background: var(--map-ground) url("../img/boden.svg") 0 0 / 100% 100% no-repeat;
+  /* tilt the plate around the point the camera looks at */
+  transform-origin: var(--pivot-x) var(--pivot-y);
+  transform: rotateX(var(--tilt));
+  /* children keep their own 3D position instead of being flattened into the plate */
+  transform-style: preserve-3d;
+  /* only the Quadrate react to the mouse, not the ground, trees or landmarks */
+  pointer-events: none;
+}
+
+/* ---------- one Quadrat ---------- */
+
+/* The element sits in the top-left corner of the plate; all its parts use plate coordinates. */
+.map-block {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-style: preserve-3d;
+  pointer-events: auto;
+  cursor: pointer;
+  outline: none;                      /* focus is shown on the roof instead, see below */
+  --block-roof: var(--map-roof);
+  --block-wall: var(--map-wall);
+  --block-edge: var(--map-roof-edge);
+  --height-factor: 1;                 /* 1 normally, --grow-factor when selected */
+  --label-scale: 1;                   /* size of the code label */
+  --wall-height: var(--block-height);
+  --roof-height: var(--block-height);
+}
+
+.map-block--open {
+  --roof-height: 0.5px;               /* open squares are flat */
+}
+
+/* A building part. When selected it is scaled around its centre (set per part by karte.js) so that it
+   spreads a little into the streets. scale() only changes the width and depth, the height is done by
+   --height-factor. */
+.map-part {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-style: preserve-3d;
+  transform: scale(1, 1);
+  transition: transform var(--map-duration) var(--map-easing);
+}
+
+/* A wall: its bottom edge is one edge of the footprint. rotateZ turns it along the edge, rotateX(-90deg) stands
+   it up (the bottom edge stays on the ground, because transform-origin is the bottom-left corner) and scaleY
+   makes it taller when the block is selected. Walls that face away from the camera are not exported at all. */
+.map-wall {
+  position: absolute;
+  height: var(--wall-height);
+  transform-origin: 0 100%;
+  transform: rotateZ(var(--angle)) rotateX(-90deg) scaleY(var(--height-factor));
+  backface-visibility: hidden;
+  background-color: var(--block-wall);
+  /* the darkening by orientation (sun from the south-west) is a transparent black layer on top of the colour,
+     so the same walls also work with the category colours */
+  background-image: linear-gradient(rgba(0, 0, 0, var(--shade)), rgba(0, 0, 0, var(--shade)));
+  transition:
+    transform var(--map-duration) var(--map-easing),
+    background-color var(--map-colour-duration) ease,
+    box-shadow var(--map-duration) ease;
+}
+
+/* warm light that shines on the wall from below; invisible until the block is selected */
+.map-wall::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(var(--map-light), 0.95), rgba(var(--map-light), 0.35) 45%, rgba(var(--map-light), 0) 80%);
+  opacity: 0;
+  transition: opacity var(--map-duration) ease;
+}
+
+/* The roof: a flat element lifted to the wall height. Inside: the edge colour clipped to the footprint,
+   the roof colour clipped to a slightly smaller footprint (so a thin edge stays visible) and the code.
+   The footprints --outline-outer, --outline-inner and --outline-selected are polygon() values set by karte.js. */
+.map-roof {
+  position: absolute;
+  transform: translateZ(calc(var(--roof-height) * var(--height-factor)));
+  transition: transform var(--map-duration) var(--map-easing);
+  /* the box is a rectangle around the footprint; only the clipped roof itself reacts to the mouse */
+  pointer-events: none;
+}
+
+/* clip-path is supported without prefix by every current browser (Safari since 13.1) */
+.map-roof-edge,
+.map-roof-surface,
+.map-square-edge,
+.map-square-inner {
+  position: absolute;
+  inset: 0;
+  clip-path: var(--outline-outer);
+  transition: background-color var(--map-colour-duration) ease;
+}
+
+.map-roof-edge {
+  background-color: var(--block-edge);
+  pointer-events: auto;               /* clip-path also clips the clickable area */
+}
+
+.map-roof-surface,
+.map-square-inner {
+  clip-path: var(--outline-inner);
+}
+
+.map-roof-surface {
+  background-color: var(--block-roof);
+  transition:
+    background-color var(--map-colour-duration) ease,
+    clip-path var(--map-duration) var(--map-easing);
+}
+
+/* The code label. Its size is given in stage pixels; the matrix --label-matrix (from karte-daten.js) undoes the
+   tilt and the perspective at this spot, so the text looks upright and unstretched like in the reference image. */
+.map-code {
+  position: absolute;
+  transform-origin: 0 0;
+  transform: var(--label-matrix) scale(var(--label-scale)) translate(-50%, -50%);
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--map-text-light);
+  transition: transform var(--map-duration) var(--map-easing);
+}
+
+/* ---------- open squares (G1, O1, B3, H6, M4a): flat, their look is part of the ground texture ---------- */
+
+/* No transform: the outline is painted together with the ground plate (a separate layer lying exactly on the
+   ground would make the browser's depth sorting flicker). */
+.map-square {
+  position: absolute;
+  pointer-events: none;               /* only the clipped parts below react to the mouse */
+}
+
+.map-square-edge,
+.map-square-inner {
+  background-color: transparent;
+  pointer-events: auto;
+}
+
+/* The sign with code and name stands upright on the ground (rotateX(-90deg), like a wall facing the camera), so
+   the block behind the square cannot cover it. Its bottom middle is the foot point (the negative margins move the
+   box there). --sign-scale undoes the perspective enlargement at this spot and scaleY(--stretch) makes up for the
+   camera looking down on it, so the text has the same size and shape as in image 03. */
+.map-sign {
+  position: absolute;
+  width: 160px;
+  height: 40px;
+  margin-left: -80px;
+  margin-top: -40px;
+  transform-origin: 50% 100%;
+  transform: rotateX(-90deg) scale(var(--sign-scale)) scaleY(var(--stretch));
+  pointer-events: none;               /* the empty part of the box must not catch clicks for neighbours */
+}
+
+.map-sign-text {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);        /* centred above the foot point */
+  text-align: center;
+  white-space: nowrap;
+  color: var(--map-text-dark);
+  pointer-events: auto;               /* the text itself selects the square */
+  /* a halo in the colour of the square keeps the text readable on paving and grass */
+  text-shadow: 0 0 2px var(--halo), 0 0 2px var(--halo), 0 0 3px var(--halo), 0 0 4px var(--halo);
+}
+
+.map-sign-code {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 16px;
+}
+
+.map-sign-name {
+  display: block;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #46433c;
+}
+
+/* ---------- glow on the ground under the selected Quadrat ---------- */
+
+/* No transform, like .map-square: painted together with the ground plate. */
+.map-pool {
+  position: absolute;
+  background: radial-gradient(closest-side, rgba(var(--map-light), 1), rgba(var(--map-light), 0.7) 55%, rgba(var(--map-light), 0));
+  opacity: 0;
+  transition: opacity var(--map-duration) ease;
+  pointer-events: none;
+}
+
+/* ---------- category colours (Karte.faerben): the whole building takes the colour ---------- */
+.map-block.is-tinted {
+  --block-roof: var(--tint);
+  --block-wall: var(--tint);
+}
+
+.map-block.is-tinted .map-roof-edge {
+  background-color: var(--tint);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));   /* slightly darker edge */
+}
+
+/* On light category colours (class set by karte.js) the white code would be hard to read: dark text instead. */
+.map-block.is-tinted-light .map-code {
+  color: var(--map-text-dark);
+}
+
+.map-block--open.is-tinted .map-square-inner {
+  background-color: var(--tint);
+  opacity: 0.5;                       /* the square stays recognisable under the colour */
+}
+
+/* ---------- mouse over a Quadrat ---------- */
+.map-block:hover .map-roof-surface {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.16));
+}
+
+.map-block:hover .map-roof-edge,
+.map-block:hover .map-square-edge {
+  background: #f4efe2;
+}
+
+/* ---------- selected Quadrat (Karte.waehlen): taller, a little wider, yellow edges, lit from below ---------- */
+.map-block.is-selected {
+  --height-factor: var(--grow-factor);
+  --label-scale: 1.2;
+}
+
+.map-block.is-selected .map-part {
+  transform: scale(var(--sx), var(--sy));
+}
+
+/* thicker yellow roof edge: the roof surface shrinks to a smaller footprint with the same corners */
+.map-block.is-selected .map-roof-surface {
+  clip-path: var(--outline-selected);
+}
+
+.map-block.is-selected .map-wall {
+  /* first inset shadow = yellow frame along all four edges of the wall, second = soft glow inside the edges.
+     Only inset shadows: a shadow outside the wall would make the browser sort the 3D pieces wrongly. */
+  box-shadow: inset 0 0 0 1.5px var(--map-selected), inset 0 0 8px 2px rgba(var(--map-light), 0.6);
+}
+
+.map-block.is-selected .map-wall::after,
+.map-block.is-selected .map-pool {
+  opacity: 1;
+}
+
+.map-block.is-selected .map-roof-edge,
+.map-block.is-selected .map-square-edge {
+  background: var(--map-selected);
+}
+
+/* ---------- keyboard focus: white frame around the code and a white roof edge ---------- */
+.map-block:focus-visible .map-code,
+.map-block:focus-visible .map-sign-code {
+  outline: 2px solid var(--map-focus);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.map-block--open:focus-visible .map-sign-code,
+.map-block.is-tinted-light:focus-visible .map-code {
+  outline-color: var(--map-text-dark);   /* a white frame would vanish on a light roof */
+}
+
+/* (a selected block keeps its yellow edge; the frame around the code still shows the focus) */
+.map-block:focus-visible:not(.is-selected) .map-roof-edge,
+.map-block:focus-visible:not(.is-selected) .map-square-edge {
+  background: var(--map-focus);
+}
+
+/* ---------- [V3] pin for Quadrate with saved places (Karte.markieren, used by js/steckbrief.js with js/merkliste.js) ---------- */
+
+/* Stands upright on the roof, facing the camera (rotateX(-90deg)); scaleY(--stretch) makes up for the camera
+   looking down on it. Everything is drawn inside the 24 x 23 px box (nothing sticks out), which keeps the
+   browser's 3D sorting clean. */
+.map-pin {
+  position: absolute;
+  width: 24px;
+  height: 23px;
+  transform-origin: 50% 100%;
+  transform: translateZ(calc(var(--roof-height) * var(--height-factor) + var(--pin-z, 0px) + 1px)) rotateX(-90deg) scaleY(var(--stretch));
+  transition: transform var(--map-duration) var(--map-easing);
+  pointer-events: none;
+}
+
+/* the pin head: a square with three round corners, turned so that the sharp corner points down to the tip */
+.map-pin::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 3.5px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #ffffff;
+  border-radius: 50% 50% 50% 0;
+  background: #c0392b;
+  transform: rotate(-45deg);
+}
+
+/* white dot in the head */
+.map-pin::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 9.5px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+/* ---------- Schloss, trees and landmarks (not clickable) ---------- */
+.map-palace {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-style: preserve-3d;
+  --height-factor: 1;                 /* the Schloss never grows */
+  --block-wall: var(--palace-wall);   /* sandstone walls (colour from karte-daten.js) */
+  --wall-height: var(--palace-height);
+}
+
+.map-palace-roof {
+  position: absolute;
+  background: url("../img/karte/schloss-dach.svg") 0 0 / 100% 100% no-repeat;
+  transform: translateZ(var(--palace-height));
+}
+
+/* Trees and the Wasserturm are pictures facing the camera ("billboards"), turned about their bottom edge.
+   A tree stands straight up (like a wall), so a building close behind it cannot cut its crown; scaleY gives
+   it back the height the camera takes away. The Wasserturm picture is turned exactly parallel to the screen
+   (it undoes the tilt of the plate), so it looks precisely like the drawing in image 03. */
+.map-tree,
+.map-landmark {
+  position: absolute;
+  transform-origin: 50% 100%;
+  pointer-events: none;
+}
+
+.map-landmark {
+  transform: rotateX(var(--untilt));
+}
+
+.map-tree {
+  transform: rotateX(-90deg) scaleY(var(--stretch));
+  width: var(--tree-width);
+  height: var(--tree-height);
+  margin-left: calc(var(--tree-width) / -2);   /* left/top name the foot of the tree */
+  margin-top: calc(var(--tree-height) * -1);
+  background: url("../img/karte/baum.svg") 50% 100% / 100% 100% no-repeat;
+}
+
+/* ---------- less motion ---------- */
+
+/* People who switch off animations in their system get the same states without the movement. */
+@media (prefers-reduced-motion: reduce) {
+  .map-root *,
+  .map-root *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Used by the test page for screenshots: states appear at once. */
+.map-no-animation *,
+.map-no-animation *::after {
+  transition: none !important;
+}

@@ -1,0 +1,300 @@
+@charset "utf-8";
+/*
+ * index.css - styles that only the start page (index.html) needs.     [V1 fallback, V2 interactive]
+ *
+ * How it fits in: loaded after css/style.css (design system) and css/karte.css (map of the variant).
+ * style.css already styles the layout of this page (map-layout, filter-bar, map-frame, map-footer,
+ * profile, place-group, place, badge, legend, photo). This file only adds what is new here:
+ * the "Jetzt" button next to the time, the list "Quadrat wählen" with its jump link, the live
+ * summary under the legend and the extra parts of the profile panel made by js/steckbrief.js.
+ */
+
+/* Elements that need JavaScript [V2] carry the attribute hidden in index.html; js/app.js removes it.
+   The rule that makes hidden always win is in css/style.css (section 4, Utilities). */
+
+
+/* ---------- Filter bar [V2] ---------- */
+
+/* A wider start size for the time group than in style.css (18rem): on laptop screens weekday and
+   slider then fill the first row, and the categories share the second row with the list. */
+.filter-bar .filter-group--time {
+  flex-basis: 28rem;
+}
+
+/* Readout of the time and the button "Jetzt" side by side, on the right of the label. */
+.time-now {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* The small button needs no room for a wall edge below it inside this row. */
+.time-now .button {
+  margin-bottom: 0;
+}
+
+/* The list "Quadrat wählen": full width on phones. From 48rem on it is wide enough for
+   "M4a – Parkplatz", not wider, and margin-left: auto pushes it to the right end of its row. */
+.filter-group--block {
+  flex: 1 1 100%;
+}
+
+@media (min-width: 48rem) {
+  .filter-group--block {
+    flex: 0 1 14rem;
+    margin-left: auto;
+  }
+}
+
+/* Jump link after the list: hidden like .visually-hidden until it gets the keyboard focus. */
+.jump-link:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.jump-link:focus {
+  display: inline-block;
+  margin-top: var(--space-2);
+  font-weight: 600;
+}
+
+
+/* ---------- Map ---------- */
+
+/* Hint for phones: the map is wider than the screen and scrolls sideways, but mobile browsers show
+   no scroll bar. Shown only below 48rem, the width from which the whole map fits. */
+.map-hint {
+  display: none;
+  margin: 0;
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-paper);
+  border-bottom: 0.0625rem solid var(--color-ring);
+  font-size: var(--text-s);
+}
+
+@media (max-width: 47.99rem) {
+  .map-hint {
+    display: block;
+  }
+}
+
+/* The data source always sits at the right end of the strip, also when the legend is hidden
+   (page without JavaScript), so its right-aligned lines line up. */
+.map-footer__meta {
+  margin-left: auto;
+}
+
+
+/* ---------- Legend strip and live summary [V2] ---------- */
+
+.map-footer__legend {
+  display: grid;
+  gap: var(--space-2);
+}
+
+/* "In 23 Quadraten haben jetzt ... geöffnet (58 Orte)." */
+.map-summary {
+  margin: 0;
+  color: var(--color-text);
+  font-size: var(--text-m);
+  font-weight: 600;
+}
+
+.map-summary__note {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+/* "Steckbrief von O3 lesen": shown by js/app.js after a Quadrat is chosen. In the grid of the legend
+   column it keeps its own width instead of stretching. */
+.map-footer__legend .button {
+  justify-self: start;
+  margin-top: var(--space-1);
+}
+
+
+/* ---------- Profile panel [V2] ---------- */
+
+/* scrollIntoView (phones) and the jump link stop a little above the panel, not at its very edge. */
+#steckbrief {
+  scroll-margin-top: var(--space-4);
+}
+
+/* Small heading above the counts per category. */
+.profile__subtitle {
+  margin: var(--space-5) 0 var(--space-3);
+  font-size: var(--text-m);
+}
+
+/* Counts per category, "swatch  Essen  3 (2 geöffnet)": as many columns of at least 10rem as fit
+   (one on phones, two in the left column of the panel). */
+.profile-counts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-s);
+}
+
+.profile-counts li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--space-2);
+  margin: 0;
+}
+
+.profile-counts__name {
+  font-weight: 600;
+}
+
+.profile-counts__number {
+  font-family: var(--font-code);
+  font-weight: 600;
+}
+
+.profile-counts__open,
+.profile-counts__item--zero {
+  color: var(--color-text-muted);
+}
+
+/* The place list sits right under its heading; the heading of the active group has no line of its own. */
+.profile__places .place-group__title {
+  font-weight: 700;
+}
+
+/* "Keine Orte der Kategorie ... in diesem Quadrat." */
+.place-group__empty {
+  margin: 0;
+  padding: var(--space-3) 0;
+  color: var(--color-text-muted);
+  border-top: 0.0625rem solid var(--color-ring);
+}
+
+/* --- Folded categories: <details> with the category line as <summary> --- */
+.place-group--folded {
+  margin-bottom: var(--space-3);
+}
+
+/* The summary looks like a flat block you can open. "list-style: none" and the WebKit rule below
+   remove the browser's triangle; a chevron drawn with two borders (::after) replaces it. */
+.place-group--folded > summary {
+  min-height: var(--target);
+  margin-bottom: 0;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-ground);
+  border: 0.0625rem solid var(--color-ring);
+  border-radius: var(--radius-block);
+  cursor: pointer;
+  list-style: none;
+}
+
+/* Safari still draws its triangle through this pseudo-element and ignores "list-style: none". */
+.place-group--folded > summary::-webkit-details-marker {
+  display: none;
+}
+
+.place-group--folded > summary:hover {
+  background: var(--color-plaza);
+}
+
+/* Chevron at the right end: points down when closed, up when open. */
+.place-group--folded > summary::after {
+  content: "";
+  flex-shrink: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-left: auto;
+  border-right: 0.125rem solid var(--color-text);
+  border-bottom: 0.125rem solid var(--color-text);
+  transform: translateY(-0.125rem) rotate(45deg);
+}
+
+.place-group--folded[open] > summary::after {
+  transform: translateY(0.125rem) rotate(-135deg);
+}
+
+.place-group--folded[open] > summary {
+  margin-bottom: var(--space-2);
+}
+
+/* --- One place: extra parts next to the classes of style.css --- */
+
+/* "vom Vortag bis 02:00": the place is open because yesterday's hours go past midnight. */
+.place__note {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+/* [V3] "Merken" toggle button (aria-pressed): the pressed state gets the sand colour of "current"
+   things and a tick in front of the word, so the state does not depend on colour alone. */
+.place__save {
+  margin-bottom: 0;
+}
+
+.place__save[aria-pressed="true"] {
+  background: var(--color-sand);
+  box-shadow: inset 0 0 0 0.0625rem var(--color-sand-line), 0 var(--wall) 0 var(--color-sand-line);
+}
+
+/* The tick is drawn with two borders of a turned box (no text, so screen readers do not read it). */
+.place__save[aria-pressed="true"]::before {
+  content: "";
+  width: 0.3125rem;
+  height: 0.625rem;
+  margin: -0.125rem 0.125rem 0 0;
+  border-right: 0.125rem solid currentColor;
+  border-bottom: 0.125rem solid currentColor;
+  transform: rotate(45deg);
+}
+
+/* [V3] error after a failed "Merken"; empty most of the time, so it takes no room then. */
+.profile__save-error {
+  color: var(--color-error);
+  font-size: var(--text-s);
+  font-weight: 600;
+}
+
+.profile__save-error:empty {
+  margin: 0;
+}
+
+.profile__save-hint {
+  font-size: var(--text-s);
+}
+
+/* Friendly note for a Quadrat without any place. */
+.profile-empty-note {
+  padding: var(--space-4);
+  background: var(--color-ground);
+  border: 0.0625rem dashed var(--color-control-line);
+  border-radius: var(--radius-panel);
+}
+
+.profile-empty-note > :last-child {
+  margin-bottom: 0;
+}
+
+/* The OSM credit under the lists keeps some distance from the last list. */
+.profile__places .profile__source {
+  margin-top: var(--space-5);
+}
+
+
+/* ---------- Printing ---------- */
+
+/* Buttons and the jump link do nothing on paper ([V3] .place__save: the "Merken" buttons). */
+@media print {
+  .jump-link,
+  .map-footer__legend .button,
+  .place__save {
+    display: none;
+  }
+}

@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<!--
+  docs/styleguide.html - living preview of the design system in css/style.css.  [V1]
+
+  Purpose: shows every shared component with realistic content, so the team can
+  see how it looks and copy the markup. Class names are listed under each example.
+  How it fits in: not part of the site navigation. It lives in docs/, therefore
+  all paths start with "../". It links css/style.css and, for the filter bar of the
+  start page, css/index.css. Page-specific helper styles (only for this preview)
+  are in the <style> block below and prefixed "sg-".
+  No JavaScript: the radio-based chips and the weekday control work with CSS alone.
+  The filter bar in the section "Startseite" is the markup of index.html (ids with the
+  prefix sg-, so they stay unique on this page).
+  Sample places are taken from js/data/orte.js (OpenStreetMap, stand 2026-09-28),
+  the sample photo and its credit from js/data/fotos.js; the map picture is a
+  schematic drawing, not real data.
+-->
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Styleguide – Quadrate</title>
+  <meta name="description" content="Alle Bausteine der Website Quadrate auf einer Seite: Farben, Schrift, Filter, Tabellen, Steckbrief.">
+  <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+  <!-- page styles of the start page: needed for its filter bar in the section "Startseite" -->
+  <link rel="stylesheet" href="../css/index.css">
+  <style>
+    /* Helper styles for this preview page only (prefix sg-). */
+
+    /* Space between the big sections, with a line like a plan sheet border. */
+    .sg-section {
+      padding-top: var(--space-6);
+      margin-top: var(--space-7);
+      border-top: 0.0625rem solid var(--color-ring);
+    }
+
+    .sg-section > h2 {
+      margin-bottom: var(--space-2);
+    }
+
+    .sg-section h3 {
+      margin-top: var(--space-5);
+    }
+
+    .sg-section > .sg-intro {
+      max-width: var(--measure);
+      color: var(--color-text-muted);
+    }
+
+    /* Example area: the component on paper, the class names below it. */
+    .sg-example {
+      margin: var(--space-4) 0 var(--space-5);
+    }
+
+    .sg-classes {
+      margin: var(--space-2) 0 0;
+      color: var(--color-text-muted);
+      font-size: var(--text-s);
+    }
+
+    .sg-classes code {
+      color: var(--color-text);
+    }
+
+    /* Table of contents in two to four columns. */
+    .sg-toc ol {
+      columns: 14rem;
+      column-gap: var(--space-6);
+      margin: 0;
+      padding-left: 1.5rem;
+    }
+
+    .sg-toc li {
+      margin: 0 0 var(--space-1);
+      break-inside: avoid;
+    }
+
+    /* Colour tokens: each colour as a small block with its wall edge. */
+    .sg-tokens {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+      gap: var(--space-4);
+      margin: 0 0 var(--space-5);
+      padding: 0;
+      list-style: none;
+    }
+
+    .sg-tokens li {
+      margin: 0;
+      font-size: var(--text-s);
+    }
+
+    .sg-token-chip {
+      display: block;
+      height: 3rem;
+      margin-bottom: var(--space-2);
+      background: var(--c);
+      border-radius: var(--radius-block);
+      box-shadow: inset 0 0 0 0.0625rem rgba(0, 0, 0, 0.12), inset 0 -0.375rem 0 rgba(0, 0, 0, 0.16);
+    }
+
+    .sg-token-name {
+      display: block;
+      font-weight: 600;
+    }
+
+    /* Category ramps: four levels side by side. */
+    .sg-ramps {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+      gap: var(--space-4) var(--space-6);
+      margin: 0 0 var(--space-4);
+    }
+
+    .sg-ramp h4 {
+      margin-bottom: var(--space-2);
+      font-size: var(--text-m);
+    }
+
+    .sg-ramp-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-1);
+    }
+
+    .sg-ramp-row span {
+      display: block;
+      padding: var(--space-5) var(--space-1) var(--space-1);
+      background: var(--c);
+      font-family: var(--font-code);
+      font-size: var(--text-xs);
+      border-radius: 0.125rem;
+      box-shadow: inset 0 -0.25rem 0 rgba(0, 0, 0, 0.2);
+    }
+
+    /* Type specimen rows. */
+    .sg-type-row {
+      display: grid;
+      gap: var(--space-1) var(--space-5);
+      padding: var(--space-3) 0;
+      border-bottom: 0.0625rem solid var(--color-ring);
+    }
+
+    @media (min-width: 48rem) {
+      .sg-type-row {
+        grid-template-columns: 11rem 1fr;
+        align-items: baseline;
+      }
+    }
+
+    .sg-type-row p {
+      margin: 0;
+    }
+
+    .sg-type-meta {
+      color: var(--color-text-muted);
+      font-family: var(--font-code);
+      font-size: var(--text-xs);
+    }
+
+    /* Several small examples next to each other. */
+    .sg-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    /* The schematic map fills #karte like the real map will. */
+    #karte svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
+
+  <header class="site-header">
+    <div class="site-header__inner container">
+      <a class="site-logo" href="../index.html">
+        <img src="../img/logo.svg" alt="Quadrate – zur Karte" width="200" height="33">
+      </a>
+      <nav class="site-nav" aria-label="Hauptnavigation">
+        <ul class="site-nav__list">
+          <li><a href="../index.html">Karte</a></li>
+          <li><a href="../quadrate.html">Quadrate</a></li>
+          <li><a href="../vorschlagen.html" aria-current="page">Ort vorschlagen</a></li>
+          <li><a href="../ueber-uns.html">Über uns</a></li>
+          <!-- [V3] account link -->
+          <li class="site-nav__item--account"><a href="../login.php">Anmelden</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhalt" class="container">
+    <div class="page-intro">
+      <h1>Styleguide</h1>
+      <p class="lead">Alle Bausteine der Website auf einer Seite: so sehen sie aus, und so heißen ihre Klassen in <code>css/style.css</code>. Kopfzeile und Fußzeile dieser Seite sind die echten, wie auf jeder Seite.</p>
+    </div>
+
+    <nav class="sg-toc" aria-label="Inhalt des Styleguides">
+      <ol>
+        <li><a href="#farben">Farben</a></li>
+        <li><a href="#schrift">Schrift</a></li>
+        <li><a href="#seitenrahmen">Seitenrahmen</a></li>
+        <li><a href="#startseite">Startseite: Filter, Karte, Steckbrief</a></li>
+        <li><a href="#knoepfe">Knöpfe</a></li>
+        <li><a href="#kategorien">Kategorie-Auswahl</a></li>
+        <li><a href="#zeit">Zeitregler</a></li>
+        <li><a href="#wochentag">Wochentag und Auswahlliste</a></li>
+        <li><a href="#formulare">Formulare</a></li>
+        <li><a href="#tabellen">Tabellen</a></li>
+        <li><a href="#kuerzel">Kürzel und Kacheln</a></li>
+        <li><a href="#status">Status</a></li>
+        <li><a href="#legende">Legende</a></li>
+        <li><a href="#foto">Foto mit Nachweis</a></li>
+        <li><a href="#hinweise">Hinweise</a></li>
+        <li><a href="#fokus">Fokus und Bewegung</a></li>
+      </ol>
+    </nav>
+
+    <!-- ============================== Colours ============================== -->
+    <section class="sg-section" id="farben" aria-labelledby="farben-titel">
+      <h2 id="farben-titel">Farben</h2>
+      <p class="sg-intro">Die Farben kommen aus den freigegebenen Karten-Bildern. Die Seite selbst ist der Boden der Karte; Flächen liegen wie Planblätter darauf. Die mit „nur Karte“ markierten Farben stehen als Variablen in <code>css/style.css</code>, werden dort aber von keiner Regel benutzt: Die Karten nehmen ihre Farben aus ihren Datendateien.</p>
+
+      <h3>Karte und Flächen</h3>
+      <ul class="sg-tokens">
+        <li><span class="sg-token-chip" style="--c: #e7e4dd"></span><span class="sg-token-name">Boden</span><code>--color-ground</code> #e7e4dd</li>
+        <li><span class="sg-token-chip" style="--c: #f7f5f0"></span><span class="sg-token-name">Papier</span><code>--color-paper</code> #f7f5f0</li>
+        <li><span class="sg-token-chip" style="--c: #3a3d43"></span><span class="sg-token-name">Dach</span><code>--color-roof</code> #3a3d43</li>
+        <li><span class="sg-token-chip" style="--c: #62666e"></span><span class="sg-token-name">Wand</span><code>--color-wall</code> #62666e</li>
+        <li><span class="sg-token-chip" style="--c: #6b6f78"></span><span class="sg-token-name">Dachkante</span><code>--color-roof-edge</code> #6b6f78 (nur Karte)</li>
+        <li><span class="sg-token-chip" style="--c: #c5c0b5"></span><span class="sg-token-name">Ring</span><code>--color-ring</code> #c5c0b5</li>
+        <li><span class="sg-token-chip" style="--c: #dcd4c3"></span><span class="sg-token-name">Platz</span><code>--color-plaza</code> #dcd4c3</li>
+        <li><span class="sg-token-chip" style="--c: #f2e6cc"></span><span class="sg-token-name">Achse (Sand)</span><code>--color-sand</code> #f2e6cc</li>
+        <li><span class="sg-token-chip" style="--c: #8a6d3b"></span><span class="sg-token-name">Achsen-Schrift</span><code>--color-sand-text</code> #8a6d3b</li>
+        <li><span class="sg-token-chip" style="--c: #b3c79a"></span><span class="sg-token-name">Park</span><code>--color-park</code> #b3c79a (nur Karte)</li>
+        <li><span class="sg-token-chip" style="--c: #c2d4a6"></span><span class="sg-token-name">Rasen</span><code>--color-lawn</code> #c2d4a6 (nur Karte)</li>
+        <li><span class="sg-token-chip" style="--c: #a8c8d8"></span><span class="sg-token-name">Wasser</span><code>--color-water</code> #a8c8d8 (nur Karte)</li>
+      </ul>
+
+      <h3>Schrift, Auswahl und Rückmeldung</h3>
+      <ul class="sg-tokens">
+        <li><span class="sg-token-chip" style="--c: #2b2d31"></span><span class="sg-token-name">Text</span><code>--color-text</code> #2b2d31</li>
+        <li><span class="sg-token-chip" style="--c: #54575e"></span><span class="sg-token-name">Text leise</span><code>--color-text-muted</code> #54575e</li>
+        <li><span class="sg-token-chip" style="--c: #7d7a72"></span><span class="sg-token-name">Feldrand</span><code>--color-control-line</code> #7d7a72</li>
+        <li><span class="sg-token-chip" style="--c: #f2c230"></span><span class="sg-token-name">Ausgewählt</span><code>--color-selected</code> #f2c230</li>
+        <li><span class="sg-token-chip" style="--c: #9e1f3c"></span><span class="sg-token-name">Fehler</span><code>--color-error</code> #9e1f3c</li>
+        <li><span class="sg-token-chip" style="--c: #2f6b2a"></span><span class="sg-token-name">Erfolg</span><code>--color-success</code> #2f6b2a</li>
+        <li><span class="sg-token-chip" style="--c: #245266"></span><span class="sg-token-name">Info</span><code>--color-info</code> #245266</li>
+      </ul>
+
+      <h3>Kategorien</h3>
+      <p class="sg-intro">Vier Stufen je Kategorie, nach Zahl der geöffneten Orte im Quadrat: 1, 2–3, 4–6, 7 und mehr. Kein geöffneter Ort: das Quadrat bleibt dunkelgrau. Das ganze Gebäude wird eingefärbt, Dach und Wände.</p>
+      <div class="sg-ramps">
+        <div class="sg-ramp">
+          <h4>Essen</h4>
+          <div class="sg-ramp-row">
+            <span style="--c: #F3C2B5">1</span><span style="--c: #EA8B70">2–3</span><span style="--c: #D23F27">4–6</span><span style="--c: #A32F1C; color: #fff">7+</span>
+          </div>
+        </div>
+        <div class="sg-ramp">
+          <h4>Trinken</h4>
+          <div class="sg-ramp-row">
+            <span style="--c: #F4DDA6">1</span><span style="--c: #E9B955">2–3</span><span style="--c: #D0901A">4–6</span><span style="--c: #9A6710; color: #fff">7+</span>
+          </div>
+        </div>
+        <div class="sg-ramp">
+          <h4>Kultur</h4>
+          <div class="sg-ramp-row">
+            <span style="--c: #D3CCF3">1</span><span style="--c: #A597E6">2–3</span><span style="--c: #6B5BD2; color: #fff">4–6</span><span style="--c: #4A3BA3; color: #fff">7+</span>
+          </div>
+        </div>
+        <div class="sg-ramp">
+          <h4>Shoppen</h4>
+          <div class="sg-ramp-row">
+            <span style="--c: #BDE6DF">1</span><span style="--c: #6CC7B7">2–3</span><span style="--c: #25A792">4–6</span><span style="--c: #156E60; color: #fff">7+</span>
+          </div>
+        </div>
+      </div>
+      <p class="sg-classes">Variablen <code>--essen-1</code> bis <code>--shoppen-4</code>; die Klassen <code>cat-essen</code>, <code>cat-trinken</code>, <code>cat-kultur</code>, <code>cat-shoppen</code> setzen daraus <code>--cat-1</code> bis <code>--cat-4</code> für alles darin.</p>
+    </section>
+
+    <!-- ============================== Type ============================== -->
+    <section class="sg-section" id="schrift" aria-labelledby="schrift-titel">
+      <h2 id="schrift-titel">Schrift</h2>
+      <p class="sg-intro">Archivo für Text, Überschriften, Bedienelemente und Quadrat-Kürzel. IBM Plex Mono nur für Daten: Uhrzeiten, Anzahlen, Datumsangaben. Kürzel stehen in Archivo, weil in der Plex Mono das O und die Null fast gleich aussehen (O3 und 03). Beide Schriften liegen im Ordner <code>fonts/</code> (SIL Open Font License), es gibt keine Verbindung zu Google.</p>
+      <div class="sg-type-row">
+        <span class="sg-type-meta">h1 · 36 px · 700</span>
+        <p style="font-size: var(--text-3xl); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15">Was hat gerade offen?</p>
+      </div>
+      <div class="sg-type-row">
+        <span class="sg-type-meta">h2 · 24 px · 700</span>
+        <p style="font-size: var(--text-2xl); font-weight: 700; line-height: 1.15">Alle 146 Quadrate</p>
+      </div>
+      <div class="sg-type-row">
+        <span class="sg-type-meta">h3 · 18 px · 700</span>
+        <p style="font-size: var(--text-l); font-weight: 700">Geöffnet am Mittwoch um 19:30</p>
+      </div>
+      <div class="sg-type-row">
+        <span class="sg-type-meta">Text · 16 px · 400</span>
+        <p>Die Innenstadt von Mannheim ist in Blöcke eingeteilt, die statt Straßennamen Kürzel aus Buchstabe und Zahl tragen.</p>
+      </div>
+      <div class="sg-type-row">
+        <span class="sg-type-meta">Klein · 14 px · 600</span>
+        <p style="font-size: var(--text-s); font-weight: 600">Wochentag, Uhrzeit, Kategorie</p>
+      </div>
+      <div class="sg-type-row">
+        <span class="sg-type-meta">Kürzel · 700</span>
+        <p><span class="block-code">G1</span> <span class="block-code">M3a</span> <span class="block-code">O3</span> <span class="block-code">L10</span></p>
+      </div>
+      <div class="sg-type-row">
+        <span class="sg-type-meta">Daten · Plex Mono</span>
+        <p><span class="mono">09:00–21:00 · 3 von 12 · 28.09.2026</span></p>
+      </div>
+    </section>
+
+    <!-- ============================== Page frame ============================== -->
+    <section class="sg-section" id="seitenrahmen" aria-labelledby="rahmen-titel">
+      <h2 id="rahmen-titel">Seitenrahmen</h2>
+      <p class="sg-intro">Kopfzeile mit Logo und Hauptnavigation, Hauptbereich, Fußzeile mit OpenStreetMap-Hinweis. Die Vorlage zum Kopieren ist <code>docs/_vorlage.html</code>. Die aktuelle Seite trägt <code>aria-current="page"</code> und bekommt den Sandstreifen, wie die Achsen auf der Karte; hier ist es zur Ansicht Ort vorschlagen.</p>
+      <div class="sg-row sg-example">
+        <img src="../img/logo.svg" alt="Logo Quadrate, 32 Pixel hoch" width="194" height="32">
+        <img src="../img/logo.svg" alt="Logo Quadrate, 64 Pixel hoch" width="388" height="64">
+        <img src="../img/favicon.svg" alt="Favicon" width="32" height="32">
+      </div>
+      <p class="sg-classes"><code>skip-link</code>, <code>site-header</code>, <code>site-header__inner</code>, <code>site-logo</code>, <code>site-nav</code>, <code>site-nav__list</code>, <code>site-nav__item--account</code> [V3], <code>site-footer</code>, <code>site-footer__inner</code>, <code>site-footer__links</code>, <code>container</code>, <code>container--wide</code>, <code>page-intro</code>, <code>lead</code>, <code>prose</code>, <code>embed</code></p>
+    </section>
+
+    <!-- ============================== Index layout ============================== -->
+    <section class="sg-section" id="startseite" aria-labelledby="start-titel">
+      <h2 id="start-titel">Startseite: Filter, Karte, Steckbrief</h2>
+      <p class="sg-intro">Reihenfolge auf allen Bildschirmgrößen: Filterleiste, Karte mit Legendenstreifen, darunter der Steckbrief. Auf der echten Startseite ist <code>main</code> selbst das Raster: <code>&lt;main id="inhalt" class="map-layout container container--wide"&gt;</code>.</p>
+
+      <div class="map-layout sg-example">
+        <!-- [V2] filter bar: the markup of index.html (there js/app.js removes the attribute hidden) -->
+        <section class="filter-bar" aria-labelledby="sg-filter-titel">
+          <h3 class="visually-hidden" id="sg-filter-titel">Filter und Auswahl</h3>
+          <fieldset class="filter-group segmented">
+            <legend class="filter-label">Wochentag</legend>
+            <div class="segmented__options">
+              <input class="segmented__input visually-hidden" type="radio" name="sg-tag-a" id="sg-a-0" value="0">
+              <label class="segmented__option" for="sg-a-0"><span aria-hidden="true">Mo</span><span class="visually-hidden">Montag</span></label>
+              <input class="segmented__input visually-hidden" type="radio" name="sg-tag-a" id="sg-a-1" value="1">
+              <label class="segmented__option" for="sg-a-1"><span aria-hidden="true">Di</span><span class="visually-hidden">Dienstag</span></label>
+              <input class="segmented__input visually-hidden" type="radio" name="sg-tag-a" id="sg-a-2" value="2" checked>
+              <label class="segmented__option" for="sg-a-2"><span aria-hidden="true">Mi</span><span class="visually-hidden">Mittwoch</span></label>
+              <input class="segmented__input visually-hidden" type="radio" name="sg-tag-a" id="sg-a-3" value="3">
+              <label class="segmented__option" for="sg-a-3"><span aria-hidden="true">Do</span><span class="visually-hidden">Donnerstag</span></label>
+              <input class="segmented__input visually-hidden" type="radio" name="sg-tag-a" id="sg-a-4" value="4">
+              <label class="segmented__option" for="sg-a-4"><span aria-hidden="true">Fr</span><span class="visually-hidden">Freitag</span></label>
+              <input class="segmented__input visually-hidden" type="radio" name="sg-tag-a" id="sg-a-5" value="5">
+              <label class="segmented__option" for="sg-a-5"><span aria-hidden="true">Sa</span><span class="visually-hidden">Samstag</span></label>
+              <input class="segmented__input visually-hidden" type="radio" name="sg-tag-a" id="sg-a-6" value="6">
+              <label class="segmented__option" for="sg-a-6"><span aria-hidden="true">So</span><span class="visually-hidden">Sonntag</span></label>
+            </div>
+          </fieldset>
+
+          <div class="filter-group filter-group--time">
+            <div class="filter-group__head">
+              <label class="filter-label" for="sg-zeit-a">Uhrzeit</label>
+              <div class="time-now">
+                <output class="time-readout" for="sg-zeit-a" aria-hidden="true">19:30 <span>Uhr</span></output>
+                <button class="button button--secondary button--small" type="button">Jetzt<span class="visually-hidden">: heutigen Tag und aktuelle Uhrzeit einstellen</span></button>
+              </div>
+            </div>
+            <input class="range" type="range" id="sg-zeit-a" min="0" max="1440" step="30" value="1170">
+            <div class="range-scale" aria-hidden="true"><span>0</span><span>6</span><span>12</span><span>18</span><span>24</span></div>
+          </div>
+
+          <fieldset class="filter-group">
+            <legend class="filter-label">Kategorie</legend>
+            <ul class="chip-group">
+              <li><input class="chip-input visually-hidden" type="radio" name="sg-kategorie-a" id="sg-kat-a-essen" value="essen"><label class="chip cat-essen" for="sg-kat-a-essen"><span class="chip__swatch"></span>Essen</label></li>
+              <li><input class="chip-input visually-hidden" type="radio" name="sg-kategorie-a" id="sg-kat-a-trinken" value="trinken"><label class="chip cat-trinken" for="sg-kat-a-trinken"><span class="chip__swatch"></span>Trinken</label></li>
+              <li><input class="chip-input visually-hidden" type="radio" name="sg-kategorie-a" id="sg-kat-a-kultur" value="kultur"><label class="chip cat-kultur" for="sg-kat-a-kultur"><span class="chip__swatch"></span>Kultur</label></li>
+              <li><input class="chip-input visually-hidden" type="radio" name="sg-kategorie-a" id="sg-kat-a-shoppen" value="shoppen" checked><label class="chip cat-shoppen" for="sg-kat-a-shoppen"><span class="chip__swatch"></span>Shoppen</label></li>
+            </ul>
+          </fieldset>
+
+          <div class="filter-group filter-group--block">
+            <label class="filter-label" for="sg-quadrat-wahl">Quadrat wählen</label>
+            <select id="sg-quadrat-wahl">
+              <option value="">Bitte wählen</option>
+              <option value="O3" selected>O3</option>
+              <option value="G1">G1 – Marktplatz</option>
+            </select>
+          </div>
+        </section>
+
+        <div class="map-frame">
+          <div id="karte">
+            <svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="schema-title">
+            <title id="schema-title">Schema der Karte: Quadrate C bis F und N bis Q beiderseits der Kurpfalzstraße und der Planken, O3 ist ausgewählt</title>
+            <rect width="900" height="600" fill="#e7e4dd"/>
+            <rect x="440" y="40" width="20" height="520" fill="#f2e6cc"/>
+            <rect x="20" y="290" width="860" height="20" fill="#f2e6cc"/>
+            <text x="250" y="304.5" font-size="12" font-weight="600" letter-spacing="3" fill="#8a6d3b" text-anchor="middle">PLANKEN</text>
+            <rect x="340" y="190" width="84" height="84" rx="2" fill="#62666e"/>
+            <rect x="340" y="190" width="84" height="70" rx="2" fill="#3a3d43"/>
+            <text x="382" y="233" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">E1</text>
+            <rect x="240" y="190" width="84" height="84" rx="2" fill="#98c9c0"/>
+            <rect x="240" y="190" width="84" height="70" rx="2" fill="#BDE6DF"/>
+            <text x="282" y="233" font-size="20" font-weight="700" fill="#2b2d31" text-anchor="middle">E2</text>
+            <rect x="140" y="190" width="84" height="84" rx="2" fill="#62666e"/>
+            <rect x="140" y="190" width="84" height="70" rx="2" fill="#3a3d43"/>
+            <text x="182" y="233" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">E3</text>
+            <rect x="40" y="190" width="84" height="84" rx="2" fill="#62666e"/>
+            <rect x="40" y="190" width="84" height="70" rx="2" fill="#3a3d43"/>
+            <text x="82" y="233" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">E4</text>
+            <rect x="340" y="90" width="84" height="84" rx="2" fill="#62666e"/>
+            <rect x="340" y="90" width="84" height="70" rx="2" fill="#3a3d43"/>
+            <text x="382" y="133" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">F1</text>
+            <rect x="240" y="90" width="84" height="84" rx="2" fill="#62666e"/>
+            <rect x="240" y="90" width="84" height="70" rx="2" fill="#3a3d43"/>
+            <text x="282" y="133" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">F2</text>
+            <rect x="140" y="90" width="84" height="84" rx="2" fill="#62666e"/>
+            <rect x="140" y="90" width="84" height="70" rx="2" fill="#3a3d43"/>
+            <text x="182" y="133" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">F3</text>
+            <rect x="40" y="90" width="84" height="84" rx="2" fill="#62666e"/>
+            <rect x="40" y="90" width="84" height="70" rx="2" fill="#3a3d43"/>
+            <text x="82" y="133" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">F4</text>
+            <rect x="340" y="326" width="84" height="84" rx="2" fill="#62666e"/>
+            <rect x="340" y="326" width="84" height="70" rx="2" fill="#3a3d43"/>
+            <text x="382" y="369" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">D1</text>
+            <rect x="240" y="326" width="84" height="84" rx="2" fill="#62666e"/>
+            <rect x="240" y="326" width="84" height="70" rx="2" fill="#3a3d43"/>
+            <text x="282" y="369" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">D2</text>
+            <rect x="140" y="326" width="84" height="84" rx="2" fill="#62666e"/>
+            <rect x="140" y="326" width="84" height="70" rx="2" fill="#3a3d43"/>
+            <text x="182" y="369" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">D3</text>
+            <rect x="40" y="326" width="84" height="84" rx="2" fill="#62666e"/>
+            <rect x="40" y="326" width="84" height="70" rx="2" fill="#3a3d43"/>
+            <text x="82" y="369" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">D4</text>
+            <rect x="340" y="426" width="84" height="84" rx="2" fill="#62666e"/>
+            <rect x="340" y="426" width="84" height="70" rx="2" fill="#3a3d43"/>
+            <text x="382" y="469" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">C1</text>
+            <rect x="240" y="426" width="84" height="84" rx="2" fill="#62666e"/>
+            <rect x="240" y="426" width="84" height="70" rx="2" fill="#3a3d43"/>
+            <text x="282" y="469" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">C2</text>
+            <rect x="140" y="426" width="84" height="84" rx="2" fill="#62666e"/>
+            <rect x="140" y="426" width="84" height="70" rx="2" fill="#3a3d43"/>
+            <text x="182" y="469" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">C3</text>
+            <rect x="40" y="426" width="84" height="84" rx="2" fill="#62666e"/>
+            <rect x="40" y="426" width="84" height="70" rx="2" fill="#3a3d43"/>
+            <text x="82" y="469" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">C4</text>
+            <rect x="476" y="190" width="84" height="84" rx="2" fill="#0f5249"/>
+            <rect x="476" y="190" width="84" height="70" rx="2" fill="#156E60"/>
+            <text x="518" y="233" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">P1</text>
+            <rect x="576" y="190" width="84" height="84" rx="2" fill="#62666e"/>
+            <rect x="576" y="190" width="84" height="70" rx="2" fill="#3a3d43"/>
+            <text x="618" y="233" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">P2</text>
+            <rect x="676" y="190" width="84" height="84" rx="2" fill="#4fa696"/>
+            <rect x="676" y="190" width="84" height="70" rx="2" fill="#6CC7B7"/>
+            <text x="718" y="233" font-size="20" font-weight="700" fill="#2b2d31" text-anchor="middle">P3</text>
+            <rect x="776" y="190" width="84" height="84" rx="2" fill="#62666e"/>
+            <rect x="776" y="190" width="84" height="70" rx="2" fill="#3a3d43"/>
+            <text x="818" y="233" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">P4</text>
+            <rect x="476" y="90" width="84" height="84" rx="2" fill="#1d8674"/>
+            <rect x="476" y="90" width="84" height="70" rx="2" fill="#25A792"/>
+            <text x="518" y="133" font-size="20" font-weight="700" fill="#2b2d31" text-anchor="middle">Q1</text>
+            <rect x="576" y="90" width="84" height="84" rx="2" fill="#98c9c0"/>
+            <rect x="576" y="90" width="84" height="70" rx="2" fill="#BDE6DF"/>
+            <text x="618" y="133" font-size="20" font-weight="700" fill="#2b2d31" text-anchor="middle">Q2</text>
+            <rect x="676" y="90" width="84" height="84" rx="2" fill="#62666e"/>
+            <rect x="676" y="90" width="84" height="70" rx="2" fill="#3a3d43"/>
+            <text x="718" y="133" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">Q3</text>
+            <rect x="776" y="90" width="84" height="84" rx="2" fill="#62666e"/>
+            <rect x="776" y="90" width="84" height="70" rx="2" fill="#3a3d43"/>
+            <text x="818" y="133" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">Q4</text>
+            <rect x="476" y="326" width="84" height="84" fill="#b3c79a"/>
+            <text x="518" y="374" font-size="20" font-weight="700" fill="#2b2d31" text-anchor="middle">O1</text>
+            <rect x="576" y="326" width="84" height="84" rx="2" fill="#62666e"/>
+            <rect x="576" y="326" width="84" height="70" rx="2" fill="#3a3d43"/>
+            <text x="618" y="369" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">O2</text>
+            <rect x="776" y="326" width="84" height="84" rx="2" fill="#62666e"/>
+            <rect x="776" y="326" width="84" height="70" rx="2" fill="#3a3d43"/>
+            <text x="818" y="369" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">O4</text>
+            <rect x="476" y="426" width="84" height="84" rx="2" fill="#4fa696"/>
+            <rect x="476" y="426" width="84" height="70" rx="2" fill="#6CC7B7"/>
+            <text x="518" y="469" font-size="20" font-weight="700" fill="#2b2d31" text-anchor="middle">N1</text>
+            <rect x="576" y="426" width="84" height="84" rx="2" fill="#62666e"/>
+            <rect x="576" y="426" width="84" height="70" rx="2" fill="#3a3d43"/>
+            <text x="618" y="469" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">N2</text>
+            <rect x="676" y="426" width="84" height="84" rx="2" fill="#62666e"/>
+            <rect x="676" y="426" width="84" height="70" rx="2" fill="#3a3d43"/>
+            <text x="718" y="469" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">N3</text>
+            <rect x="776" y="426" width="84" height="84" rx="2" fill="#62666e"/>
+            <rect x="776" y="426" width="84" height="70" rx="2" fill="#3a3d43"/>
+            <text x="818" y="469" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">N4</text>
+            <defs><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"/></filter></defs>
+            <ellipse cx="718" cy="412" rx="62" ry="16" fill="#f2c230" opacity="0.85" filter="url(#glow)"/>
+            <rect x="670" y="296" width="96" height="116" rx="2" fill="#4fa696" stroke="#f2c230" stroke-width="3"/>
+            <rect x="670" y="296" width="96" height="66" rx="2" fill="#6CC7B7" stroke="#f2c230" stroke-width="3"/>
+            <text x="718" y="336" font-size="24" font-weight="700" fill="#2b2d31" text-anchor="middle">O3</text>
+            </svg>
+          </div>
+          <div class="map-footer">
+            <div class="legend cat-shoppen">
+              <p class="legend__title">Shoppen: geöffnete Orte je Quadrat</p>
+              <ul class="legend__items">
+                <li><span class="swatch swatch--none"></span>keiner</li>
+                <li><span class="swatch swatch--l1"></span>1</li>
+                <li><span class="swatch swatch--l2"></span>2–3</li>
+                <li><span class="swatch swatch--l3"></span>4–6</li>
+                <li><span class="swatch swatch--l4"></span>7+</li>
+              </ul>
+            </div>
+            <p class="map-footer__meta">Schema, keine echten Daten.<br>Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL</p>
+          </div>
+        </div>
+
+        <!-- [V2] profile panel, filled by js/steckbrief.js -->
+        <section class="profile" id="steckbrief-beispiel" aria-labelledby="sg-profil-titel" tabindex="-1">
+          <header class="profile__head">
+            <span class="block-tile block-tile--selected" aria-hidden="true">O3</span>
+            <div class="profile__heading">
+              <h3 class="profile__title" id="sg-profil-titel">Quadrat O3</h3>
+              <p class="profile__meta">Gebäude, rechte Seite, an den Planken</p>
+            </div>
+            <button class="button button--secondary button--small profile__close" type="button">Auswahl aufheben</button>
+          </header>
+
+          <div class="profile__body">
+            <div class="profile__about">
+              <p>13 Orte aus OpenStreetMap: einer zum Trinken, zwölf zum Shoppen.</p>
+              <p class="profile__source">Quelle: OpenStreetMap, Stand 28.09.2026</p>
+            </div>
+
+            <div class="profile__places">
+              <h4 class="profile__places-title">Orte und Öffnungszeiten am Mittwoch, 19:30 Uhr</h4>
+
+              <section class="place-group cat-trinken" aria-labelledby="sg-gruppe-trinken">
+                <h5 class="place-group__title" id="sg-gruppe-trinken"><span class="swatch swatch--l1"></span>Trinken <span class="place-group__count">1 von 1 geöffnet</span></h5>
+                <ul class="place-list">
+                  <li class="place">
+                    <div><span class="place__name">Remetzo - Café und Snacks</span><span class="place__type">Café, O 3, 1</span></div>
+                    <div class="place__status"><span class="place__hours">09:00–21:00</span><span class="badge badge--open">geöffnet</span></div>
+                  </li>
+                </ul>
+              </section>
+
+              <section class="place-group cat-shoppen" aria-labelledby="sg-gruppe-shoppen">
+                <h5 class="place-group__title" id="sg-gruppe-shoppen"><span class="swatch swatch--l2"></span>Shoppen <span class="place-group__count">3 von 12 geöffnet, Auszug</span></h5>
+                <ul class="place-list">
+                  <li class="place">
+                    <div><span class="place__name">Peek &amp; Cloppenburg</span><span class="place__type">Bekleidung, O 3, 2-8</span></div>
+                    <div class="place__status"><span class="place__hours">10:00–20:00</span><span class="badge badge--open">geöffnet</span></div>
+                  </li>
+                  <li class="place">
+                    <div><span class="place__name">City Optic</span><span class="place__type">Optiker</span></div>
+                    <div class="place__status"><span class="place__hours">10:00–18:00</span><span class="badge badge--closed">geschlossen</span></div>
+                  </li>
+                  <li class="place">
+                    <div><span class="place__name">Chez André</span><span class="place__type">Feinkost</span></div>
+                    <div class="place__status"><span class="place__hours">keine Angabe</span><span class="badge badge--unknown">unbekannt</span></div>
+                  </li>
+                </ul>
+              </section>
+            </div>
+          </div>
+        </section>
+      </div>
+      <p class="sg-classes"><code>map-layout</code>, <code>filter-bar</code>, <code>filter-group</code>, <code>filter-group--time</code>, <code>filter-group__head</code>, <code>filter-label</code>, <code>map-frame</code>, <code>#karte</code>, <code>map-fallback</code> [V1, auf <code>#karte</code>, Bild statt Karte], <code>map-footer</code>, <code>map-footer__meta</code>, <code>profile</code>, <code>profile__head</code>, <code>profile__heading</code>, <code>profile__title</code>, <code>profile__meta</code>, <code>profile__close</code>, <code>profile__body</code>, <code>profile__about</code>, <code>profile__places</code>, <code>profile__places-title</code>, <code>profile__source</code>, <code>place-group</code>, <code>place-group__title</code>, <code>place-group__count</code>, <code>place-list</code>, <code>place</code>, <code>place__name</code>, <code>place__type</code>, <code>place__status</code>, <code>place__hours</code></p>
+
+      <h3>Steckbrief ohne Auswahl</h3>
+      <div class="sg-example">
+        <section class="profile profile--empty" aria-label="Steckbrief">
+          <span class="block-tile block-tile--empty" aria-hidden="true">–</span>
+          <p>Wähle ein Quadrat auf der Karte oder in der Liste „Quadrat wählen“. Hier erscheinen dann sein Steckbrief und die Orte, die zur gewählten Zeit geöffnet haben.</p>
+        </section>
+      </div>
+      <p class="sg-classes"><code>profile profile--empty</code>, <code>block-tile--empty</code></p>
+    </section>
+
+    <!-- ============================== Buttons ============================== -->
+    <section class="sg-section" id="knoepfe" aria-labelledby="knoepfe-titel">
+      <h2 id="knoepfe-titel">Knöpfe</h2>
+      <p class="sg-intro">Ein Knopf ist ein kleiner Block: dunkles Dach, hellere Wand darunter. Beim Drücken sinkt er auf den Boden. Die Beschriftung sagt, was passiert.</p>
+      <div class="button-row sg-example">
+        <button class="button" type="button">Vorschlag senden</button>
+        <button class="button button--secondary" type="button">Jetzt</button>
+        <a class="button button--secondary" href="../quadrate.html">Alle Quadrate ansehen</a>
+        <button class="button button--small" type="button">Merken</button>
+        <button class="button" type="button" disabled>Senden nicht möglich</button>
+      </div>
+      <p class="sg-classes"><code>button</code>, <code>button--secondary</code>, <code>button--small</code>, <code>button-row</code>; gesperrt mit <code>disabled</code> oder <code>aria-disabled="true"</code></p>
+    </section>
+
+    <!-- ============================== Chips ============================== -->
+    <section class="sg-section" id="kategorien" aria-labelledby="kat-titel">
+      <h2 id="kat-titel">Kategorie-Auswahl</h2>
+      <p class="sg-intro">Aus: leeres Quadrat, grauer Rand. An: gefülltes Quadrat, Hintergrund und Rand in der Farbe der Kategorie. Der Zustand ist also auch ohne Farbwahrnehmung erkennbar. Gebaut aus Optionsfeldern (funktioniert ohne JavaScript), wie auf der Startseite und auf Ort vorschlagen.</p>
+      <fieldset class="filter-group sg-example">
+        <legend class="filter-label">Kategorie</legend>
+        <ul class="chip-group">
+          <li><input class="chip-input visually-hidden" type="radio" name="sg-kat" id="sg-kat-essen" value="essen" checked><label class="chip cat-essen" for="sg-kat-essen"><span class="chip__swatch"></span>Essen</label></li>
+          <li><input class="chip-input visually-hidden" type="radio" name="sg-kat" id="sg-kat-trinken" value="trinken"><label class="chip cat-trinken" for="sg-kat-trinken"><span class="chip__swatch"></span>Trinken</label></li>
+          <li><input class="chip-input visually-hidden" type="radio" name="sg-kat" id="sg-kat-kultur" value="kultur"><label class="chip cat-kultur" for="sg-kat-kultur"><span class="chip__swatch"></span>Kultur</label></li>
+          <li><input class="chip-input visually-hidden" type="radio" name="sg-kat" id="sg-kat-shoppen" value="shoppen"><label class="chip cat-shoppen" for="sg-kat-shoppen"><span class="chip__swatch"></span>Shoppen</label></li>
+        </ul>
+      </fieldset>
+      <p class="sg-classes"><code>chip-group</code>, <code>chip</code>, <code>chip__swatch</code>, <code>chip-input</code> (verstecktes Optionsfeld vor dem <code>label</code>), dazu eine Kategorie-Klasse <code>cat-…</code></p>
+    </section>
+
+    <!-- ============================== Range ============================== -->
+    <section class="sg-section" id="zeit" aria-labelledby="zeit-titel">
+      <h2 id="zeit-titel">Zeitregler</h2>
+      <p class="sg-intro">Eine Sandspur mit einem Strich pro Stunde, der Griff ist ein kleiner Block. Der Wert zählt Minuten seit Mitternacht (0 bis 1440), in Schritten von 30 Minuten.</p>
+      <div class="panel sg-example" style="max-width: 36rem">
+        <div class="filter-group filter-group--time">
+          <div class="filter-group__head">
+            <label class="filter-label" for="sg-zeit-b">Uhrzeit</label>
+            <output class="time-readout" for="sg-zeit-b">14:30 <span>Uhr</span></output>
+          </div>
+          <input class="range" type="range" id="sg-zeit-b" min="0" max="1440" step="30" value="870">
+          <div class="range-scale" aria-hidden="true"><span>0</span><span>6</span><span>12</span><span>18</span><span>24</span></div>
+        </div>
+      </div>
+      <p class="sg-classes"><code>range</code> (auf <code>input type="range"</code>), <code>range-scale</code> mit genau fünf <code>span</code>, <code>time-readout</code> (auf <code>output</code>)</p>
+    </section>
+
+    <!-- ============================== Segmented + select ============================== -->
+    <section class="sg-section" id="wochentag" aria-labelledby="tag-titel">
+      <h2 id="tag-titel">Wochentag und Auswahlliste</h2>
+      <p class="sg-intro">Sieben Optionsfelder in einer Reihe; der gewählte Tag wird zum dunklen Block. Mit den Pfeiltasten wechselt man den Tag.</p>
+      <fieldset class="filter-group segmented sg-example">
+        <legend class="filter-label">Wochentag</legend>
+        <div class="segmented__options">
+          <input class="segmented__input visually-hidden" type="radio" name="sg-tag-b" id="sg-b-0" value="0" checked>
+          <label class="segmented__option" for="sg-b-0"><span aria-hidden="true">Mo</span><span class="visually-hidden">Montag</span></label>
+          <input class="segmented__input visually-hidden" type="radio" name="sg-tag-b" id="sg-b-1" value="1">
+          <label class="segmented__option" for="sg-b-1"><span aria-hidden="true">Di</span><span class="visually-hidden">Dienstag</span></label>
+          <input class="segmented__input visually-hidden" type="radio" name="sg-tag-b" id="sg-b-2" value="2">
+          <label class="segmented__option" for="sg-b-2"><span aria-hidden="true">Mi</span><span class="visually-hidden">Mittwoch</span></label>
+          <input class="segmented__input visually-hidden" type="radio" name="sg-tag-b" id="sg-b-3" value="3">
+          <label class="segmented__option" for="sg-b-3"><span aria-hidden="true">Do</span><span class="visually-hidden">Donnerstag</span></label>
+          <input class="segmented__input visually-hidden" type="radio" name="sg-tag-b" id="sg-b-4" value="4">
+          <label class="segmented__option" for="sg-b-4"><span aria-hidden="true">Fr</span><span class="visually-hidden">Freitag</span></label>
+          <input class="segmented__input visually-hidden" type="radio" name="sg-tag-b" id="sg-b-5" value="5">
+          <label class="segmented__option" for="sg-b-5"><span aria-hidden="true">Sa</span><span class="visually-hidden">Samstag</span></label>
+          <input class="segmented__input visually-hidden" type="radio" name="sg-tag-b" id="sg-b-6" value="6">
+          <label class="segmented__option" for="sg-b-6"><span aria-hidden="true">So</span><span class="visually-hidden">Sonntag</span></label>
+        </div>
+      </fieldset>
+      <p class="sg-classes"><code>segmented</code>, <code>segmented__options</code>, <code>segmented__input</code> (verstecktes Optionsfeld), <code>segmented__option</code> (das <code>label</code>)</p>
+
+      <div class="field sg-example" style="max-width: 20rem">
+        <label class="field__label" for="sg-select">Kategorie</label>
+        <select id="sg-select">
+          <option>Alle Kategorien</option>
+          <option>Essen</option>
+          <option>Trinken</option>
+          <option>Kultur</option>
+          <option>Shoppen</option>
+        </select>
+      </div>
+      <p class="sg-classes"><code>select</code> braucht keine Klasse</p>
+    </section>
+
+    <!-- ============================== Forms ============================== -->
+    <section class="sg-section" id="formulare" aria-labelledby="form-titel">
+      <h2 id="form-titel">Formulare</h2>
+      <p class="sg-intro">Jedes Feld hat eine sichtbare Beschriftung. Fehler erscheinen erst nach der Eingabe, direkt unter dem Feld, und sagen, wie man sie behebt. In V1 prüft der Browser selbst (<code>:user-invalid</code>), in V3 setzt PHP die Klasse <code>field--error</code> und <code>aria-invalid="true"</code>.</p>
+      <form class="form sg-example" action="#" onsubmit="return false">
+        <div class="field">
+          <label class="field__label" for="sg-name">Name des Ortes <span class="field__required">(Pflichtfeld)</span></label>
+          <input id="sg-name" type="text" required autocomplete="off" value="Café am Wasserturm">
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="sg-quadrat">Quadrat</label>
+          <p class="field__hint" id="sg-quadrat-hinweis">Buchstabe und Zahl, zum Beispiel G1 oder M3a.</p>
+          <input id="sg-quadrat" type="text" aria-describedby="sg-quadrat-hinweis" placeholder="G1">
+        </div>
+
+        <div class="field field--error">
+          <label class="field__label" for="sg-mail">E-Mail <span class="field__required">(Pflichtfeld)</span></label>
+          <input id="sg-mail" type="email" required value="anna@beispiel" aria-invalid="true" aria-describedby="sg-mail-fehler">
+          <p class="field__error" id="sg-mail-fehler">Die E-Mail-Adresse braucht eine Endung, zum Beispiel anna@beispiel.de.</p>
+        </div>
+
+        <div class="field field--valid">
+          <label class="field__label" for="sg-plz">Postleitzahl</label>
+          <input id="sg-plz" type="text" inputmode="numeric" value="68161">
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="sg-text">Nachricht</label>
+          <textarea id="sg-text" rows="4">Das Café hat seit Mai auch sonntags geöffnet.</textarea>
+        </div>
+
+        <fieldset class="fieldset">
+          <legend>Kategorie des Ortes</legend>
+          <label class="check"><input type="radio" name="sg-art" checked> Essen</label>
+          <label class="check"><input type="radio" name="sg-art"> Trinken</label>
+        </fieldset>
+
+        <label class="check"><input type="checkbox" required> Ich habe die Datenschutzerklärung gelesen.</label>
+
+        <div class="button-row">
+          <button class="button" type="submit">Vorschlag senden</button>
+        </div>
+      </form>
+      <p class="sg-classes"><code>form</code>, <code>field</code>, <code>field__label</code>, <code>field__required</code>, <code>field__hint</code>, <code>field__error</code>, <code>field--error</code>, <code>field--valid</code>, <code>fieldset</code>, <code>check</code></p>
+    </section>
+
+    <!-- ============================== Tables ============================== -->
+    <section class="sg-section" id="tabellen" aria-labelledby="tab-titel">
+      <h2 id="tab-titel">Tabellen</h2>
+      <p class="sg-intro">Kopfzeile in Platzfarbe, bleibt beim Scrollen stehen. Sortierbare Spalten haben einen Knopf in der Kopfzelle [V2]; <code>aria-sort</code> zeichnet den Pfeil. Eine Zeile, die über einen Anker angesprungen wird, leuchtet gelb wie das ausgewählte Quadrat: <a href="#zeile-O3">Zeile O3 anspringen</a>.</p>
+      <div class="table-wrap sg-example" role="region" aria-labelledby="sg-tabelle-titel" tabindex="0">
+        <table class="data-table">
+          <caption id="sg-tabelle-titel">Beispielzeilen aus dem Verzeichnis (Orte laut OpenStreetMap, Stand 28.09.2026)</caption>
+          <thead>
+            <tr>
+              <th scope="col" aria-sort="ascending"><button class="sort-button" type="button">Quadrat</button></th>
+              <th scope="col"><button class="sort-button" type="button">Besonderheit</button></th>
+              <th scope="col" class="num"><button class="sort-button" type="button">Essen</button></th>
+              <th scope="col" class="num"><button class="sort-button" type="button">Trinken</button></th>
+              <th scope="col" class="num"><button class="sort-button" type="button">Kultur</button></th>
+              <th scope="col" class="num"><button class="sort-button" type="button">Shoppen</button></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr id="zeile-G1">
+              <td><a class="block-code" href="../index.html#G1">G1</a></td>
+              <td>Marktplatz</td>
+              <td class="num num--zero">0</td><td class="num num--zero">0</td><td class="num num--zero">0</td><td class="num num--zero">0</td>
+            </tr>
+            <tr id="zeile-N1">
+              <td><a class="block-code" href="../index.html#N1">N1</a></td>
+              <td></td>
+              <td class="num">3</td><td class="num">2</td><td class="num">4</td><td class="num">5</td>
+            </tr>
+            <tr id="zeile-O1">
+              <td><a class="block-code" href="../index.html#O1">O1</a></td>
+              <td>Paradeplatz</td>
+              <td class="num num--zero">0</td><td class="num">1</td><td class="num num--zero">0</td><td class="num">1</td>
+            </tr>
+            <tr id="zeile-O3">
+              <td><a class="block-code" href="../index.html#O3">O3</a></td>
+              <td></td>
+              <td class="num num--zero">0</td><td class="num">1</td><td class="num num--zero">0</td><td class="num">12</td>
+            </tr>
+            <tr id="zeile-Q1">
+              <td><a class="block-code" href="../index.html#Q1">Q1</a></td>
+              <td></td>
+              <td class="num">5</td><td class="num num--zero">0</td><td class="num num--zero">0</td><td class="num">15</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="sg-classes"><code>table-wrap</code> (mit <code>role="region"</code> und <code>tabindex="0"</code>), <code>table-wrap--tall</code> für lange Tabellen, <code>data-table</code>, <code>num</code>, <code>num--zero</code>, <code>sort-button</code> [V2]</p>
+    </section>
+
+    <!-- ============================== Codes and tiles ============================== -->
+    <section class="sg-section" id="kuerzel" aria-labelledby="kuerzel-titel">
+      <h2 id="kuerzel-titel">Kürzel und Kacheln</h2>
+      <p class="sg-intro">Quadrat-Kürzel erscheinen immer als kleiner dunkler Block mit weißer Schrift, wie auf der Karte. Im Fließtext: Der Marktplatz liegt in <a class="block-code" href="../index.html#G1">G1</a>, der Paradeplatz in <a class="block-code" href="../index.html#O1">O1</a>.</p>
+      <div class="sg-row sg-example">
+        <span class="block-tile">G1</span>
+        <span class="block-tile">M3a</span>
+        <span class="block-tile block-tile--selected">O3</span>
+        <span class="block-tile block-tile--empty">–</span>
+      </div>
+      <p class="sg-classes"><code>block-code</code> (im Text, meist als Link), <code>block-tile</code>, <code>block-tile--selected</code>, <code>block-tile--empty</code></p>
+    </section>
+
+    <!-- ============================== Badges ============================== -->
+    <section class="sg-section" id="status" aria-labelledby="status-titel">
+      <h2 id="status-titel">Status</h2>
+      <p class="sg-intro">Das Wort nennt den Zustand; der Punkt davor ist eine zweite Hilfe: voll, Ring, gepunkteter Ring.</p>
+      <div class="sg-row sg-example">
+        <span class="badge badge--open">geöffnet</span>
+        <span class="badge badge--closed">geschlossen</span>
+        <span class="badge badge--unknown">unbekannt</span>
+      </div>
+      <p class="sg-classes"><code>badge</code>, <code>badge--open</code>, <code>badge--closed</code>, <code>badge--unknown</code></p>
+    </section>
+
+    <!-- ============================== Legend ============================== -->
+    <section class="sg-section" id="legende" aria-labelledby="legende-titel">
+      <h2 id="legende-titel">Legende</h2>
+      <p class="sg-intro">Die Kategorie-Klasse am Rahmen bestimmt die Farben der Felder darin.</p>
+      <div class="panel sg-example">
+        <div class="legend cat-essen">
+          <p class="legend__title">Essen</p>
+          <ul class="legend__items">
+            <li><span class="swatch swatch--none"></span>keiner</li>
+            <li><span class="swatch swatch--l1"></span>1</li>
+            <li><span class="swatch swatch--l2"></span>2–3</li>
+            <li><span class="swatch swatch--l3"></span>4–6</li>
+            <li><span class="swatch swatch--l4"></span>7+</li>
+          </ul>
+        </div>
+        <div class="legend cat-kultur">
+          <p class="legend__title">Kultur</p>
+          <ul class="legend__items">
+            <li><span class="swatch swatch--none"></span>keiner</li>
+            <li><span class="swatch swatch--l1"></span>1</li>
+            <li><span class="swatch swatch--l2"></span>2–3</li>
+            <li><span class="swatch swatch--l3"></span>4–6</li>
+            <li><span class="swatch swatch--l4"></span>7+</li>
+          </ul>
+        </div>
+        <div class="legend">
+          <p class="legend__title">Symbole</p>
+          <ul class="legend__items">
+            <li><span class="swatch swatch--pin"></span>gemerkte Orte [V3]</li>
+          </ul>
+        </div>
+      </div>
+      <p class="sg-classes"><code>legend</code>, <code>legend__title</code>, <code>legend__items</code>, <code>swatch</code>, <code>swatch--none</code>, <code>swatch--l1</code> bis <code>swatch--l4</code>, <code>swatch--pin</code> [V3]; eigene Farbe mit <code>style="--swatch: #…"</code></p>
+    </section>
+
+    <!-- ============================== Photo ============================== -->
+    <section class="sg-section" id="foto" aria-labelledby="foto-titel">
+      <h2 id="foto-titel">Foto mit Nachweis</h2>
+      <p class="sg-intro">Jedes Foto steht im Format 3:2 und hat direkt darunter Urheber, Lizenz und Quelle. Die Angaben kommen aus <code>js/data/fotos.js</code>.</p>
+      <figure class="photo sg-example" style="max-width: 30rem">
+        <img src="../img/fotos/marktplatz.jpg" alt="Marktplatz in G 1: das Alte Rathaus und die Kirche St. Sebastian mit rot-weißer Barockfassade und Mittelturm unter blauem Himmel" width="1200" height="800">
+        <figcaption>
+          <span class="photo__caption">Altes Rathaus und St. Sebastian am Marktplatz</span>
+          <span class="photo__credit">Foto: Georg Buzin, <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/wiki/File:Altes_Rathaus_und_Sankt_Sebastianskirche_auf_dem_Mannheimer_Marktplatz.jpg">Wikimedia Commons</a></span>
+        </figcaption>
+      </figure>
+      <p class="sg-classes"><code>photo</code>, <code>photo__caption</code>, <code>photo__credit</code></p>
+    </section>
+
+    <!-- ============================== Notices ============================== -->
+    <section class="sg-section" id="hinweise" aria-labelledby="hinweise-titel">
+      <h2 id="hinweise-titel">Hinweise</h2>
+      <p class="sg-intro">Für Meldungen, die sich auf die ganze Seite beziehen. Fehler, die nach einer Aktion erscheinen, bekommen <code>role="alert"</code>, alle anderen <code>role="status"</code>.</p>
+      <div class="sg-example" style="max-width: 44rem">
+        <div class="notice notice--info" role="status">
+          <p class="notice__title">Öffnungszeiten ohne Gewähr</p>
+          <p>Die Zeiten stammen aus OpenStreetMap, Stand 28.09.2026. Feiertage sind nicht berücksichtigt.</p>
+        </div>
+        <div class="notice notice--warning" role="status">
+          <p class="notice__title">Karte ohne JavaScript</p>
+          <p>Ohne JavaScript zeigt die Startseite ein festes Bild der Karte. Filter und Steckbrief brauchen JavaScript.</p>
+        </div>
+        <div class="notice notice--error" role="alert">
+          <p class="notice__title">Vorschlag nicht gesendet</p>
+          <p>Zwei Felder sind noch leer: Name des Ortes und E-Mail. Bitte ergänze sie und sende erneut.</p>
+        </div>
+        <div class="notice notice--success" role="status">
+          <p class="notice__title">Vorschlag gesendet</p>
+          <p>Danke. Wir prüfen den Ort und nehmen ihn beim nächsten Daten-Stand auf.</p>
+        </div>
+      </div>
+      <p class="sg-classes"><code>notice</code>, <code>notice__title</code>, <code>notice--info</code>, <code>notice--warning</code>, <code>notice--error</code>, <code>notice--success</code></p>
+    </section>
+
+    <!-- ============================== Focus and motion ============================== -->
+    <section class="sg-section" id="fokus" aria-labelledby="fokus-titel">
+      <h2 id="fokus-titel">Fokus und Bewegung</h2>
+      <div class="prose">
+        <p>Mit der Tabulatortaste bekommt jedes bedienbare Element einen dunklen Rahmen im Abstand von 3 Pixeln. Er erscheint nur bei Bedienung mit der Tastatur (<code>:focus-visible</code>), nicht nach einem Mausklick. Der erste Tabulator-Schritt auf jeder Seite ist der Link Zum Inhalt springen.</p>
+        <p>Wer im Betriebssystem weniger Bewegung eingestellt hat (<code>prefers-reduced-motion</code>), sieht keine Animationen: Knöpfe heben und senken sich nicht, das ausgewählte Quadrat wächst ohne Übergang. Die Karte liest dafür in <code>css/karte.css</code> die Variable <code>--duration-grow</code> (450 ms, bei weniger Bewegung 0 ms); die SVG-Karte prüft <code>prefers-reduced-motion</code> zusätzlich in <code>js/karte.js</code>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner container">
+      <p>Kartendaten © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, ODbL</p>
+      <nav class="site-footer__links" aria-label="Rechtliches">
+        <ul>
+          <li><a href="../impressum.html">Impressum</a></li>
+          <li><a href="../datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </nav>
+      <p>Studienprojekt <span aria-hidden="true">·</span> DHBW Mannheim <span aria-hidden="true">·</span> Webprogrammierung 2026</p>
+    </div>
+  </footer>
+</body>
+</html>
